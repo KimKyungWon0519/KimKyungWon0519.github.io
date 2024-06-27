@@ -6,13 +6,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'KKW BLOG',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
+      body: Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height / 4,
+            width: MediaQuery.sizeOf(context).width * (3 / 5),
           ),
-        ),
+          const Expanded(
+            child: Row(
+              children: [
+                Expanded(child: Placeholder()),
+                Expanded(
+                  flex: 3,
+                  child: Placeholder(),
+                ),
+                Spacer()
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
