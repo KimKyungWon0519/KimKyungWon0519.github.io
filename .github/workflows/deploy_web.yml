@@ -17,8 +17,8 @@ jobs:
       with:
         flutter-version: '3.22.2'
 
-    - name: Build Web
-      run: flutter build web --release
+    - name: Build Web ( wasm )
+      run: flutter build web --release --wasm
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3.9.3
