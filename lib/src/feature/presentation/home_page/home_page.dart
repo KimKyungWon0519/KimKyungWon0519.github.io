@@ -9,37 +9,40 @@ class HomePage extends StatelessWidget {
     final Size size = MediaQuery.sizeOf(context);
 
     return Scaffold(
-      body: ScreenTypeLayout.builder(
-        desktop: (p0) => Column(
-          children: [
-            SizedBox(
-              height: size.height / 4,
-              width: size.width * (3 / 5),
-              child: const Placeholder(),
-            ),
-            const Expanded(
-              child: Row(
-                children: [
-                  Expanded(child: Placeholder()),
-                  Expanded(
-                    flex: 3,
-                    child: Placeholder(),
-                  ),
-                  Spacer()
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: ScreenTypeLayout.builder(
+          desktop: (p0) => Column(
+            children: [
+              SizedBox(
+                height: size.height / 4,
+                width: size.width * (3 / 5),
+                child: const Placeholder(),
               ),
-            ),
-          ],
-        ),
-        mobile: (p0) => Column(
-          children: [
-            SizedBox(
-              height: size.height / 4,
-              width: size.width,
-              child: const Placeholder(),
-            ),
-            const Expanded(child: Placeholder()),
-          ],
+              const Expanded(
+                child: Row(
+                  children: [
+                    Expanded(child: Placeholder()),
+                    Expanded(
+                      flex: 3,
+                      child: Placeholder(),
+                    ),
+                    Spacer()
+                  ],
+                ),
+              ),
+            ],
+          ),
+          mobile: (p0) => Column(
+            children: [
+              SizedBox(
+                height: size.height / 4,
+                width: size.width,
+                child: const Placeholder(),
+              ),
+              const Expanded(child: Placeholder()),
+            ],
+          ),
         ),
       ),
     );
