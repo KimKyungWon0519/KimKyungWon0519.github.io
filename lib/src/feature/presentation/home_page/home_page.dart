@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import './local_widgets/header.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -15,9 +17,8 @@ class HomePage extends StatelessWidget {
           desktop: (p0) => Column(
             children: [
               SizedBox(
-                height: size.height / 4,
                 width: size.width * (3 / 5),
-                child: const Placeholder(),
+                child: const Header(),
               ),
               const Expanded(
                 child: Row(
@@ -36,9 +37,8 @@ class HomePage extends StatelessWidget {
           mobile: (p0) => Column(
             children: [
               SizedBox(
-                height: size.height / 4,
                 width: size.width,
-                child: const Placeholder(),
+                child: const Header(),
               ),
               const Expanded(child: Placeholder()),
             ],
