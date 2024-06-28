@@ -91,6 +91,6 @@ flutter:
   fonts:
     - family: GmarketSans
       fonts:
-        - asset: assets/fonts/GmarketSansBold.otf
-        - asset: assets/fonts/GmarketSansLight.otf
-        - asset: assets/fonts/GmarketSansMedium.otf
+        - asset: assets/fonts/GmarketSansTTFBold.ttf
+        - asset: assets/fonts/GmarketSansTTFLight.ttf
+        - asset: assets/fonts/GmarketSansTTFMedium.ttf
