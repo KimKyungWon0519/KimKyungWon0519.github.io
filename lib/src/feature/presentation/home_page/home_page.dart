@@ -1,30 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.sizeOf(context);
+
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.sizeOf(context).height / 4,
-            width: MediaQuery.sizeOf(context).width * (3 / 5),
-          ),
-          const Expanded(
-            child: Row(
-              children: [
-                Expanded(child: Placeholder()),
-                Expanded(
-                  flex: 3,
-                  child: Placeholder(),
-                ),
-                Spacer()
-              ],
+      body: ScreenTypeLayout.builder(
+        desktop: (p0) => Column(
+          children: [
+            SizedBox(
+              height: size.height / 4,
+              width: size.width * (3 / 5),
+              child: const Placeholder(),
             ),
-          ),
-        ],
+            const Expanded(
+              child: Row(
+                children: [
+                  Expanded(child: Placeholder()),
+                  Expanded(
+                    flex: 3,
+                    child: Placeholder(),
+                  ),
+                  Spacer()
+                ],
+              ),
+            ),
+          ],
+        ),
+        mobile: (p0) => Column(
+          children: [
+            SizedBox(
+              height: size.height / 4,
+              width: size.width,
+              child: const Placeholder(),
+            ),
+            const Expanded(child: Placeholder()),
+          ],
+        ),
       ),
     );
   }
