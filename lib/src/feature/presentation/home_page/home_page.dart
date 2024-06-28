@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: ScreenTypeLayout.builder(
-          desktop: (p0) => Column(
+          desktop: (context) => Column(
             children: [
               SizedBox(
                 width: size.width * (3 / 5),
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ),
-          mobile: (p0) => Column(
+          mobile: (context) => Column(
             children: [
               SizedBox(
                 width: size.width,
