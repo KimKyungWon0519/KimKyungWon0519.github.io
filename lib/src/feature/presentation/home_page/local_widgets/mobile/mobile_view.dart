@@ -1,66 +1,64 @@
 import 'package:flutter/material.dart';
 
 import '../header.dart';
+import 'atrribute.dart';
 
-class MobileView extends StatelessWidget {
+class MobileView extends StatefulWidget {
   const MobileView({super.key});
 
   @override
+  State<MobileView> createState() => _MobileViewState();
+}
+
+class _MobileViewState extends State<MobileView> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: DefaultTabController(
+        length: 2,
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: DefaultTabController(
-            length: 2,
-            child: Column(
-              children: [
-                Header(),
-                TabBar(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 16),
+              ),
+              const SliverToBoxAdapter(
+                child: Header(),
+              ),
+              const SliverToBoxAdapter(
+                child: TabBar(
                   tabs: [
                     Text('홈'),
                     Text('정보'),
                   ],
                 ),
-                MenuAnchor(
-                  builder: (BuildContext context, MenuController controller,
-                      Widget? child) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        if (controller.isOpen) {
-                          controller.close();
-                        } else {
-                          controller.open();
-                        }
-                      },
-                      child: Text('전체'),
-                    );
-                  },
-                  menuChildren: [
-                    MenuItemButton(
-                      child: Text('전체'),
-                    ),
-                    SubmenuButton(
-                      menuChildren: List.generate(
-                        10,
-                        (index) => MenuItemButton(
-                          child: Text('카테고리 $index'),
+              ),
+            ],
+            body: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: TabBarView(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const Align(
+                          alignment: Alignment.topLeft,
+                          child: Menu(),
                         ),
-                      ),
-                      child: Text('카테고리'),
-                    ),
-                    SubmenuButton(
-                      menuChildren: List.generate(
-                        20,
-                        (index) => MenuItemButton(
-                          child: Text('태그 $index'),
+                        const SizedBox(height: 8),
+                        Column(
+                          children: List.generate(
+                            5,
+                            (index) => const Placeholder(),
+                          ),
                         ),
-                      ),
-                      child: Text('태그'),
+                      ],
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                  const Placeholder(),
+                ],
+              ),
             ),
           ),
         ),
