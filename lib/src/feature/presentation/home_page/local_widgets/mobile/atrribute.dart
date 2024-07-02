@@ -39,7 +39,7 @@ class _MenuState extends State<Menu> {
   }
 }
 
-class _MenuButton extends StatelessWidget {
+class _MenuButton extends StatefulWidget {
   final String name;
   final MenuController controller;
 
@@ -50,27 +50,62 @@ class _MenuButton extends StatelessWidget {
   });
 
   @override
+  State<_MenuButton> createState() => _MenuButtonState();
+}
+
+class _MenuButtonState extends State<_MenuButton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _animationController;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController =
+        AnimationController(vsync: this, duration: Durations.short4);
+    _animation =
+        Tween<double>(begin: 0.0, end: 0.5).animate(_animationController);
+  }
+
+  @override
+  void didUpdateWidget(covariant _MenuButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (!(widget.controller.isOpen) && _animation.value == 0.5) {
+      _animationController.reverse();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return ElevatedButton.icon(
       onPressed: _onPressedEvent,
-      child: Text(
-        name,
+      label: Text(
+        widget.name,
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
       ),
+      icon: RotationTransition(
+        turns: _animation,
+        child: const Icon(Icons.expand_more),
+      ),
+      iconAlignment: IconAlignment.end,
     );
   }
 
   void _onPressedEvent() {
-    controller.isOpen ? _openMenu() : _closeMenu();
+    widget.controller.isOpen ? _openMenu() : _closeMenu();
   }
 
   void _openMenu() {
-    controller.close();
+    _animationController.reverse();
+    widget.controller.close();
   }
 
   void _closeMenu() {
-    controller.open();
+    _animationController.forward();
+    widget.controller.open();
   }
 }
 
