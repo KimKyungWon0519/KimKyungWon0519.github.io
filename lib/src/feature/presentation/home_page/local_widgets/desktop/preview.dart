@@ -5,6 +5,14 @@ class Preview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Card(
+      margin: const EdgeInsets.all(8),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          children: [],
+        ),
+      ),
+    );
   }
 }
