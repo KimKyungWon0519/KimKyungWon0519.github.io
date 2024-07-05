@@ -13,6 +13,8 @@ class Preview extends StatelessWidget {
           children: [
             _Title(),
             _Content(),
+            SizedBox(height: 10),
+            _Category(),
           ],
         ),
       ),
@@ -43,6 +45,22 @@ class _Content extends StatelessWidget {
       '내용' * 1000,
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
+    );
+  }
+}
+
+class _Category extends StatelessWidget {
+  const _Category({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '카테고리',
+      maxLines: 3,
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Colors.grey[700],
+            fontWeight: FontWeight.bold,
+          ),
     );
   }
 }
