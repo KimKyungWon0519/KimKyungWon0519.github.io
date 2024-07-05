@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/desktop/preview.dart';
 
 import '../header.dart';
 import 'atrribute.dart';
@@ -32,7 +33,7 @@ class DesktopView extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 3,
-                        child: Placeholder(),
+                        child: Preview(),
                       ),
                       Spacer()
                     ],
