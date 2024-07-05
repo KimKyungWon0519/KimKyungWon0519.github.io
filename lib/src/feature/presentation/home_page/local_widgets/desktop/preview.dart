@@ -5,26 +5,56 @@ class Preview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(8),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            _Title(),
-            _Content(),
-            SizedBox(height: 10),
-            IntrinsicHeight(
-              child: Row(
-                children: [
-                  _Category(),
-                  VerticalDivider(),
-                  _UploadDate(),
-                ],
-              ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Card(
+          margin: const EdgeInsets.all(8),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                _Image(
+                  height: constraints.maxWidth * 0.5,
+                ),
+                const SizedBox(height: 10),
+                _Title(),
+                _Content(),
+                const SizedBox(height: 10),
+                IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      _Category(),
+                      VerticalDivider(),
+                      _UploadDate(),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _Image extends StatelessWidget {
+  final double? height;
+
+  const _Image({
+    super.key,
+    this.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Image.network(
+        'https://cdn.mos.cms.futurecdn.net/FaWKMJQnr2PFcYCmEyfiTm-1200-80.jpg',
+        height: height,
+        width: double.infinity,
+        fit: BoxFit.cover,
       ),
     );
   }
