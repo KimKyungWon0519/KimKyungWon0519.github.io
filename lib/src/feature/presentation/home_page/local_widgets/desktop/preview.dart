@@ -12,6 +12,7 @@ class Preview extends StatelessWidget {
         child: Column(
           children: [
             _Title(),
+            _Content(),
           ],
         ),
       ),
@@ -28,6 +29,19 @@ class _Title extends StatelessWidget {
       '제목' * 100,
       maxLines: 1,
       style: Theme.of(context).textTheme.titleLarge,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  const _Content({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '내용' * 1000,
+      maxLines: 3,
       overflow: TextOverflow.ellipsis,
     );
   }
