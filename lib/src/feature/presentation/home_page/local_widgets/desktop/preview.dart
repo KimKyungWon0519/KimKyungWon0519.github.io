@@ -38,7 +38,9 @@ class _Title extends StatelessWidget {
     return Text(
       '제목' * 100,
       maxLines: 1,
-      style: Theme.of(context).textTheme.titleLarge,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
       overflow: TextOverflow.ellipsis,
     );
   }
