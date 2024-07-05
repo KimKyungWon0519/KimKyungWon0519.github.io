@@ -14,7 +14,15 @@ class Preview extends StatelessWidget {
             _Title(),
             _Content(),
             SizedBox(height: 10),
-            _Category(),
+            IntrinsicHeight(
+              child: Row(
+                children: [
+                  _Category(),
+                  VerticalDivider(),
+                  _UploadDate(),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -56,10 +64,23 @@ class _Category extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       '카테고리',
-      maxLines: 3,
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: Colors.grey[700],
             fontWeight: FontWeight.bold,
+          ),
+    );
+  }
+}
+
+class _UploadDate extends StatelessWidget {
+  const _UploadDate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '2024년 1월 1일',
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Colors.grey[700],
           ),
     );
   }
