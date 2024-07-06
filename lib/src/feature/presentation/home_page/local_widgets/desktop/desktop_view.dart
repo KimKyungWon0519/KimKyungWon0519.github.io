@@ -1,16 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/desktop/preview.dart';
+import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/desktop/scroll_to_top_fab.dart';
 
 import '../header.dart';
 import 'atrribute.dart';
 
-class DesktopView extends StatelessWidget {
+class DesktopView extends StatefulWidget {
   const DesktopView({super.key});
+
+  @override
+  State<DesktopView> createState() => _DesktopViewState();
+}
+
+class _DesktopViewState extends State<DesktopView> {
+  late final ScrollController _controller;
+  List<Preview> _previews = List.generate(
+    10,
+    (index) => const Preview(),
+  );
+  bool _isShowToTopFAB = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = ScrollController()
+      ..addListener(
+        () {
+          if (_controller.offset >= _controller.position.maxScrollExtent) {
+            setState(() {
+              _previews.addAll(List.generate(
+                10,
+                (index) => const Preview(),
+              ));
+            });
+          }
+
+          if (!_isShowToTopFAB && _controller.offset > 50) {
+            setState(() {
+              _isShowToTopFAB = true;
+            });
+          } else if (_isShowToTopFAB && _controller.offset == 0) {
+            setState(() {
+              _isShowToTopFAB = false;
+            });
+          }
+        },
+      );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: _controller,
         child: LayoutBuilder(
           builder: (context, constraints) {
             double padding = (constraints.maxWidth - 1200) / 2;
@@ -22,20 +65,20 @@ class DesktopView extends StatelessWidget {
                 vertical: 16,
                 horizontal: padding,
               ),
-              child: const Column(
+              child: Column(
                 children: [
-                  Header(),
+                  const Header(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
+                      const Expanded(
                         child: Atrribute(),
                       ),
                       Expanded(
                         flex: 3,
-                        child: Preview(),
+                        child: Column(children: _previews),
                       ),
-                      Spacer()
+                      const Spacer()
                     ],
                   ),
                 ],
@@ -44,6 +87,19 @@ class DesktopView extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton:
+          _isShowToTopFAB ? ScrollToTopFAB(onPressed: _scrollToTop) : null,
     );
+  }
+
+  void _scrollToTop() {
+    _controller.jumpTo(0);
+
+    setState(() {
+      _previews = List.generate(
+        10,
+        (index) => const Preview(),
+      );
+    });
   }
 }
