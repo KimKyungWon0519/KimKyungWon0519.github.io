@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/desktop/preview.dart';
+import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/preview.dart';
 import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/desktop/scroll_to_top_fab.dart';
 
 import '../header.dart';

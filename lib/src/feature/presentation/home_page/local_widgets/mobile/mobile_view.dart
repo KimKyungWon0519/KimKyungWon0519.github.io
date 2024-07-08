@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../preview.dart';
 import '../header.dart';
 import 'atrribute.dart';
 
@@ -14,52 +15,22 @@ class _MobileViewState extends State<MobileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DefaultTabController(
-        length: 2,
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 16),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Header(),
+              const Align(
+                alignment: Alignment.topLeft,
+                child: Menu(),
               ),
-              const SliverToBoxAdapter(
-                child: Header(),
-              ),
-              const SliverToBoxAdapter(
-                child: TabBar(
-                  tabs: [
-                    Text('홈'),
-                    Text('정보'),
-                  ],
-                ),
+              Divider(),
+              ...List.generate(
+                10,
+                (index) => Preview(),
               ),
             ],
-            body: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: TabBarView(
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        const Align(
-                          alignment: Alignment.topLeft,
-                          child: Menu(),
-                        ),
-                        const SizedBox(height: 8),
-                        Column(
-                          children: List.generate(
-                            5,
-                            (index) => const Placeholder(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Placeholder(),
-                ],
-              ),
-            ),
           ),
         ),
       ),
