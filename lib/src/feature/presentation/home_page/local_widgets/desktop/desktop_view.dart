@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/preview.dart';
-import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/desktop/scroll_to_top_fab.dart';
+import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/scroll_to_top_fab.dart';
 
 import '../header.dart';
 import 'atrribute.dart';
