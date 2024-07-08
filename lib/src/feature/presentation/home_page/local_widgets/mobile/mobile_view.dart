@@ -20,12 +20,11 @@ class _MobileViewState extends State<MobileView> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Header(),
+              const Header(),
               const Align(
                 alignment: Alignment.topLeft,
                 child: Menu(),
               ),
-              Divider(),
               ...List.generate(
                 10,
                 (index) => Preview(),

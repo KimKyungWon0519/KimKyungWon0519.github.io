@@ -8,7 +8,7 @@ class Preview extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Card(
-          margin: const EdgeInsets.symmetric(vertical: 8),
+          margin: const EdgeInsets.symmetric(vertical: 16),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
