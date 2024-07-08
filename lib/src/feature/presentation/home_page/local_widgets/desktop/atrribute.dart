@@ -5,11 +5,16 @@ class Atrribute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ExpansionTileTheme(
-      data: ExpansionTileThemeData(
-        shape: RoundedRectangleBorder(),
+    return Theme(
+      data: ThemeData(
+        expansionTileTheme: const ExpansionTileThemeData(
+          shape: RoundedRectangleBorder(),
+        ),
+        listTileTheme: ListTileThemeData(
+          titleTextStyle: Theme.of(context).textTheme.bodyMedium,
+        ),
       ),
-      child: Padding(
+      child: const Padding(
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
@@ -29,7 +34,12 @@ class _Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: const Text('카테고리'),
+      title: const Text(
+        '카테고리',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       children: List.generate(
         10,
         (index) => ListTile(
@@ -46,7 +56,12 @@ class _Tags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: const Text('태그'),
+      title: const Text(
+        '태그',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       children: List.generate(
         10,
         (index) => ListTile(
@@ -62,6 +77,13 @@ class _Informations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ListTile(title: Text('정보'));
+    return const ListTile(
+      title: Text(
+        '정보',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 }
