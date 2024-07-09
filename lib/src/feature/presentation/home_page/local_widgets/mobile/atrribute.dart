@@ -28,6 +28,7 @@ class _MenuState extends State<Menu> {
         _All(onSelected: _onSelectedMenu),
         _Categories(onSelected: _onSelectedMenu),
         _Tags(onSelected: _onSelectedMenu),
+        _Information(onSelected: _onSelectedMenu),
       ],
     );
   }
@@ -168,6 +169,23 @@ class _Tags extends StatelessWidget {
         ),
       ),
       child: const Text('태그'),
+    );
+  }
+}
+
+class _Information extends StatelessWidget {
+  final _SelectedMenu? onSelected;
+
+  const _Information({
+    super.key,
+    this.onSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MenuItemButton(
+      onPressed: () => onSelected?.call('정보'),
+      child: const Text('정보'),
     );
   }
 }
