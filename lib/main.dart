@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:kkw_blog/src/core/constants/app_constant.dart';
+import 'package:kkw_blog/src/core/utils/data_sources/post_helper.dart';
 import 'package:kkw_blog/src/feature/presentation/home_page/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  posts = await const PostHelper().createPosts();
+
   runApp(const MyApp());
 }
 
