@@ -45,7 +45,6 @@ class _MenuButton extends StatefulWidget {
   final MenuController controller;
 
   const _MenuButton({
-    super.key,
     required this.name,
     required this.controller,
   });
@@ -114,7 +113,6 @@ class _All extends StatelessWidget {
   final _SelectedMenu? onSelected;
 
   const _All({
-    super.key,
     this.onSelected,
   });
 
@@ -131,7 +129,6 @@ class _Categories extends StatelessWidget {
   final _SelectedMenu? onSelected;
 
   const _Categories({
-    super.key,
     this.onSelected,
   });
 
@@ -154,7 +151,6 @@ class _Tags extends StatelessWidget {
   final _SelectedMenu? onSelected;
 
   const _Tags({
-    super.key,
     this.onSelected,
   });
 
@@ -177,7 +173,6 @@ class _Information extends StatelessWidget {
   final _SelectedMenu? onSelected;
 
   const _Information({
-    super.key,
     this.onSelected,
   });
 

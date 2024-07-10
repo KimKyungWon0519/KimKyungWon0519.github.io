@@ -17,7 +17,7 @@ class Header extends StatelessWidget {
 }
 
 class _Label extends StatelessWidget {
-  const _Label({super.key});
+  const _Label();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _Label extends StatelessWidget {
 }
 
 class _Introduction extends StatelessWidget {
-  const _Introduction({super.key});
+  const _Introduction();
 
   @override
   Widget build(BuildContext context) {

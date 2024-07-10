@@ -17,10 +17,10 @@ class Preview extends StatelessWidget {
                   height: constraints.maxWidth * 0.5,
                 ),
                 const SizedBox(height: 10),
-                _Title(),
-                _Content(),
+                const _Title(),
+                const _Content(),
                 const SizedBox(height: 10),
-                IntrinsicHeight(
+                const IntrinsicHeight(
                   child: Row(
                     children: [
                       _Category(),
@@ -42,7 +42,6 @@ class _Image extends StatelessWidget {
   final double? height;
 
   const _Image({
-    super.key,
     this.height,
   });
 
@@ -61,7 +60,7 @@ class _Image extends StatelessWidget {
 }
 
 class _Title extends StatelessWidget {
-  const _Title({super.key});
+  const _Title();
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +76,7 @@ class _Title extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
-  const _Content({super.key});
+  const _Content();
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +89,7 @@ class _Content extends StatelessWidget {
 }
 
 class _Category extends StatelessWidget {
-  const _Category({super.key});
+  const _Category();
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +104,7 @@ class _Category extends StatelessWidget {
 }
 
 class _UploadDate extends StatelessWidget {
-  const _UploadDate({super.key});
+  const _UploadDate();
 
   @override
   Widget build(BuildContext context) {
