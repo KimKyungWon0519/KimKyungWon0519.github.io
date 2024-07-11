@@ -18,9 +18,7 @@ class PostHelper {
 
     for (String assetName in assetMap.keys) {
       if (RegExp(blogsPath).hasMatch(assetName)) {
-        String fileContent = await _bundleHelper.readFile(assetName);
-
-        Post post = _getPost(fileContent);
+        Post post = await _getPost(assetName);
 
         posts.add(post);
       }
@@ -29,14 +27,28 @@ class PostHelper {
     return UnmodifiableListView(posts);
   }
 
-  Post _getPost(String fileContent) {
+  Future<Post> _getPost(String assetName) async {
+    String fileContent = await _bundleHelper.readFile(assetName);
+
     int closeIndex = fileContent.lastIndexOf(delimiter);
     String frontMatterRaw = fileContent.substring(delimiter.length, closeIndex);
 
     YamlMap frontMatterMap = loadYaml(frontMatterRaw);
     String content =
         fileContent.substring(closeIndex + delimiter.length).trim();
+    String category = _getCategory(assetName);
 
-    return Post.withYaml(frontMatterMap, content);
+    return Post.withYaml(
+      yaml: frontMatterMap,
+      catetory: category,
+      content: content,
+    );
+  }
+
+  String _getCategory(String assetName) {
+    assetName = assetName.replaceAll(blogsPath, '');
+    int closeIndex = assetName.lastIndexOf(r'/');
+
+    return assetName.substring(0, closeIndex).trim();
   }
 }
