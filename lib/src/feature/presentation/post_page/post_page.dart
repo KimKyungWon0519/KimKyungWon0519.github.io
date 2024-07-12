@@ -22,29 +22,32 @@ class PostPage extends StatelessWidget {
       body: SelectionArea(
         child: SingleChildScrollView(
           child: SideMargin(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Header(post.title),
-                const SizedBox(height: 10),
-                IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      Category(post.catetory),
-                      const VerticalDivider(),
-                      UploadDate(post.createdAt),
-                    ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 100),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Header(post.title),
+                  const SizedBox(height: 10),
+                  IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        Category(post.catetory),
+                        const VerticalDivider(),
+                        UploadDate(post.createdAt),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                Tags(post.tags),
-                const SizedBox(height: 20),
-                Markdown(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  data: post.content,
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  Tags(post.tags),
+                  const SizedBox(height: 20),
+                  Markdown(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    data: post.content,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
