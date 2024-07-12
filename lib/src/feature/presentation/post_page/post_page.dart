@@ -4,6 +4,8 @@ import 'package:kkw_blog/src/core/utils/models/post.dart';
 import 'package:kkw_blog/src/feature/presentation/wigets/side_margin.dart';
 
 import 'local_widgets/header.dart';
+import 'local_widgets/catetory.dart';
+import 'local_widgets/update_date.dart';
 
 class PostPage extends StatelessWidget {
   final Post post;
@@ -23,8 +25,15 @@ class PostPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Header(post.title),
-                Row(
-                  children: [],
+                const SizedBox(height: 10),
+                IntrinsicHeight(
+                  child: Row(
+                    children: [
+                      Category(post.catetory),
+                      const VerticalDivider(),
+                      UploadDate(post.createdAt),
+                    ],
+                  ),
                 ),
                 Markdown(
                   padding: EdgeInsets.zero,
