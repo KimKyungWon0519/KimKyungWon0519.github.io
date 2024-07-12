@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kkw_blog/src/core/constants/app_constant.dart';
-import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/side_margin.dart';
+import 'package:kkw_blog/src/feature/presentation/wigets/side_margin.dart';
 
 import '../header.dart';
 import '../preview.dart';
