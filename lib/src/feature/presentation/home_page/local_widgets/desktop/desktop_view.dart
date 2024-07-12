@@ -12,6 +12,7 @@ class DesktopView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SideMargin(
+      contentSize: 1200,
       child: Column(
         children: [
           const Header(),

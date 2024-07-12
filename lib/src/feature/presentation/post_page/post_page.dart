@@ -22,8 +22,12 @@ class PostPage extends StatelessWidget {
       body: SelectionArea(
         child: SingleChildScrollView(
           child: SideMargin(
+            contentSize: 800,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 100),
+              padding: const EdgeInsets.symmetric(
+                vertical: 100,
+                horizontal: 32,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -40,7 +44,14 @@ class PostPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Tags(post.tags),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
+                  if (post.thumbnail != null) ...[
+                    Align(
+                      alignment: Alignment.center,
+                      child: Image.network(post.thumbnail!),
+                    ),
+                    const SizedBox(height: 10),
+                  ],
                   Markdown(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
