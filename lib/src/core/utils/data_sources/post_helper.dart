@@ -17,7 +17,7 @@ class PostHelper {
     Map<String, dynamic> assetMap = await _bundleHelper.getAssetManifest();
 
     for (String assetName in assetMap.keys) {
-      if (RegExp(blogsPath).hasMatch(assetName)) {
+      if (RegExp(mdFileRegexp).hasMatch(assetName)) {
         Post post = await _getPost(assetName);
 
         posts.add(post);
@@ -34,6 +34,7 @@ class PostHelper {
     String frontMatterRaw = fileContent.substring(delimiter.length, closeIndex);
 
     YamlMap frontMatterMap = loadYaml(frontMatterRaw);
+
     String content =
         fileContent.substring(closeIndex + delimiter.length).trim();
     String category = _getCategory(assetName);
@@ -47,7 +48,7 @@ class PostHelper {
 
   String _getCategory(String assetName) {
     assetName = assetName.replaceAll(blogsPath, '');
-    int closeIndex = assetName.lastIndexOf(r'/');
+    int closeIndex = assetName.indexOf(r'/');
 
     return assetName.substring(0, closeIndex).trim();
   }

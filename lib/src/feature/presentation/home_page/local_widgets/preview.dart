@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kkw_blog/src/core/utils/models/post.dart';
+import 'package:kkw_blog/src/feature/presentation/post_page/post_page.dart';
 
 class Preview extends StatelessWidget {
   final Post post;
@@ -13,33 +14,41 @@ class Preview extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Card(
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (post.thumbnail != null) ...[
-                  _Image(
-                    post.thumbnail!,
-                    height: constraints.maxWidth * 0.5,
-                  ),
+        return GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => PostPage(post: post),
+            ),
+          ),
+          child: Card(
+            margin: const EdgeInsets.symmetric(vertical: 8),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (post.thumbnail != null) ...[
+                    _Image(
+                      post.thumbnail!,
+                      height: constraints.maxWidth * 0.5,
+                    ),
+                    const SizedBox(height: 10),
+                  ],
+                  _Title(post.title),
+                  _Description(post.description),
                   const SizedBox(height: 10),
-                ],
-                _Title(post.title),
-                _Description(post.description),
-                const SizedBox(height: 10),
-                IntrinsicHeight(
-                  child: Row(
-                    children: [
-                      _Category(post.catetory),
-                      const VerticalDivider(),
-                      _UploadDate(post.createdAt),
-                    ],
+                  IntrinsicHeight(
+                    child: Row(
+                      children: [
+                        _Category(post.catetory),
+                        const VerticalDivider(),
+                        _UploadDate(post.createdAt),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
