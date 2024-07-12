@@ -6,6 +6,7 @@ import 'package:kkw_blog/src/feature/presentation/wigets/side_margin.dart';
 import 'local_widgets/header.dart';
 import 'local_widgets/catetory.dart';
 import 'local_widgets/update_date.dart';
+import 'local_widgets/tags.dart';
 
 class PostPage extends StatelessWidget {
   final Post post;
@@ -35,6 +36,9 @@ class PostPage extends StatelessWidget {
                     ],
                   ),
                 ),
+                const SizedBox(height: 10),
+                Tags(post.tags),
+                const SizedBox(height: 20),
                 Markdown(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
