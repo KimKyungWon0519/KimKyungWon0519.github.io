@@ -17,21 +17,23 @@ class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SideMargin(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Header(post.title),
-              Row(
-                children: [],
-              ),
-              Markdown(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                data: post.content,
-              ),
-            ],
+      body: SelectionArea(
+        child: SingleChildScrollView(
+          child: SideMargin(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Header(post.title),
+                Row(
+                  children: [],
+                ),
+                Markdown(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  data: post.content,
+                ),
+              ],
+            ),
           ),
         ),
       ),
