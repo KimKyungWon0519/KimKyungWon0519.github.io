@@ -74,7 +74,7 @@ class _Image extends StatelessWidget {
         path,
         height: height,
         width: double.infinity,
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
       ),
     );
   }
