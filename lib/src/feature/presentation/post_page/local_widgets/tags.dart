@@ -11,7 +11,12 @@ class Tags extends StatelessWidget {
       spacing: 8,
       children: tags
           .map(
-            (e) => Text('#$e'),
+            (e) => Text(
+              '#$e',
+              style: TextStyle(
+                color: Colors.grey[700],
+              ),
+            ),
           )
           .toList(),
     );
