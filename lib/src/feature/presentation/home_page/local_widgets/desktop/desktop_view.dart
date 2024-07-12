@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kkw_blog/src/core/constants/app_constant.dart';
 import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/preview.dart';
 import 'package:kkw_blog/src/feature/presentation/home_page/local_widgets/scroll_to_top_fab.dart';
 
@@ -14,10 +15,6 @@ class DesktopView extends StatefulWidget {
 
 class _DesktopViewState extends State<DesktopView> {
   late final ScrollController _controller;
-  List<Preview> _previews = List.generate(
-    10,
-    (index) => const Preview(),
-  );
   bool _isShowToTopFAB = false;
 
   @override
@@ -27,15 +24,6 @@ class _DesktopViewState extends State<DesktopView> {
     _controller = ScrollController()
       ..addListener(
         () {
-          if (_controller.offset >= _controller.position.maxScrollExtent) {
-            setState(() {
-              _previews.addAll(List.generate(
-                10,
-                (index) => const Preview(),
-              ));
-            });
-          }
-
           if (!_isShowToTopFAB && _controller.offset > 50) {
             setState(() {
               _isShowToTopFAB = true;
@@ -76,7 +64,18 @@ class _DesktopViewState extends State<DesktopView> {
                       ),
                       Expanded(
                         flex: 3,
-                        child: Column(children: _previews),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Column(
+                            children: posts
+                                .map(
+                                  (post) => Preview(
+                                    post: post,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
                       ),
                       const Spacer()
                     ],
@@ -94,12 +93,5 @@ class _DesktopViewState extends State<DesktopView> {
 
   void _scrollToTop() {
     _controller.jumpTo(0);
-
-    setState(() {
-      _previews = List.generate(
-        10,
-        (index) => const Preview(),
-      );
-    });
   }
 }

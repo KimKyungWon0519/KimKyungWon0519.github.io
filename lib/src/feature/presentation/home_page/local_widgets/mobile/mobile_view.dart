@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kkw_blog/src/core/constants/app_constant.dart';
 
 import '../scroll_to_top_fab.dart';
 import '../preview.dart';
@@ -14,10 +15,6 @@ class MobileView extends StatefulWidget {
 
 class _MobileViewState extends State<MobileView> {
   late final ScrollController _controller;
-  List<Preview> _previews = List.generate(
-    10,
-    (index) => const Preview(),
-  );
   bool _isShowToTopFAB = false;
 
   @override
@@ -27,15 +24,6 @@ class _MobileViewState extends State<MobileView> {
     _controller = ScrollController()
       ..addListener(
         () {
-          if (_controller.offset >= _controller.position.maxScrollExtent) {
-            setState(() {
-              _previews.addAll(List.generate(
-                10,
-                (index) => const Preview(),
-              ));
-            });
-          }
-
           if (!_isShowToTopFAB && _controller.offset > 50) {
             setState(() {
               _isShowToTopFAB = true;
@@ -63,7 +51,16 @@ class _MobileViewState extends State<MobileView> {
                 alignment: Alignment.topLeft,
                 child: Menu(),
               ),
-              ..._previews,
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: posts
+                      .map(
+                        (post) => Preview(post: post),
+                      )
+                      .toList(),
+                ),
+              ),
             ],
           ),
         ),
@@ -75,12 +72,5 @@ class _MobileViewState extends State<MobileView> {
 
   void _scrollToTop() {
     _controller.jumpTo(0);
-
-    setState(() {
-      _previews = List.generate(
-        10,
-        (index) => const Preview(),
-      );
-    });
   }
 }

@@ -1,31 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:kkw_blog/src/core/utils/models/post.dart';
 
 class Preview extends StatelessWidget {
-  const Preview({super.key});
+  final Post post;
+
+  const Preview({
+    super.key,
+    required this.post,
+  });
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Card(
-          margin: const EdgeInsets.symmetric(vertical: 16),
+          margin: const EdgeInsets.symmetric(vertical: 8),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _Image(
-                  height: constraints.maxWidth * 0.5,
-                ),
+                if (post.thumbnail != null) ...[
+                  _Image(
+                    post.thumbnail!,
+                    height: constraints.maxWidth * 0.5,
+                  ),
+                  const SizedBox(height: 10),
+                ],
+                _Title(post.title),
+                _Description(post.description),
                 const SizedBox(height: 10),
-                const _Title(),
-                const _Content(),
-                const SizedBox(height: 10),
-                const IntrinsicHeight(
+                IntrinsicHeight(
                   child: Row(
                     children: [
-                      _Category(),
-                      VerticalDivider(),
-                      _UploadDate(),
+                      _Category(post.catetory),
+                      const VerticalDivider(),
+                      _UploadDate(post.createdAt),
                     ],
                   ),
                 ),
@@ -40,8 +50,10 @@ class Preview extends StatelessWidget {
 
 class _Image extends StatelessWidget {
   final double? height;
+  final String path;
 
-  const _Image({
+  const _Image(
+    this.path, {
     this.height,
   });
 
@@ -50,7 +62,7 @@ class _Image extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
-        'https://cdn.mos.cms.futurecdn.net/FaWKMJQnr2PFcYCmEyfiTm-1200-80.jpg',
+        path,
         height: height,
         width: double.infinity,
         fit: BoxFit.cover,
@@ -60,12 +72,14 @@ class _Image extends StatelessWidget {
 }
 
 class _Title extends StatelessWidget {
-  const _Title();
+  final String text;
+
+  const _Title(this.text);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '제목' * 100,
+      text,
       maxLines: 1,
       style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontWeight: FontWeight.bold,
@@ -75,13 +89,15 @@ class _Title extends StatelessWidget {
   }
 }
 
-class _Content extends StatelessWidget {
-  const _Content();
+class _Description extends StatelessWidget {
+  final String text;
+
+  const _Description(this.text);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '내용' * 1000,
+      text,
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
     );
@@ -89,12 +105,14 @@ class _Content extends StatelessWidget {
 }
 
 class _Category extends StatelessWidget {
-  const _Category();
+  final String text;
+
+  const _Category(this.text);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '카테고리',
+      text,
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: Colors.grey[700],
             fontWeight: FontWeight.bold,
@@ -104,15 +122,28 @@ class _Category extends StatelessWidget {
 }
 
 class _UploadDate extends StatelessWidget {
-  const _UploadDate();
+  final String createAt;
+
+  const _UploadDate(this.createAt);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      '2024년 1월 1일',
+      _formattigDate(),
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: Colors.grey[700],
           ),
     );
+  }
+
+  String _formattigDate() {
+    String newTypeDate = createAt;
+
+    newTypeDate = newTypeDate.replaceFirst('-', '년 ');
+    newTypeDate = newTypeDate.replaceFirst('-', '월 ');
+
+    newTypeDate += '일';
+
+    return newTypeDate;
   }
 }
