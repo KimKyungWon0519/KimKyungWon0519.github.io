@@ -29,7 +29,7 @@ class Atrribute extends StatelessWidget {
 }
 
 class _Categories extends StatelessWidget {
-  const _Categories({super.key});
+  const _Categories();
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class _Categories extends StatelessWidget {
 }
 
 class _Tags extends StatelessWidget {
-  const _Tags({super.key});
+  const _Tags();
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _Tags extends StatelessWidget {
 }
 
 class _Informations extends StatelessWidget {
-  const _Informations({super.key});
+  const _Informations();
 
   @override
   Widget build(BuildContext context) {
