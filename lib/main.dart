@@ -6,7 +6,11 @@ import 'package:kkw_blog/src/feature/presentation/home_page/home_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  posts = await const PostHelper().createPosts();
+  const PostHelper postHelper = PostHelper();
+
+  posts = await postHelper.createPosts();
+  categories = postHelper.getCategories();
+  tags = postHelper.getTags();
 
   runApp(const MyApp());
 }

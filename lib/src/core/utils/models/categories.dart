@@ -1,0 +1,1 @@
+typedef Categories = Set<String>;
