@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kkw_blog/src/core/constants/app_constant.dart';
 
 typedef _SelectedMenu = void Function(String);
 
@@ -135,13 +136,14 @@ class _Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SubmenuButton(
-      menuChildren: List.generate(
-        10,
-        (index) => MenuItemButton(
-          child: Text('카테고리 $index'),
-          onPressed: () => onSelected?.call('카테고리 $index'),
-        ),
-      ),
+      menuChildren: categories
+          .map(
+            (e) => MenuItemButton(
+              child: Text(e),
+              onPressed: () => onSelected?.call(e),
+            ),
+          )
+          .toList(),
       child: const Text('카테고리'),
     );
   }
@@ -157,13 +159,14 @@ class _Tags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SubmenuButton(
-      menuChildren: List.generate(
-        10,
-        (index) => MenuItemButton(
-          child: Text('태그 $index'),
-          onPressed: () => onSelected?.call('태그 $index'),
-        ),
-      ),
+      menuChildren: tags
+          .map(
+            (e) => MenuItemButton(
+              child: Text(e),
+              onPressed: () => onSelected?.call(e),
+            ),
+          )
+          .toList(),
       child: const Text('태그'),
     );
   }

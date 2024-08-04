@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kkw_blog/src/core/constants/app_constant.dart';
 
 class Atrribute extends StatelessWidget {
   const Atrribute({super.key});
@@ -40,12 +41,13 @@ class _Categories extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      children: List.generate(
-        10,
-        (index) => ListTile(
-          title: Text('카테고리 아이템 $index'),
-        ),
-      ),
+      children: categories
+          .map(
+            (e) => ListTile(
+              title: Text(e),
+            ),
+          )
+          .toList(),
     );
   }
 }
@@ -62,12 +64,13 @@ class _Tags extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      children: List.generate(
-        10,
-        (index) => ListTile(
-          title: Text('태그 아이템 $index'),
-        ),
-      ),
+      children: tags
+          .map(
+            (e) => ListTile(
+              title: Text(e),
+            ),
+          )
+          .toList(),
     );
   }
 }
