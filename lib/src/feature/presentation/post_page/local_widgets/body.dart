@@ -11,6 +11,7 @@ class Body extends StatelessWidget {
     return Markdown(
       shrinkWrap: true,
       data: content,
+      padding: EdgeInsets.zero,
       imageBuilder: (uri, title, alt) {
         Widget widget;
 
