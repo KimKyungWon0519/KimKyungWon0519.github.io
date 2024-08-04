@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/core/constants/app_constant.dart';
+import 'package:kkw_blog/src/constants/app_constant.dart';
 
 import '../preview.dart';
 import '../header.dart';

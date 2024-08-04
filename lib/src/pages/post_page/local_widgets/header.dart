@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/core/utils/models/post.dart';
+import 'package:kkw_blog/src/utils/models/post.dart';
 
 import 'catetory.dart';
 import 'title.dart' as LocalWidget;

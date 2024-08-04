@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/core/utils/models/post.dart';
+import 'package:kkw_blog/src/utils/models/post.dart';
 
 import 'local_widgets/body.dart';
 import 'local_widgets/header.dart';

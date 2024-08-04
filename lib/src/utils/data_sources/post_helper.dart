@@ -1,11 +1,11 @@
 import 'dart:collection';
 
-import 'package:kkw_blog/src/core/constants/app_constant.dart';
-import 'package:kkw_blog/src/core/constants/resources.dart';
-import 'package:kkw_blog/src/core/utils/models/categories.dart';
-import 'package:kkw_blog/src/core/utils/models/post.dart';
-import 'package:kkw_blog/src/core/utils/models/posts.dart';
-import 'package:kkw_blog/src/core/utils/models/tags.dart';
+import 'package:kkw_blog/src/constants/app_constant.dart';
+import 'package:kkw_blog/src/constants/resources.dart';
+import 'package:kkw_blog/src/utils/models/categories.dart';
+import 'package:kkw_blog/src/utils/models/post.dart';
+import 'package:kkw_blog/src/utils/models/posts.dart';
+import 'package:kkw_blog/src/utils/models/tags.dart';
 import 'package:yaml/yaml.dart';
 
 import 'bundle_helper.dart';
