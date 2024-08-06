@@ -3,7 +3,7 @@ import 'package:kkw_blog/src/utils/models/posts.dart';
 
 import '../header.dart';
 import '../preview.dart';
-import 'atrribute.dart';
+import 'attribute.dart';
 
 class DesktopView extends StatelessWidget {
   final Posts posts;
@@ -26,7 +26,7 @@ class DesktopView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Expanded(
-                  child: Atrribute(),
+                  child: Attribute(),
                 ),
                 Expanded(
                   flex: 3,

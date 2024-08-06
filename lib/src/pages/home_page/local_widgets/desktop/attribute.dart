@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kkw_blog/src/constants/app_constant.dart';
 import 'package:kkw_blog/src/riverpods/post_notifier.dart';
 
-class Atrribute extends StatelessWidget {
-  const Atrribute({super.key});
+class Attribute extends StatelessWidget {
+  const Attribute({super.key});
 
   @override
   Widget build(BuildContext context) {

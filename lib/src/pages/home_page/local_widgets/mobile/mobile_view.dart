@@ -3,7 +3,7 @@ import 'package:kkw_blog/src/utils/models/posts.dart';
 
 import '../preview.dart';
 import '../header.dart';
-import 'atrribute.dart';
+import 'attribute.dart';
 
 class MobileView extends StatelessWidget {
   final Posts posts;

@@ -33,7 +33,9 @@ class _MenuState extends State<Menu> {
     );
   }
 
-  void _onSelectedMenu(String name) {
+  void _onSelectedMenu(
+    String name,
+  ) {
     setState(() {
       _selected = name;
     });
