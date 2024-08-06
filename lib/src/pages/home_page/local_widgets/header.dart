@@ -62,6 +62,7 @@ class _Introduction extends StatelessWidget {
         child: Text(
           wrappedKorean(
               '안녕하세요. 플러터 개발자 김경원입니다.\n이 블로그를 모두에게 도움이 되는 블로그로 채우도록 노력하겠습니다.'),
+          style: const TextStyle(color: Colors.white),
           textAlign: TextAlign.center,
         ),
       ),

@@ -26,7 +26,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'GmarketSans',
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFE0F8E8),
+          seedColor: Colors.black,
+          dynamicSchemeVariant: DynamicSchemeVariant.content,
         ),
       ),
       home: const HomePage(),
