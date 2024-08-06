@@ -24,7 +24,7 @@ class _Label extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const CircleAvatar(),
+        const _ProfileCircle(),
         const SizedBox(width: 16),
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -41,6 +41,30 @@ class _Label extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _ProfileCircle extends StatelessWidget {
+  const _ProfileCircle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black54,
+          width: 2,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+        borderRadius: BorderRadius.circular(30),
+        image: const DecorationImage(
+          image: AssetImage('assets/web/profile.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }
