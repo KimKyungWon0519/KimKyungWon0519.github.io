@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kkw_blog/src/constants/app_constant.dart';
 import 'package:kkw_blog/src/utils/data_sources/post_helper.dart';
 import 'package:kkw_blog/src/pages/home_page/home_page.dart';
@@ -12,7 +13,7 @@ void main() async {
   categories = postHelper.getCategories();
   tags = postHelper.getTags();
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

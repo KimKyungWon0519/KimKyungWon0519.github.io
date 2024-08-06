@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/constants/app_constant.dart';
+import 'package:kkw_blog/src/utils/models/posts.dart';
 
 import '../header.dart';
 import '../preview.dart';
 import 'atrribute.dart';
 
 class DesktopView extends StatelessWidget {
-  const DesktopView({super.key});
+  final Posts posts;
+
+  const DesktopView({
+    super.key,
+    required this.posts,
+  });
 
   @override
   Widget build(BuildContext context) {

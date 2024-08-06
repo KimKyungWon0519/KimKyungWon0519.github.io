@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/constants/app_constant.dart';
+import 'package:kkw_blog/src/utils/models/posts.dart';
 
 import '../preview.dart';
 import '../header.dart';
 import 'atrribute.dart';
 
 class MobileView extends StatelessWidget {
-  const MobileView({super.key});
+  final Posts posts;
+
+  const MobileView({
+    super.key,
+    required this.posts,
+  });
 
   @override
   Widget build(BuildContext context) {
