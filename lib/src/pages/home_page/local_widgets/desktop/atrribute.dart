@@ -74,11 +74,11 @@ class _Categories extends ConsumerWidget {
   }
 }
 
-class _Tags extends StatelessWidget {
+class _Tags extends ConsumerWidget {
   const _Tags();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ExpansionTile(
       title: const Text(
         '태그',
@@ -88,8 +88,10 @@ class _Tags extends StatelessWidget {
       ),
       children: tags
           .map(
-            (e) => ListTile(
-              title: Text(e),
+            (tag) => ListTile(
+              title: Text(tag),
+              onTap: () =>
+                  ref.read(postNotifierProvider.notifier).tagFilter(tag),
             ),
           )
           .toList(),

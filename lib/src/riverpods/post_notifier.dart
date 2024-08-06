@@ -17,4 +17,8 @@ class PostNotifier extends _$PostNotifier {
   void categoryFilter(String category) {
     state = Posts(posts.where((element) => element.catetory == category));
   }
+
+  void tagFilter(String tag) {
+    state = Posts(posts.where((element) => element.tags.contains(tag)));
+  }
 }
