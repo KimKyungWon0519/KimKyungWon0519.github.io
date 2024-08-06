@@ -21,12 +21,29 @@ class Atrribute extends StatelessWidget {
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
+            _All(),
             _Categories(),
             _Tags(),
-            _Informations(),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _All extends ConsumerWidget {
+  const _All({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      title: const Text(
+        '전체보기',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      onTap: () => ref.read(postNotifierProvider.notifier).resetPosts(),
     );
   }
 }

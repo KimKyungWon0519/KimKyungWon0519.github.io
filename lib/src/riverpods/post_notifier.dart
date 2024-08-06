@@ -12,6 +12,8 @@ class PostNotifier extends _$PostNotifier {
   @override
   set state(Posts newPosts) => super.state = newPosts;
 
+  void resetPosts() => state = posts;
+
   void categoryFilter(String category) {
     state = Posts(posts.where((element) => element.catetory == category));
   }
