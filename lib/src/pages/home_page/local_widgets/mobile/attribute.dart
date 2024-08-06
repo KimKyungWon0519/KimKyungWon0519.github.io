@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kkw_blog/src/constants/app_constant.dart';
+import 'package:kkw_blog/src/riverpods/post_notifier.dart';
+import 'package:kkw_blog/src/utils/models/attribute_type.dart';
 
-typedef _SelectedMenu = void Function(String);
+typedef _SelectedMenu = void Function(String, AttributeType);
 
-class Menu extends StatefulWidget {
+class Menu extends ConsumerStatefulWidget {
   const Menu({super.key});
 
   @override
-  State<Menu> createState() => _MenuState();
+  ConsumerState<Menu> createState() => _MenuState();
 }
 
-class _MenuState extends State<Menu> {
+class _MenuState extends ConsumerState<Menu> {
   String _selected = '전체';
 
   @override
@@ -28,12 +32,16 @@ class _MenuState extends State<Menu> {
         _All(onSelected: _onSelectedMenu),
         _Categories(onSelected: _onSelectedMenu),
         _Tags(onSelected: _onSelectedMenu),
-        _Information(onSelected: _onSelectedMenu),
       ],
     );
   }
 
-  void _onSelectedMenu(String name) {
+  void _onSelectedMenu(
+    String name,
+    AttributeType attr,
+  ) {
+    ref.read(postNotifierProvider.notifier).update(attr);
+
     setState(() {
       _selected = name;
     });
@@ -95,17 +103,17 @@ class _MenuButtonState extends State<_MenuButton>
   }
 
   void _onPressedEvent() {
-    widget.controller.isOpen ? _openMenu() : _closeMenu();
+    widget.controller.isOpen ? _closeMenu() : _openMenu();
   }
 
   void _openMenu() {
-    _animationController.reverse();
-    widget.controller.close();
+    _animationController.forward();
+    widget.controller.open();
   }
 
   void _closeMenu() {
-    _animationController.forward();
-    widget.controller.open();
+    _animationController.reverse();
+    widget.controller.close();
   }
 }
 
@@ -119,7 +127,7 @@ class _All extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MenuItemButton(
-      onPressed: () => onSelected?.call('전체'),
+      onPressed: () => onSelected?.call('전체', AllAttri()),
       child: const Text('전체'),
     );
   }
@@ -135,13 +143,15 @@ class _Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SubmenuButton(
-      menuChildren: List.generate(
-        10,
-        (index) => MenuItemButton(
-          child: Text('카테고리 $index'),
-          onPressed: () => onSelected?.call('카테고리 $index'),
-        ),
-      ),
+      menuChildren: categories
+          .map(
+            (category) => MenuItemButton(
+              child: Text(category),
+              onPressed: () =>
+                  onSelected?.call(category, CategoriesAttri(category)),
+            ),
+          )
+          .toList(),
       child: const Text('카테고리'),
     );
   }
@@ -157,13 +167,14 @@ class _Tags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SubmenuButton(
-      menuChildren: List.generate(
-        10,
-        (index) => MenuItemButton(
-          child: Text('태그 $index'),
-          onPressed: () => onSelected?.call('태그 $index'),
-        ),
-      ),
+      menuChildren: tags
+          .map(
+            (tag) => MenuItemButton(
+              child: Text(tag),
+              onPressed: () => onSelected?.call(tag, TagsAttri(tag)),
+            ),
+          )
+          .toList(),
       child: const Text('태그'),
     );
   }
@@ -179,7 +190,7 @@ class _Information extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MenuItemButton(
-      onPressed: () => onSelected?.call('정보'),
+      onPressed: () {},
       child: const Text('정보'),
     );
   }

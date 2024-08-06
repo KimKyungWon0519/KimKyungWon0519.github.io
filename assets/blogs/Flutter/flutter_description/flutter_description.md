@@ -5,7 +5,7 @@ tags:
     - Flutter
     - Dart
 createdAt: 2024-03-02
-thumbnail: assets/blogs/flutter/flutter_description/thumbnail.png
+thumbnail: assets/blogs/Flutter/flutter_description/thumbnail.png
 ---
 
 # 1. Flutter(플러터)란?
@@ -15,7 +15,7 @@ Google에서 개발한 **Flutter**는 오픈소스 크로스플랫폼입니다. 
 
 # 2. Flutter 구성
 ## 2-1. 아키텍처 레이어
-![architecutre](<resource:blogs/flutter/flutter_description/archdiagram.png>)
+![architecutre](<resource:blogs/Flutter/flutter_description/archdiagram.png>)
 ### 1. Embedder(임베더)
 **Embedder**는 운영 체제와 직접 상호작용합니다. 렌더링, 접근성, 사용자 입력 등의 플랫폼에 종속적인 서비스들의 제어하며, 메시지 이벤트 루프를 관리합니다.
 임베더는 현재 Android(Java, C++) iOS/MacOS(Objective-C, Objective-C++), Windows/Linux(C++)를 사용합니다.
@@ -34,7 +34,7 @@ dart:ui는 입력, 그래픽(Skia 혹은 Impeller), 렌더링 클래스와 같�
 
 아래의 다이어그램 **flutter create**로 생성된 일반적인 flutter 앱의 구성 요소입니다.
 
-![app_anatomy](<resource:blogs/flutter/flutter_description/app-anatomy.svg>)
+![app_anatomy](<resource:blogs/Flutter/flutter_description/app-anatomy.svg>)
 
 ### 1. Dart App
 - 위젯으로 원하는 UI를 구현합니다.

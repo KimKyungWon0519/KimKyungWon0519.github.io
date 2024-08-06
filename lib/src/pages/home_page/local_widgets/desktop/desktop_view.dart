@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/core/constants/app_constant.dart';
+import 'package:kkw_blog/src/utils/models/posts.dart';
 
 import '../header.dart';
 import '../preview.dart';
-import 'atrribute.dart';
+import 'attribute.dart';
 
 class DesktopView extends StatelessWidget {
-  const DesktopView({super.key});
+  final Posts posts;
+
+  const DesktopView({
+    super.key,
+    required this.posts,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,7 @@ class DesktopView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Expanded(
-                  child: Atrribute(),
+                  child: Attribute(),
                 ),
                 Expanded(
                   flex: 3,

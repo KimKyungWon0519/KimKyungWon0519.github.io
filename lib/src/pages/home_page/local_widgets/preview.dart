@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/core/utils/models/post.dart';
-import 'package:kkw_blog/src/feature/presentation/post_page/post_page.dart';
+import 'package:kkw_blog/src/utils/models/post.dart';
+import 'package:kkw_blog/src/pages/post_page/post_page.dart';
 
 class Preview extends StatelessWidget {
   final Post post;
