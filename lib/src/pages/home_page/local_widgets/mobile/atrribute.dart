@@ -96,17 +96,17 @@ class _MenuButtonState extends State<_MenuButton>
   }
 
   void _onPressedEvent() {
-    widget.controller.isOpen ? _openMenu() : _closeMenu();
+    widget.controller.isOpen ? _closeMenu() : _openMenu();
   }
 
   void _openMenu() {
-    _animationController.reverse();
-    widget.controller.close();
+    _animationController.forward();
+    widget.controller.open();
   }
 
   void _closeMenu() {
-    _animationController.forward();
-    widget.controller.open();
+    _animationController.reverse();
+    widget.controller.close();
   }
 }
 
