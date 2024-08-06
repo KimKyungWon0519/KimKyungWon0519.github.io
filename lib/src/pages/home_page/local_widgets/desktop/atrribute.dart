@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kkw_blog/src/constants/app_constant.dart';
+import 'package:kkw_blog/src/riverpods/post_notifier.dart';
 
 class Atrribute extends StatelessWidget {
   const Atrribute({super.key});
@@ -29,11 +31,11 @@ class Atrribute extends StatelessWidget {
   }
 }
 
-class _Categories extends StatelessWidget {
+class _Categories extends ConsumerWidget {
   const _Categories();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ExpansionTile(
       title: const Text(
         '카테고리',
@@ -43,8 +45,11 @@ class _Categories extends StatelessWidget {
       ),
       children: categories
           .map(
-            (e) => ListTile(
-              title: Text(e),
+            (category) => ListTile(
+              title: Text(category),
+              onTap: () => ref
+                  .read(postNotifierProvider.notifier)
+                  .categoryFilter(category),
             ),
           )
           .toList(),
