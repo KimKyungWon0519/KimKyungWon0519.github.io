@@ -17,6 +17,8 @@ jobs:
       with:
         flutter-version: '3.22.2'
 
+    - run : flutter pub get
+
     - name: Start Build_Runner
       run : flutter pub run build_runner build
 
