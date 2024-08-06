@@ -29,7 +29,6 @@ class _MenuState extends State<Menu> {
         _All(onSelected: _onSelectedMenu),
         _Categories(onSelected: _onSelectedMenu),
         _Tags(onSelected: _onSelectedMenu),
-        _Information(onSelected: _onSelectedMenu),
       ],
     );
   }
