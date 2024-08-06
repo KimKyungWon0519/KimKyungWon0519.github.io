@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kkw_blog/src/constants/app_constant.dart';
 import 'package:kkw_blog/src/riverpods/post_notifier.dart';
+import 'package:kkw_blog/src/utils/models/attribute_type.dart';
 
 class Attribute extends StatelessWidget {
   const Attribute({super.key});
@@ -36,14 +38,14 @@ class _All extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ListTile(
-      title: const Text(
+    return _AttriTile(
+      attributeType: AllAttri(),
+      child: const Text(
         '전체보기',
         style: TextStyle(
           fontWeight: FontWeight.bold,
         ),
       ),
-      onTap: () => ref.read(postNotifierProvider.notifier).resetPosts(),
     );
   }
 }
@@ -62,11 +64,9 @@ class _Categories extends ConsumerWidget {
       ),
       children: categories
           .map(
-            (category) => ListTile(
-              title: Text(category),
-              onTap: () => ref
-                  .read(postNotifierProvider.notifier)
-                  .categoryFilter(category),
+            (category) => _AttriTile(
+              attributeType: CategoriesAttri(category),
+              child: Text(category),
             ),
           )
           .toList(),
@@ -88,10 +88,9 @@ class _Tags extends ConsumerWidget {
       ),
       children: tags
           .map(
-            (tag) => ListTile(
-              title: Text(tag),
-              onTap: () =>
-                  ref.read(postNotifierProvider.notifier).tagFilter(tag),
+            (tag) => _AttriTile(
+              attributeType: TagsAttri(tag),
+              child: Text(tag),
             ),
           )
           .toList(),
@@ -111,6 +110,27 @@ class _Informations extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
+    );
+  }
+}
+
+class _AttriTile extends ConsumerWidget {
+  final Widget child;
+  final AttributeType attributeType;
+
+  const _AttriTile({
+    super.key,
+    required this.child,
+    required this.attributeType,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListTile(
+      title: child,
+      onTap: () {
+        ref.read(postNotifierProvider.notifier).update(attributeType);
+      },
     );
   }
 }
