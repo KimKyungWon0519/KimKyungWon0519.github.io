@@ -12,7 +12,7 @@ class Tags extends StatelessWidget {
       children: tags
           .map(
             (e) => Text(
-              '#$e asdf',
+              '#$e',
               style: TextStyle(
                 color: Colors.grey[700],
               ),

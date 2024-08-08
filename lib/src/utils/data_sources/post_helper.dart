@@ -1,44 +1,44 @@
-import 'dart:collection';
-
 import 'package:kkw_blog/src/constants/app_constant.dart';
 import 'package:kkw_blog/src/constants/resources.dart';
 import 'package:kkw_blog/src/utils/models/categories.dart';
 import 'package:kkw_blog/src/utils/models/post.dart';
 import 'package:kkw_blog/src/utils/models/posts.dart';
+import 'package:kkw_blog/src/utils/models/bucket_file.dart';
+import 'package:kkw_blog/src/utils/models/bucket_files.dart';
 import 'package:kkw_blog/src/utils/models/tags.dart';
 import 'package:yaml/yaml.dart';
 
-import 'bundle_helper.dart';
+import 'supabase_storage_helper.dart';
 
 class PostHelper {
-  final BundleHelper _bundleHelper;
+  late final StorageBucketHelper _storageHelper = StorageBucketHelper('posts');
 
-  const PostHelper() : _bundleHelper = const BundleHelper();
+  Future<void> initializeValues() async {
+    categories = await _getCategories();
+    posts = await _getPosts();
+    tags = _getTags();
+  }
 
-  Future<Posts> createPosts() async {
+  Future<Posts> _getPosts() async {
     List<Post> posts = [];
-    Map<String, dynamic> assetMap = await _bundleHelper.getAssetManifest();
+    BucketFiles storageFiles = [];
 
-    for (String assetName in assetMap.keys) {
-      if (RegExp(mdFileRegexp).hasMatch(assetName)) {
-        Post post = await _getPost(assetName);
+    for (String category in categories) {
+      storageFiles = await _storageHelper.getPostFileNames(category);
 
-        posts.add(post);
+      for (BucketFile storageFile in storageFiles) {
+        posts.add(await _getPost(storageFile, category));
       }
     }
 
-    return UnmodifiableListView(posts);
+    return Posts(posts);
   }
 
-  Categories getCategories() {
-    return posts
-        .map(
-          (element) => element.catetory,
-        )
-        .toSet();
+  Future<Categories> _getCategories() {
+    return _storageHelper.getFolders().then((value) => value.toSet());
   }
 
-  Tags getTags() {
+  Tags _getTags() {
     Set<String> tags = {};
 
     for (Post post in posts) {
@@ -48,8 +48,8 @@ class PostHelper {
     return tags;
   }
 
-  Future<Post> _getPost(String assetName) async {
-    String fileContent = await _bundleHelper.readFile(assetName);
+  Future<Post> _getPost(BucketFile storageFile, String category) async {
+    String fileContent = await _storageHelper.downloadFile(storageFile);
 
     int closeIndex = fileContent.lastIndexOf(delimiter);
     String frontMatterRaw = fileContent.substring(delimiter.length, closeIndex);
@@ -58,19 +58,11 @@ class PostHelper {
 
     String content =
         fileContent.substring(closeIndex + delimiter.length).trim();
-    String category = _getCategory(assetName);
 
     return Post.withYaml(
       yaml: frontMatterMap,
       catetory: category,
       content: content,
     );
-  }
-
-  String _getCategory(String assetName) {
-    assetName = assetName.replaceAll(blogsPath, '');
-    int closeIndex = assetName.indexOf(r'/');
-
-    return assetName.substring(0, closeIndex).trim();
   }
 }

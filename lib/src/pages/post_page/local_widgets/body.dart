@@ -16,9 +16,9 @@ class Body extends StatelessWidget {
         Widget widget;
 
         if (RegExp('.svg').hasMatch(uri.path)) {
-          widget = SvgPicture.asset(uri.path);
+          widget = SvgPicture.network(uri.path);
         } else {
-          widget = Image.asset(uri.path);
+          widget = Image.network(uri.path);
         }
         return Center(child: widget);
       },

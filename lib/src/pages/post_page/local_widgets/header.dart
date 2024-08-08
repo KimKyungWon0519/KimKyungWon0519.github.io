@@ -33,7 +33,7 @@ class Header extends StatelessWidget {
         if (post.thumbnail != null) ...[
           Align(
             alignment: Alignment.center,
-            child: Image.asset(post.thumbnail!),
+            child: Image.network(post.thumbnail!),
           ),
           const SizedBox(height: 10),
         ],
