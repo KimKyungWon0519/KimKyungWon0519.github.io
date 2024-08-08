@@ -47,6 +47,8 @@ class Preview extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  _Tags(post.tags),
                 ],
               ),
             ),
@@ -154,5 +156,26 @@ class _UploadDate extends StatelessWidget {
     newTypeDate += '일';
 
     return newTypeDate;
+  }
+}
+
+class _Tags extends StatelessWidget {
+  final List<String> tags;
+
+  const _Tags(this.tags, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 8,
+      children: tags
+          .map((e) => Text(
+                '#$e',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey[700],
+                    ),
+              ))
+          .toList(),
+    );
   }
 }
