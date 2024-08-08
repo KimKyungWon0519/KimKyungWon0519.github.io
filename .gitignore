@@ -1,3 +1,6 @@
+# Api Key
+lib/src/utils/constants/supabase.dart
+
 # BuildRunner
 *.g.dart
 

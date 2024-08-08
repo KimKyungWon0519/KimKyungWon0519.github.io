@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kkw_blog/src/constants/app_constant.dart';
+import 'package:kkw_blog/src/utils/constants/supabase.dart';
 import 'package:kkw_blog/src/utils/data_sources/post_helper.dart';
 import 'package:kkw_blog/src/pages/home_page/home_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: supabaseUrl,
+    anonKey: supabaseKey,
+  );
 
   const PostHelper postHelper = PostHelper();
 
