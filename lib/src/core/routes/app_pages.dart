@@ -4,7 +4,7 @@ import 'package:kkw_blog/src/core/routes/app_routes.dart';
 final class AppPages {
   const AppPages._();
 
-  static const String _initialLocation = '/';
+  static final String _initialLocation = AppRoutes.main.path;
 
   static final GoRouter routeConfigs = GoRouter(
     routes: AppRoutes.routes,
