@@ -13,12 +13,13 @@ class Introduction extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).colorScheme.inversePrimary,
+        color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: Text(
         Messages.of(context).introduction,
         textAlign: TextAlign.center,
-        style: TextStyle(color: Theme.of(context).colorScheme.primary),
+        style:
+            TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer),
       ),
     );
   }
