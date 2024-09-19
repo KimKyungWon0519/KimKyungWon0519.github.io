@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kkw_blog/src/core/constants/assets.dart' as Assets;
 
 class BlogTitle extends StatelessWidget {
@@ -7,13 +6,20 @@ class BlogTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       children: [
-        const _ProfileImage(),
+        _ProfileImage(),
         SizedBox(
-          width: 10.w,
+          width: 10,
         ),
-        const _Title(),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _Title(),
+            _SubTitle(),
+          ],
+        ),
       ],
     );
   }
@@ -25,8 +31,8 @@ class _ProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 50.sp,
-      height: 50.sp,
+      width: 50,
+      height: 50,
       decoration: BoxDecoration(
         image: const DecorationImage(
           image: AssetImage(Assets.profile),
@@ -50,10 +56,24 @@ class _Title extends StatelessWidget {
 
     return Text(
       '얼렁뚱땅 개발 블로그',
-      style: themeData.textTheme.headlineMedium?.copyWith(
+      style: themeData.textTheme.titleLarge?.copyWith(
         color: themeData.primaryColor,
         fontWeight: FontWeight.bold,
       ),
+    );
+  }
+}
+
+class _SubTitle extends StatelessWidget {
+  const _SubTitle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
+
+    return Text(
+      '김경원의 개발 블로그',
+      style: themeData.textTheme.bodyMedium,
     );
   }
 }
