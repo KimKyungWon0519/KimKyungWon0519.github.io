@@ -27,9 +27,11 @@ class MainApp extends StatelessWidget {
         return ScreenUtilInit(
           designSize: size,
           builder: (context, child) => MaterialApp.router(
-            theme: lightThemeData,
-            darkTheme: darkThemeData,
-            themeMode: ThemeMode.light,
+            theme: AppTheme.lightTheme,
+            highContrastTheme: AppTheme.lightHighContrastThemeData,
+            darkTheme: AppTheme.darkTheme,
+            highContrastDarkTheme: AppTheme.darkHighContrastThemeData,
+            themeMode: ThemeMode.dark,
             routerConfig: AppPages.routeConfigs,
           ),
         );
