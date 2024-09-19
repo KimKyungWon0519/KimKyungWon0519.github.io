@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/src/presentation/pages/main_page/local_widgets/introduction.dart';
+import 'package:kkw_blog/src/presentation/pages/main_page/local_widgets/theme_mode_fab.dart';
 
 import 'local_widgets/blog_title.dart';
 
@@ -30,6 +31,7 @@ class MainPage extends StatelessWidget {
             ),
           ),
         ),
+        floatingActionButton: const ThemeModeFab(),
       ),
     );
   }
