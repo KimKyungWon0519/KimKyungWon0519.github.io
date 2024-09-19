@@ -15,7 +15,10 @@ class MainPage extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: kToolbarHeight),
+            padding: const EdgeInsets.symmetric(
+              vertical: kToolbarHeight,
+              horizontal: 16,
+            ),
             constraints: const BoxConstraints(maxWidth: 1200),
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.center,
