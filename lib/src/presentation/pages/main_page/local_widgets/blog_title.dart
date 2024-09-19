@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/src/core/constants/assets.dart' as Assets;
 
 class BlogTitle extends StatelessWidget {
@@ -55,7 +56,7 @@ class _Title extends StatelessWidget {
     ThemeData themeData = Theme.of(context);
 
     return Text(
-      '얼렁뚱땅 개발 블로그',
+      Messages.of(context).blogTitle,
       style: themeData.textTheme.titleLarge?.copyWith(
         color: themeData.colorScheme.onSurface,
         fontWeight: FontWeight.bold,
