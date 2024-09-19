@@ -11,8 +11,19 @@ class MainPage extends StatelessWidget {
     return Title(
       color: Colors.white,
       title: Messages.of(context).blogTitle,
-      child: const Scaffold(
-        body: BlogTitle(),
+      child: Scaffold(
+        body: Center(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: kToolbarHeight),
+            constraints: const BoxConstraints(maxWidth: 1200),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                BlogTitle(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
