@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
-import 'package:kkw_blog/src/core/constants/assets.dart' as Assets;
+import 'package:kkw_blog/resource/assets.dart' as Assets;
 
 class BlogTitle extends StatelessWidget {
   const BlogTitle({super.key});
@@ -40,7 +40,7 @@ class _ProfileImage extends StatelessWidget {
           image: AssetImage(Assets.profile),
         ),
         border: Border.all(
-          color: Theme.of(context).colorScheme.onSurface,
+          color: Theme.of(context).colorScheme.primary,
           width: 1,
         ),
         shape: BoxShape.circle,
@@ -59,7 +59,7 @@ class _Title extends StatelessWidget {
     return Text(
       Messages.of(context).blogTitle,
       style: themeData.textTheme.titleLarge?.copyWith(
-        color: themeData.colorScheme.onSurface,
+        color: themeData.colorScheme.primary,
         fontWeight: FontWeight.bold,
       ),
     );

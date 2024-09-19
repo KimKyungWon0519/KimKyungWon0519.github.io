@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/core/values/color_sheme.dart';
+import 'package:kkw_blog/resource/values/color_sheme.dart';
 
 final class AppTheme {
   const AppTheme._();

@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/src/core/routes/app_pages.dart';
-import 'package:kkw_blog/src/core/values/theme.dart';
+import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 void main() async {
