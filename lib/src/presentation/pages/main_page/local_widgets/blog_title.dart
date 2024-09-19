@@ -38,7 +38,7 @@ class _ProfileImage extends StatelessWidget {
           image: AssetImage(Assets.profile),
         ),
         border: Border.all(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.onSurface,
           width: 1,
         ),
         shape: BoxShape.circle,
@@ -57,7 +57,7 @@ class _Title extends StatelessWidget {
     return Text(
       '얼렁뚱땅 개발 블로그',
       style: themeData.textTheme.titleLarge?.copyWith(
-        color: themeData.primaryColor,
+        color: themeData.colorScheme.onSurface,
         fontWeight: FontWeight.bold,
       ),
     );
