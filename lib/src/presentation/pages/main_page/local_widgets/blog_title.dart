@@ -7,7 +7,15 @@ class BlogTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _ProfileImage();
+    return Row(
+      children: [
+        const _ProfileImage(),
+        SizedBox(
+          width: 10.w,
+        ),
+        const _Title(),
+      ],
+    );
   }
 }
 
@@ -28,6 +36,23 @@ class _ProfileImage extends StatelessWidget {
           width: 1,
         ),
         shape: BoxShape.circle,
+      ),
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  const _Title({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
+
+    return Text(
+      '얼렁뚱땅 개발 블로그',
+      style: themeData.textTheme.headlineMedium?.copyWith(
+        color: themeData.primaryColor,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
