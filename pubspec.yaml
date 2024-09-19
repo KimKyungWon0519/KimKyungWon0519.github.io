@@ -35,3 +35,10 @@ flutter:
 
   assets:
     - assets/images/
+
+  fonts:
+    - family: GmarketSans
+      fonts:
+        - asset: fonts/GmarketSansTTFBold.ttf
+        - asset: fonts/GmarketSansTTFLight.ttf
+        - asset: fonts/GmarketSansTTFMedium.ttf
