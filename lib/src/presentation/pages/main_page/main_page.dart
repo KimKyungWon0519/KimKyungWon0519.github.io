@@ -35,7 +35,11 @@ class MainPage extends StatelessWidget {
                       Expanded(
                         child: ClassifiedPanel(),
                       ),
-                      Preview(),
+                      Expanded(
+                        flex: 3,
+                        child: Preview(),
+                      ),
+                      Spacer(),
                     ],
                   ),
                 ],
