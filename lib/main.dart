@@ -42,7 +42,7 @@ class MainApp extends StatelessWidget {
 }
 
 class _MyMaterialApp extends ConsumerWidget {
-  const _MyMaterialApp({super.key});
+  const _MyMaterialApp();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

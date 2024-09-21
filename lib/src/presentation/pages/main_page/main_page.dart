@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
+import 'package:kkw_blog/src/presentation/pages/main_page/local_widgets/preview.dart';
 
 import 'local_widgets/introduction.dart';
 import 'local_widgets/theme_mode_fab.dart';
@@ -29,7 +30,14 @@ class MainPage extends StatelessWidget {
                   BlogTitle(),
                   SizedBox(height: 10),
                   Introduction(),
-                  ClassifiedPanel(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ClassifiedPanel(),
+                      ),
+                      Preview(),
+                    ],
+                  ),
                 ],
               ),
             ),

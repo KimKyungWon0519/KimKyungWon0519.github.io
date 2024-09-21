@@ -8,7 +8,7 @@ class ClassifiedPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         _All(),
         _Categories(),
@@ -19,18 +19,18 @@ class ClassifiedPanel extends StatelessWidget {
 }
 
 class _All extends StatelessWidget {
-  const _All({super.key});
+  const _All();
 
   @override
   Widget build(BuildContext context) {
-    return _CustomListView(
+    return const _CustomListView(
       classificationType: AllType(0),
     );
   }
 }
 
 class _Categories extends StatelessWidget {
-  const _Categories({super.key});
+  const _Categories();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _Categories extends StatelessWidget {
 }
 
 class _Tags extends StatelessWidget {
-  const _Tags({super.key});
+  const _Tags();
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +103,6 @@ class _CustomExpansionTile extends ConsumerWidget {
   final List<Widget> children;
 
   const _CustomExpansionTile({
-    super.key,
     required this.title,
     this.children = const [],
   });
@@ -111,7 +110,7 @@ class _CustomExpansionTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ExpansionTileTheme(
-      data: ExpansionTileThemeData(
+      data: const ExpansionTileThemeData(
         shape: RoundedRectangleBorder(),
       ),
       child: ExpansionTile(

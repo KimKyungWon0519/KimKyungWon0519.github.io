@@ -50,7 +50,7 @@ class _ProfileImage extends StatelessWidget {
 }
 
 class _Title extends StatelessWidget {
-  const _Title({super.key});
+  const _Title();
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class _Title extends StatelessWidget {
 }
 
 class _SubTitle extends StatelessWidget {
-  const _SubTitle({super.key});
+  const _SubTitle();
 
   @override
   Widget build(BuildContext context) {
