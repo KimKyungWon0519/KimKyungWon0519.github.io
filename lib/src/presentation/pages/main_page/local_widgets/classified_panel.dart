@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/src/domain/models/classification_type.dart';
+import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
 
 class ClassifiedPanel extends StatelessWidget {
   const ClassifiedPanel({super.key});
@@ -21,7 +24,7 @@ class _All extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _CustomListView(
-      title: '전체보기 (10)',
+      classificationType: AllType(0),
     );
   }
 }
@@ -36,7 +39,10 @@ class _Categories extends StatelessWidget {
       children: List.generate(
         10,
         (index) => _CustomListView(
-          title: '카테고리 $index (10)',
+          classificationType: CategoryType(
+            category: '카테고리 $index',
+            count: index * 2,
+          ),
         ),
       ),
     );
@@ -53,30 +59,46 @@ class _Tags extends StatelessWidget {
       children: List.generate(
         10,
         (index) => _CustomListView(
-          title: '태그 $index (10)',
+          classificationType: TagType(
+            tag: '태그 $index',
+            count: index * 3,
+          ),
         ),
       ),
     );
   }
 }
 
-class _CustomListView extends StatelessWidget {
-  final String title;
+class _CustomListView<T> extends ConsumerWidget {
+  final ClassificationType classificationType;
 
   const _CustomListView({
     super.key,
-    required this.title,
+    required this.classificationType,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ClassificationType type = ref.watch(mainNotifierProvider);
+
+    bool isSelected = type == classificationType;
+
     return ListTile(
-      title: Text(title),
+      title: Text(
+        classificationType.name,
+        style: TextStyle(
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        ),
+      ),
+      selected: isSelected,
+      onTap: () {
+        ref.read(mainNotifierProvider.notifier).update(classificationType);
+      },
     );
   }
 }
 
-class _CustomExpansionTile extends StatelessWidget {
+class _CustomExpansionTile extends ConsumerWidget {
   final String title;
   final List<Widget> children;
 
@@ -87,7 +109,7 @@ class _CustomExpansionTile extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ExpansionTileTheme(
       data: ExpansionTileThemeData(
         shape: RoundedRectangleBorder(),
