@@ -1,3 +1,6 @@
+# l10n resource gennerator
+lib/resource/l10n/generated/*
+
 # Build Gennerator FIles
 *.freezed.dart
 *.g.dart
