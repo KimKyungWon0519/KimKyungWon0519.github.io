@@ -6,6 +6,7 @@ final class PostsTable {
 
   static const String name = 'posts';
 
+  static const String id = 'id';
   static const String fileName = 'file_name';
   static const String path = 'path';
   static const String uploadDate = 'upload_date';
