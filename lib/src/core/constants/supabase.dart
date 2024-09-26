@@ -4,10 +4,10 @@ const supabaseKey = String.fromEnvironment('supabase_key');
 final class PostsTable {
   const PostsTable._();
 
-  static const String name = 'posts';
+  static const String table = 'posts';
 
   static const String id = 'id';
-  static const String fileName = 'file_name';
-  static const String path = 'path';
-  static const String uploadDate = 'upload_date';
+  static const String name = 'name';
+  static const String createAt = 'create_at';
+  static const String categoryID = 'category_id';
 }

@@ -6,9 +6,9 @@ class SupabaseDatabaseService {
 
   Future<List> getAllPosts({int startIndex = 0, int limit = 50}) {
     return _client
-        .from(PostsTable.name)
+        .from(PostsTable.table)
         .select()
-        .order(PostsTable.uploadDate)
+        .order(PostsTable.createAt)
         .range(startIndex, startIndex + limit - 1);
   }
 }

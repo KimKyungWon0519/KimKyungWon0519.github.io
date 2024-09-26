@@ -8,9 +8,9 @@ part 'posts_table_entity.g.dart';
 class PostsTableEntity with _$PostsTableEntity {
   const factory PostsTableEntity({
     required int id,
-    @JsonKey(name: PostsTable.fileName) required String fileName,
-    required String path,
-    @JsonKey(name: PostsTable.uploadDate) required DateTime uploadDate,
+    required String name,
+    @JsonKey(name: PostsTable.createAt) required DateTime createAt,
+    @JsonKey(name: PostsTable.categoryID) required int categoryID,
   }) = _PostDBEntity;
 
   factory PostsTableEntity.fromJson(Map<String, dynamic> json) =>
