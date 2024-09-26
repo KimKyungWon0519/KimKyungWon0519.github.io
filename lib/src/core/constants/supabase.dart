@@ -11,3 +11,12 @@ final class PostsTable {
   static const String createAt = 'create_at';
   static const String categoryID = 'category_id';
 }
+
+final class CategoriesTable {
+  const CategoriesTable._();
+
+  static const String table = 'categories';
+
+  static const String id = 'id';
+  static const String name = 'name';
+}
