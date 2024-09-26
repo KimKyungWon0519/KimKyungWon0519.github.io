@@ -1,20 +1,19 @@
 import 'package:kkw_blog/src/core/constants/markdown_constant.dart';
+import 'package:kkw_blog/src/core/utils/markdown.dart';
 import 'package:yaml/yaml.dart';
 
-class MarkdownFormatter {
-  const MarkdownFormatter._();
-
-  static YamlMap getFrontMatter(String markdown) {
-    int closeIndex = markdown.lastIndexOf(frontMatterDelimiter);
+extension MarkdownFormatter on Markdown {
+  YamlMap getFrontMatter() {
+    int closeIndex = content.lastIndexOf(frontMatterDelimiter);
     String frontMatterRaw =
-        markdown.substring(frontMatterDelimiter.length, closeIndex);
+        content.substring(frontMatterDelimiter.length, closeIndex);
 
     return loadYaml(frontMatterRaw);
   }
 
-  static String getContent(String markdown) {
-    int closeIndex = markdown.lastIndexOf(frontMatterDelimiter);
+  String getContent() {
+    int closeIndex = content.lastIndexOf(frontMatterDelimiter);
 
-    return markdown.substring(closeIndex + frontMatterDelimiter.length).trim();
+    return content.substring(closeIndex + frontMatterDelimiter.length).trim();
   }
 }
