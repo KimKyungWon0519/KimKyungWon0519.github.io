@@ -17,9 +17,7 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
 
   @override
   Future<void> getAllPostFiles() async {
-    List<Post> postsTableData = await _databaseService
-        .getAllPosts()
-        .then((value) => value.map((data) => Post.fromJson(data)).toList());
+    List<Post> postsTableData = await _databaseService.getAllPosts();
 
 
     Iterable<Future<Markdown>> downloadComputes = postsTableData.map(
