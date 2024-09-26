@@ -4,13 +4,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
+import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/core/riverpods/theme_mode_notifier.dart';
 import 'package:kkw_blog/src/core/routes/app_pages.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: supabaseUrl,
+    anonKey: supabaseKey,
+  );
 
   await initializeDateFormatting();
 

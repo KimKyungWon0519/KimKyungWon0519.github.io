@@ -10,7 +10,7 @@ class Post with _$Post {
     required String content,
     required String category,
     required List<String> tags,
-    required String uploadDate,
+    required DateTime createAt,
     required String? thumbnail,
   }) = _Post;
 }

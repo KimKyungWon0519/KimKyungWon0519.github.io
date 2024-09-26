@@ -11,6 +11,10 @@ class SupabaseStorageService {
     _fileAPI = Supabase.instance.client.storage.from(bucketID);
   }
 
+  String getPublicUrl(String path) {
+    return _fileAPI.getPublicUrl(path);
+  }
+
   Future<Markdown> downloadMarkdownFile({required String path}) {
     assert(path.contains(markdownExtension));
 

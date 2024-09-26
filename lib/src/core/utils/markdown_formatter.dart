@@ -8,7 +8,7 @@ extension MarkdownFormatter on Markdown {
     String frontMatterRaw =
         content.substring(frontMatterDelimiter.length, closeIndex);
 
-    return loadYaml(frontMatterRaw);
+    return loadYaml(frontMatterRaw) as YamlMap;
   }
 
   String getContent() {
