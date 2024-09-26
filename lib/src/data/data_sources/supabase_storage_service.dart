@@ -9,7 +9,9 @@ class SupabaseStorageService {
     _fileAPI = Supabase.instance.client.storage.from(bucketID);
   }
 
-  Future<String> downloadFile({required String path}) {
+  Future<String> downloadMarkdownFile({required String path}) {
+    assert(path.contains('.md'));
+
     return _fileAPI.download(path).then((value) => utf8.decode(value));
   }
 }
