@@ -11,7 +11,7 @@ class PostsTableEntity with _$PostsTableEntity {
     required String name,
     @JsonKey(name: PostsTable.createAt) required DateTime createAt,
     @JsonKey(name: PostsTable.categoryID) required int categoryID,
-  }) = _PostDBEntity;
+  }) = _PostsTableEntity;
 
   factory PostsTableEntity.fromJson(Map<String, dynamic> json) =>
       _$PostsTableEntityFromJson(json);
