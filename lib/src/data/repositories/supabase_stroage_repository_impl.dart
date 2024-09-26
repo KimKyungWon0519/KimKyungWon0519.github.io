@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:kkw_blog/src/core/constants/markdown_constant.dart';
+import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/core/utils/markdown.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_database_service.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_storage_service.dart';
@@ -56,7 +57,9 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
 
     for (int id in categoryIDs) {
       Map<String, dynamic> category = await _databaseService.getCategory(id);
-      categories.addAll({category['id']: category['name']});
+      categories.addAll({
+        category[CategoriesTable.id]: category[CategoriesTable.name],
+      });
     }
 
     return categories;
