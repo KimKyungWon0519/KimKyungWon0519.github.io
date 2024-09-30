@@ -16,12 +16,21 @@ class MainNotifier extends _$MainNotifier {
   MainNotifierState build() {
     _supabaseStorageRepository = instance<SupabaseStorageRepository>();
 
+    _initalizeState();
+
     return MainNotifierState.empty();
   }
 
   void updateType(ClassificationType type) =>
       state = state.copyWith(type: type);
 
+  void updatePosts(List<Post> posts) => state = state.copyWith(posts: posts);
+
+  void _initalizeState() async {
+    List<Post> posts = await _supabaseStorageRepository.getAllPostFiles();
+
+    updatePosts(posts);
+  }
 }
 
 @freezed
