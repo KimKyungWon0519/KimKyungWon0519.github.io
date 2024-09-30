@@ -10,6 +10,9 @@ sealed class ClassificationType {
 
   @override
   int get hashCode => name.hashCode;
+
+  @override
+  String toString() => name;
 }
 
 class AllType extends ClassificationType {

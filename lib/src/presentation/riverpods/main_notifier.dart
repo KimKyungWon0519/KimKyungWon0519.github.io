@@ -3,6 +3,7 @@ import 'package:kkw_blog/src/dependency_injection.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/domain/repositories/supabase_stroage_repository.dart';
+import 'package:kkw_blog/src/presentation/riverpods/classified_types_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'main_notifier.freezed.dart';
@@ -21,22 +22,21 @@ class MainNotifier extends _$MainNotifier {
     return MainNotifierState.empty();
   }
 
-  void updateType(ClassificationType type) =>
-      state = state.copyWith(type: type);
+  set type(ClassificationType type) => state = state.copyWith(type: type);
 
-  void updatePosts(List<Post> posts) => state = state.copyWith(posts: posts);
+  set posts(List<Post> posts) => state = state.copyWith(posts: posts);
 
   void _initalizeState() async {
     List<Post> posts = await _supabaseStorageRepository.getAllPostFiles();
 
-    updatePosts(posts);
+    this.posts = posts;
+
+    type = ref.watch(allTypeNotifierProvider);
   }
 }
 
 @freezed
 class MainNotifierState with _$MainNotifierState {
-  MainNotifierState._();
-
   const factory MainNotifierState({
     required ClassificationType type,
     required List<Post> posts,

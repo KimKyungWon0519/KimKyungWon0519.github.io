@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
+import 'package:kkw_blog/src/presentation/riverpods/classified_types_notifier.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
 
 class ClassifiedPanel extends StatelessWidget {
@@ -18,13 +19,15 @@ class ClassifiedPanel extends StatelessWidget {
   }
 }
 
-class _All extends StatelessWidget {
+class _All extends ConsumerWidget {
   const _All();
 
   @override
-  Widget build(BuildContext context) {
-    return const _CustomListView(
-      classificationType: AllType(0),
+  Widget build(BuildContext context, WidgetRef ref) {
+    AllType allType = ref.watch(allTypeNotifierProvider);
+
+    return _CustomListView(
+      classificationType: allType,
     );
   }
 }
@@ -86,14 +89,14 @@ class _CustomListView<T> extends ConsumerWidget {
 
     return ListTile(
       title: Text(
-        classificationType.name,
+        '$classificationType',
         style: TextStyle(
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
       ),
       selected: isSelected,
       onTap: () {
-        ref.read(mainNotifierProvider.notifier).updateType(classificationType);
+        ref.read(mainNotifierProvider.notifier).type = classificationType;
       },
     );
   }
