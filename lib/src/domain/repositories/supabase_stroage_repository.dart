@@ -1,3 +1,5 @@
+import 'package:kkw_blog/src/domain/models/post.dart';
+
 abstract interface class SupabaseStorageRepository {
-  Future<void> getAllPostFiles();
+  Future<List<Post>> getAllPostFiles();
 }
