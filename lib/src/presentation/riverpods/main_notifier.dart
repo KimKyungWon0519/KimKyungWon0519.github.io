@@ -19,7 +19,9 @@ class MainNotifier extends _$MainNotifier {
     return MainNotifierState.empty();
   }
 
-  void update(ClassificationType type) => state = state.copyWith(type: type);
+  void updateType(ClassificationType type) =>
+      state = state.copyWith(type: type);
+
 }
 
 @freezed
