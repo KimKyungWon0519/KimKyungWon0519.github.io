@@ -24,12 +24,16 @@ class _All extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AllType allType = ref.watch(allTypeNotifierProvider);
+    AsyncValue<AllType> allType = ref.watch(allTypeNotifierProvider);
 
-    return _CustomListView(
-      classificationType: allType,
+    return allType.when(
+      data: (data) => _CustomListView(classificationType: data),
+      error: (error, stackTrace) => _default,
+      loading: () => _default,
     );
   }
+
+  Widget get _default => const _CustomListView(classificationType: AllType(0));
 }
 
 class _Categories extends StatelessWidget {

@@ -31,7 +31,9 @@ class MainNotifier extends _$MainNotifier {
 
     this.posts = posts;
 
-    type = ref.watch(allTypeNotifierProvider);
+    AsyncValue<AllType> classification = ref.watch(allTypeNotifierProvider);
+
+    classification.whenData((value) => type = value);
   }
 }
 

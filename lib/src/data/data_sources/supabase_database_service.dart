@@ -21,4 +21,8 @@ class SupabaseDatabaseService {
         .eq(CategoriesTable.id, id)
         .single();
   }
+
+  Future<int> getPostsCount() {
+    return _client.from(PostsTable.table).count();
+  }
 }

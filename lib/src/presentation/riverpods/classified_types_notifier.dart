@@ -1,16 +1,18 @@
+import 'package:kkw_blog/src/dependency_injection.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
-import 'package:kkw_blog/src/domain/models/post.dart';
-import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
+import 'package:kkw_blog/src/domain/repositories/supabase_database_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'classified_types_notifier.g.dart';
 
 @riverpod
-AllType allTypeNotifier(AllTypeNotifierRef ref) {
-  List<Post> posts =
-      ref.watch(mainNotifierProvider.select((value) => value.posts));
+Future<AllType> allTypeNotifier(AllTypeNotifierRef ref) async {
+  SupabaseDatabaseRepository databaseRepository =
+      instance<SupabaseDatabaseRepository>();
 
-  return AllType(posts.length);
+  int count = await databaseRepository.getPostsCount();
+
+  return AllType(count);
 }
 
 @riverpod
