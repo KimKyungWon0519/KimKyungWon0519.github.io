@@ -79,7 +79,8 @@ class _CustomListView<T> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ClassificationType type = ref.watch(mainNotifierProvider);
+    ClassificationType type =
+        ref.watch(mainNotifierProvider.select((value) => value.type));
 
     bool isSelected = type == classificationType;
 
