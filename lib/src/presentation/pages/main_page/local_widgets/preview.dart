@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:kkw_blog/src/domain/models/post.dart';
+import 'package:markdown/markdown.dart' as Markdown;
 
 class Preview extends StatelessWidget {
-  const Preview({super.key});
+  final Post post;
+
+  const Preview({
+    super.key,
+    required this.post,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -10,12 +18,18 @@ class Preview extends StatelessWidget {
         return Column(
           children: _addSpacing(
             [
-              const _UploadDateAndCategory(),
+              _UploadDateAndCategory(
+                createAt: post.createAt,
+                category: post.category,
+              ),
               _Thumbnail(height: constraints.maxWidth * 0.5),
-              const _Content(),
-              const Align(
+              _Content(
+                title: post.title,
+                content: post.content,
+              ),
+              Align(
                 alignment: Alignment.topLeft,
-                child: _Tags(),
+                child: _Tags(tags: post.tags),
               )
             ],
           ),
@@ -38,17 +52,23 @@ class Preview extends StatelessWidget {
 }
 
 class _UploadDateAndCategory extends StatelessWidget {
-  const _UploadDateAndCategory();
+  final DateTime createAt;
+  final String category;
+
+  const _UploadDateAndCategory({
+    required this.createAt,
+    required this.category,
+  });
 
   @override
   Widget build(BuildContext context) {
     return IntrinsicHeight(
       child: Row(
         children: [
-          const Text('2024년 9월 15일'),
+          Text(DateFormat('yyyy년 MM월 dd일').format(createAt)),
           const VerticalDivider(),
           Text(
-            '카테고리 1',
+            category,
             style: TextStyle(
               color: Theme.of(context).colorScheme.onSecondaryContainer,
               fontWeight: FontWeight.bold,
@@ -79,14 +99,21 @@ class _Thumbnail extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
-  const _Content();
+  final String title;
+  final String content;
+
+  const _Content({
+    required this.title,
+    required this.content,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '블로그 제목' * 100,
+          title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
@@ -95,31 +122,39 @@ class _Content extends StatelessWidget {
               ),
         ),
         Text(
-          '내용' * 1000,
+          _removeMarkdownFormat(content),
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
         ),
       ],
     );
   }
+
+  String _removeMarkdownFormat(String markdown) {
+    return Markdown.markdownToHtml(markdown)
+        .replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), '');
+  }
 }
 
 class _Tags extends StatelessWidget {
-  const _Tags();
+  final List<String> tags;
+
+  const _Tags({
+    required this.tags,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 8,
-      children: List.filled(
-        50,
-        Text(
-          '#태그',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-        ),
-      ),
+      children: tags
+          .map((tag) => Text(
+                tag,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+              ))
+          .toList(),
     );
   }
 }
