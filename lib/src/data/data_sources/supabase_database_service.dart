@@ -9,7 +9,7 @@ class SupabaseDatabaseService {
   Future<List<Post>> getAllPosts({int startIndex = 0, int limit = 50}) {
     return _client
         .from(PostsTable.table)
-        .select()
+        .select('*, ${CategoriesTable.table}(name)')
         .order(PostsTable.createAt)
         .range(startIndex, startIndex + limit - 1)
         .then((value) => value.map((data) => Post.fromJson(data)).toList());

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:kkw_blog/src/core/constants/markdown_constant.dart';
-import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/core/utils/markdown.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_database_service.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_storage_service.dart';
@@ -22,7 +21,6 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
   @override
   Future<List<Model.Post>> getAllPostFiles() async {
     List<Entity.Post> posts = await _databaseService.getAllPosts();
-    Map<int, dynamic> categories = await _getAllCategory(posts);
 
     Iterable<Future<Markdown>> downloadComputes = posts.map(
       (data) => compute(
@@ -40,7 +38,6 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
         .map(
           (post) => PostMapper.createPost(
             post: post,
-            category: categories[post.categoryID],
             thumbnail:
                 _storageService.getPublicUrl('${post.name}/thumbnail.png'),
             markdown: markdowns.singleWhere((element) =>
@@ -49,20 +46,6 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
           ),
         )
         .toList();
-  }
-
-  Future<Map<int, dynamic>> _getAllCategory(List<Entity.Post> posts) async {
-    Set<int> categoryIDs = posts.map((post) => post.categoryID).toSet();
-    Map<int, dynamic> categories = {};
-
-    for (int id in categoryIDs) {
-      Map<String, dynamic> category = await _databaseService.getCategory(id);
-      categories.addAll({
-        category[CategoriesTable.id]: category[CategoriesTable.name],
-      });
-    }
-
-    return categories;
   }
 
   static Future<Markdown> _downloadMarkdownFile(Map<String, dynamic> arg) {
