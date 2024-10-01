@@ -1,4 +1,5 @@
 import 'package:kkw_blog/src/core/constants/supabase.dart';
+import 'package:kkw_blog/src/data/entities/category_count.dart';
 import 'package:kkw_blog/src/data/entities/post.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -24,5 +25,14 @@ class SupabaseDatabaseService {
 
   Future<int> getPostsCount() {
     return _client.from(PostsTable.table).count();
+  }
+
+  Future<List<CategoryCount>> getCategoriesCount() {
+    return _client
+        .from(CategoriesTable.table)
+        .select(
+            '${CategoriesTable.name}, counts:${PostsTable.table}!inner(${CategoriesTable.id})')
+        .then((value) =>
+            value.map((json) => CategoryCount.fromJson(json)).toList());
   }
 }

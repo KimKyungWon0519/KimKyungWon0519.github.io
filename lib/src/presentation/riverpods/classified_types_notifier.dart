@@ -16,8 +16,11 @@ Future<AllType> allTypeNotifier(AllTypeNotifierRef ref) async {
 }
 
 @riverpod
-Set<CategoryType> categoriesNotifier(CategoriesNotifierRef ref) {
-  return {};
+Future<Set<CategoryType>> categoriesNotifier(CategoriesNotifierRef ref) async {
+  SupabaseDatabaseRepository databaseRepository =
+      instance<SupabaseDatabaseRepository>();
+
+  return databaseRepository.getCategoriesCount();
 }
 
 @riverpod

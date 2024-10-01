@@ -36,21 +36,24 @@ class _All extends ConsumerWidget {
   Widget get _default => const _CustomListView(classificationType: AllType(0));
 }
 
-class _Categories extends StatelessWidget {
+class _Categories extends ConsumerWidget {
   const _Categories();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<Set<CategoryType>> categories =
+        ref.watch(categoriesNotifierProvider);
+
     return _CustomExpansionTile(
       title: '카테고리',
-      children: List.generate(
-        10,
-        (index) => _CustomListView(
-          classificationType: CategoryType(
-            category: '카테고리 $index',
-            count: index * 2,
-          ),
-        ),
+      children: categories.when(
+        data: (data) => data
+            .map(
+              (e) => _CustomListView(classificationType: e),
+            )
+            .toList(),
+        error: (error, stackTrace) => [],
+        loading: () => [],
       ),
     );
   }
