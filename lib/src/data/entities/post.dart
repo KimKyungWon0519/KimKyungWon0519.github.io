@@ -10,11 +10,12 @@ class Post with _$Post {
     required int id,
     required String name,
     @JsonKey(name: PostsTable.createAt) required DateTime createAt,
-    @JsonKey(name: 'categories', fromJson: _categoryNameFromJson)
+    @JsonKey(name: CategoriesTable.table, fromJson: _categoryNameFromJson)
     required String categoryName,
   }) = _Post;
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 }
 
-String _categoryNameFromJson(Map<String, dynamic> json) => json['name'];
+String _categoryNameFromJson(Map<String, dynamic> json) =>
+    json[CategoriesTable.name];

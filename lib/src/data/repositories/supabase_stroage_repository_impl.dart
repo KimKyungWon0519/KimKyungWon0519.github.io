@@ -20,9 +20,9 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
 
   @override
   Future<List<Model.Post>> getAllPostFiles() async {
-    List<Entity.Post> posts = await _databaseService.getAllPosts();
+    List<Entity.Post> postEntities = await _databaseService.getAllPosts();
 
-    Iterable<Future<Markdown>> downloadComputes = posts.map(
+    Iterable<Future<Markdown>> downloadComputes = postEntities.map(
       (data) => compute(
         _downloadMarkdownFile,
         {
@@ -34,18 +34,25 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
 
     List<Markdown> markdowns = await Future.wait(downloadComputes);
 
-    return posts
-        .map(
-          (post) => PostMapper.createPost(
-            post: post,
-            thumbnail:
-                _storageService.getPublicUrl('${post.name}/thumbnail.png'),
-            markdown: markdowns.singleWhere((element) =>
-                element.path ==
-                '${post.name}/${post.name + markdownExtension}'),
-          ),
-        )
-        .toList();
+    List<Model.Post> postModels = [];
+
+    for (Entity.Post postEntity in postEntities) {
+      List<String> tags = await _databaseService.getTags(postEntity.id);
+
+      postModels.add(
+        PostMapper.createPost(
+          post: postEntity,
+          thumbnail:
+              _storageService.getPublicUrl('${postEntity.name}/thumbnail.png'),
+          markdown: markdowns.singleWhere((element) =>
+              element.path ==
+              '${postEntity.name}/${postEntity.name + markdownExtension}'),
+          tags: tags,
+        ),
+      );
+    }
+
+    return postModels;
   }
 
   static Future<Markdown> _downloadMarkdownFile(Map<String, dynamic> arg) {

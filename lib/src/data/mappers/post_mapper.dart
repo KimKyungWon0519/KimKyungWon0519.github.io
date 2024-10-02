@@ -11,6 +11,7 @@ class PostMapper {
     required Entity.Post post,
     required String thumbnail,
     required Markdown markdown,
+    required List<String> tags,
   }) {
     YamlMap frontMatter = markdown.getFrontMatter();
     String content = markdown.getContent();
@@ -20,7 +21,7 @@ class PostMapper {
       title: frontMatter['title'],
       content: content,
       category: post.categoryName,
-      tags: (frontMatter['tags'] as YamlList).toList().cast<String>(),
+      tags: tags,
       createAt: post.createAt,
       thumbnail: thumbnail,
     );
