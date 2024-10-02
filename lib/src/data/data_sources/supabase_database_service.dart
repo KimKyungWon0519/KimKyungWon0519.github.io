@@ -9,7 +9,7 @@ class SupabaseDatabaseService {
   Future<List<Post>> getAllPosts({int startIndex = 0, int limit = 50}) {
     return _client
         .from(PostsTable.table)
-        .select('*, ${CategoriesTable.table}(name)')
+        .select('*, ${CategoriesTable.table}(${CategoriesTable.name})')
         .order(PostsTable.createAt)
         .range(startIndex, startIndex + limit - 1)
         .then((value) => value.map((data) => Post.fromJson(data)).toList());
@@ -21,6 +21,16 @@ class SupabaseDatabaseService {
         .select()
         .eq(CategoriesTable.id, id)
         .single();
+  }
+
+  Future<List<String>> getTags(int postID) {
+    return _client
+        .from(PostsUsageTags.table)
+        .select('${TagsTable.table}(${TagsTable.name})')
+        .eq(PostsUsageTags.posts_id, postID)
+        .then((value) => value
+            .map((e) => (e[TagsTable.table][TagsTable.name] as String))
+            .toList());
   }
 
   Future<int> getPostsCount() {
