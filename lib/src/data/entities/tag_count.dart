@@ -7,6 +7,7 @@ part 'tag_count.g.dart';
 @freezed
 class TagCount with _$TagCount {
   const factory TagCount({
+    required int id,
     required String name,
     @JsonKey(name: TagsCountRPC.postCount) required int counts,
   }) = _TagCount;

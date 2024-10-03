@@ -26,6 +26,7 @@ final class CategoriesCountRPC {
 
   static const String funcName = 'get_category_post_counts';
 
+  static const String id = 'id';
   static const String name = 'name';
   static const String postCount = 'post_count';
 }
@@ -35,6 +36,7 @@ final class TagsCountRPC {
 
   static const String funcName = 'get_tag_posts_count';
 
+  static const String id = 'id';
   static const String name = 'name';
   static const String postCount = 'post_count';
 }

@@ -21,7 +21,11 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
     List<CategoryCount> data = await _databaseService.getCategoriesCount();
 
     return data
-        .map((e) => CategoryType(category: e.name, count: e.counts))
+        .map((e) => CategoryType(
+              id: e.id,
+              category: e.name,
+              count: e.counts,
+            ))
         .toSet();
   }
 
@@ -29,6 +33,12 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
   Future<Set<TagType>> getTagsCount() async {
     List<TagCount> data = await _databaseService.getTags();
 
-    return data.map((e) => TagType(tag: e.name, count: e.counts)).toSet();
+    return data
+        .map((e) => TagType(
+              id: e.id,
+              tag: e.name,
+              count: e.counts,
+            ))
+        .toSet();
   }
 }

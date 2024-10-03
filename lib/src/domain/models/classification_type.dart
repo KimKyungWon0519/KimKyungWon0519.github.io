@@ -20,20 +20,24 @@ class AllType extends ClassificationType {
 }
 
 class CategoryType extends ClassificationType {
+  final int id;
   final String category;
   final int count;
 
   const CategoryType({
+    required this.id,
     required this.category,
     required this.count,
   }) : super(name: '$category ($count)');
 }
 
 class TagType extends ClassificationType {
+  final int id;
   final String tag;
   final int count;
 
   const TagType({
+    required this.id,
     required this.tag,
     required this.count,
   }) : super(name: '$tag ($count)');
