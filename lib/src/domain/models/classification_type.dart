@@ -5,7 +5,7 @@ sealed class ClassificationType {
 
   @override
   bool operator ==(covariant ClassificationType other) {
-    return name == other.name;
+    return other.runtimeType == runtimeType && name == other.name;
   }
 
   @override
