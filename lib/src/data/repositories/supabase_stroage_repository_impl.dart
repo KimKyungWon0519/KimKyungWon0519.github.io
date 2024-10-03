@@ -19,8 +19,16 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
         _storageService = stroageService;
 
   @override
-  Future<List<Model.Post>> getAllPostFiles() async {
-    List<Entity.Post> postEntities = await _databaseService.getAllPosts();
+  Future<List<Model.Post>> getPostFiles({
+    int startOffset = 0,
+    int? categoryID,
+    int? tagID,
+  }) async {
+    List<Entity.Post> postEntities = await _databaseService.getPosts(
+      startOffset: startOffset,
+      categoryID: categoryID,
+      tagID: tagID,
+    );
 
     Iterable<Future<Markdown>> downloadComputes = postEntities.map(
       (data) => compute(

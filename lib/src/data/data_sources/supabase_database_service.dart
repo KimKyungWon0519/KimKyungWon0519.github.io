@@ -7,10 +7,18 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class SupabaseDatabaseService {
   final SupabaseClient _client = Supabase.instance.client;
 
-  Future<List<Post>> getAllPosts({int startOffset = 0}) {
+  Future<List<Post>> getPosts({
+    int startOffset = 0,
+    int? categoryID,
+    int? tagID,
+  }) {
     return _client.rpc<List<Map<String, dynamic>>>(
       CombineDataPostsRPC.funcName,
-      params: {'start_offset': startOffset},
+      params: {
+        'start_offset': startOffset,
+        'p_category_id': categoryID,
+        'p_tag_id': tagID,
+      },
     ).then((result) => result.map((data) => Post.fromJson(data)).toList());
   }
 

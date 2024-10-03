@@ -27,7 +27,7 @@ class MainNotifier extends _$MainNotifier {
   set posts(List<Post> posts) => state = state.copyWith(posts: posts);
 
   void _initalizeState() async {
-    List<Post> posts = await _supabaseStorageRepository.getAllPostFiles();
+    List<Post> posts = await _supabaseStorageRepository.getPostFiles();
 
     this.posts = posts;
 
