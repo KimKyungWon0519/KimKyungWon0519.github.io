@@ -9,13 +9,12 @@ class Post with _$Post {
   const factory Post({
     required int id,
     required String name,
-    @JsonKey(name: PostsTable.createAt) required DateTime createAt,
-    @JsonKey(name: CategoriesTable.table, fromJson: _categoryNameFromJson)
+    @JsonKey(name: CombineDataPostsRPC.createAt) required DateTime createAt,
+    @JsonKey(name: CombineDataPostsRPC.categoryName)
     required String categoryName,
+    @JsonKey(name: CombineDataPostsRPC.tagsNames)
+    required List<String> tagsNames,
   }) = _Post;
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
 }
-
-String _categoryNameFromJson(Map<String, dynamic> json) =>
-    json[CategoriesTable.name];

@@ -34,25 +34,16 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
 
     List<Markdown> markdowns = await Future.wait(downloadComputes);
 
-    List<Model.Post> postModels = [];
-
-    for (Entity.Post postEntity in postEntities) {
-      List<String> tags = await _databaseService.getTags(postEntity.id);
-
-      postModels.add(
-        PostMapper.createPost(
-          post: postEntity,
-          thumbnail:
-              _storageService.getPublicUrl('${postEntity.name}/thumbnail.png'),
-          markdown: markdowns.singleWhere((element) =>
-              element.path ==
-              '${postEntity.name}/${postEntity.name + markdownExtension}'),
-          tags: tags,
-        ),
-      );
-    }
-
-    return postModels;
+    return postEntities
+        .map((post) => PostMapper.createPost(
+              post: post,
+              thumbnail:
+                  _storageService.getPublicUrl('${post.name}/thumbnail.png'),
+              markdown: markdowns.singleWhere((element) =>
+                  element.path ==
+                  '${post.name}/${post.name + markdownExtension}'),
+            ))
+        .toList();
   }
 
   static Future<Markdown> _downloadMarkdownFile(Map<String, dynamic> arg) {

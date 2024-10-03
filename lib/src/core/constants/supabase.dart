@@ -3,15 +3,16 @@ const supabaseKey = String.fromEnvironment('supabase_key');
 
 const String postsBuckID = 'posts';
 
-final class PostsTable {
-  const PostsTable._();
+final class CombineDataPostsRPC {
+  const CombineDataPostsRPC._();
 
-  static const String table = 'posts';
+  static const String funcName = 'get_combine_data_posts';
 
   static const String id = 'id';
   static const String name = 'name';
   static const String createAt = 'create_at';
-  static const String categoryID = 'category_id';
+  static const String categoryName = 'category_name';
+  static const String tagsNames = 'tags_names';
 }
 
 final class CategoriesTable {
