@@ -106,6 +106,9 @@ class _CustomListView<T> extends ConsumerWidget {
       selected: isSelected,
       onTap: () {
         ref.read(mainNotifierProvider.notifier).type = classificationType;
+        ref
+            .read(mainNotifierProvider.notifier)
+            .updatePostsWithType(classificationType);
       },
     );
   }

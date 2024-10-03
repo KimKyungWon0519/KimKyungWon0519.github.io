@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kkw_blog/src/dependency_injection.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
@@ -35,8 +34,31 @@ class MainNotifier extends _$MainNotifier {
     classification.whenData((value) => type = value);
   }
 
-  Future<void> _updatePosts() async {
-    List<Post> posts = await _supabaseStorageRepository.getPostFiles();
+  void updatePostsWithType(ClassificationType type) {
+    switch (type) {
+      case AllType():
+        _updatePosts();
+
+        break;
+      case CategoryType():
+        _updatePosts(categoryID: type.id);
+
+        break;
+      case TagType():
+        _updatePosts(tagID: type.id);
+
+        break;
+    }
+  }
+
+  Future<void> _updatePosts({
+    int? categoryID,
+    int? tagID,
+  }) async {
+    List<Post> posts = await _supabaseStorageRepository.getPostFiles(
+      tagID: tagID,
+      categoryID: categoryID,
+    );
 
     this.posts = posts;
   }
