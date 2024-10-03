@@ -59,21 +59,23 @@ class _Categories extends ConsumerWidget {
   }
 }
 
-class _Tags extends StatelessWidget {
+class _Tags extends ConsumerWidget {
   const _Tags();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<Set<TagType>> tags = ref.watch(tagsNotifierProvider);
+
     return _CustomExpansionTile(
       title: '태그',
-      children: List.generate(
-        10,
-        (index) => _CustomListView(
-          classificationType: TagType(
-            tag: '태그 $index',
-            count: index * 3,
-          ),
-        ),
+      children: tags.when(
+        data: (data) => data
+            .map(
+              (e) => _CustomListView(classificationType: e),
+            )
+            .toList(),
+        error: (error, stackTrace) => [],
+        loading: () => [],
       ),
     );
   }

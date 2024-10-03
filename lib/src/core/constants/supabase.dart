@@ -30,20 +30,11 @@ final class CategoriesCountRPC {
   static const String postCount = 'post_count';
 }
 
-final class PostsUsageTags {
-  const PostsUsageTags._();
+final class TagsCountRPC {
+  const TagsCountRPC._();
 
-  static const String table = 'posts_usage_tags';
+  static const String funcName = 'get_tag_posts_count';
 
-  static const String posts_id = 'posts_id';
-  static const String tags_id = 'tags_id';
-}
-
-final class TagsTable {
-  const TagsTable._();
-
-  static const String table = 'tags';
-
-  static const String id = 'id';
   static const String name = 'name';
+  static const String postCount = 'post_count';
 }

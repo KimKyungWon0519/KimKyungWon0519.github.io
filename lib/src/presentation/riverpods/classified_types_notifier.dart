@@ -24,6 +24,9 @@ Future<Set<CategoryType>> categoriesNotifier(CategoriesNotifierRef ref) async {
 }
 
 @riverpod
-Set<TagType> tagsNotifier(TagsNotifierRef ref) {
-  return {};
+Future<Set<TagType>> tagsNotifier(TagsNotifierRef ref) async {
+  SupabaseDatabaseRepository databaseRepository =
+      instance<SupabaseDatabaseRepository>();
+
+  return databaseRepository.getTagsCount();
 }
