@@ -3,6 +3,12 @@ const supabaseKey = String.fromEnvironment('supabase_key');
 
 const String postsBuckID = 'posts';
 
+final class PostsTable {
+  const PostsTable._();
+
+  static const String table = 'posts';
+}
+
 final class CombineDataPostsRPC {
   const CombineDataPostsRPC._();
 
@@ -15,13 +21,13 @@ final class CombineDataPostsRPC {
   static const String tagsNames = 'tags_names';
 }
 
-final class CategoriesTable {
-  const CategoriesTable._();
+final class CategoriesCountRPC {
+  const CategoriesCountRPC._();
 
-  static const String table = 'categories';
+  static const String funcName = 'get_category_post_counts';
 
-  static const String id = 'id';
   static const String name = 'name';
+  static const String postCount = 'post_count';
 }
 
 final class PostsUsageTags {

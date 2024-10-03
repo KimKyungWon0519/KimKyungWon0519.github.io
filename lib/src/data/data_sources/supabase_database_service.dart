@@ -13,14 +13,6 @@ class SupabaseDatabaseService {
     ).then((result) => result.map((data) => Post.fromJson(data)).toList());
   }
 
-  Future<Map<String, dynamic>> getCategory(int id) {
-    return _client
-        .from(CategoriesTable.table)
-        .select()
-        .eq(CategoriesTable.id, id)
-        .single();
-  }
-
   Future<List<String>> getTags(int postID) {
     return _client
         .from(PostsUsageTags.table)
@@ -32,15 +24,13 @@ class SupabaseDatabaseService {
   }
 
   Future<int> getPostsCount() {
-    return _client.from(CombineDataPostsRPC.funcName).count();
+    return _client.from(PostsTable.table).count();
   }
 
   Future<List<CategoryCount>> getCategoriesCount() {
     return _client
-        .from(CategoriesTable.table)
-        .select(
-            '${CategoriesTable.name}, counts:${CombineDataPostsRPC.funcName}!inner(${CategoriesTable.id})')
-        .then((value) =>
-            value.map((json) => CategoryCount.fromJson(json)).toList());
+        .rpc<List<Map<String, dynamic>>>(CategoriesCountRPC.funcName)
+        .then((result) =>
+            result.map((data) => CategoryCount.fromJson(data)).toList());
   }
 }

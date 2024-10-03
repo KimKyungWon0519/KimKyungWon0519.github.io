@@ -20,7 +20,7 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
     List<CategoryCount> data = await _databaseService.getCategoriesCount();
 
     return data
-        .map((e) => CategoryType(category: e.name, count: e.counts.length))
+        .map((e) => CategoryType(category: e.name, count: e.counts))
         .toSet();
   }
 }

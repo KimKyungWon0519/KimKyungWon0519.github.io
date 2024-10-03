@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kkw_blog/src/core/constants/supabase.dart';
 
 part 'category_count.freezed.dart';
 part 'category_count.g.dart';
@@ -7,7 +8,7 @@ part 'category_count.g.dart';
 class CategoryCount with _$CategoryCount {
   const factory CategoryCount({
     required String name,
-    required List<Map<String, dynamic>> counts,
+    @JsonKey(name: CategoriesCountRPC.postCount) required int counts,
   }) = _CategoryCount;
 
   factory CategoryCount.fromJson(Map<String, dynamic> json) =>
