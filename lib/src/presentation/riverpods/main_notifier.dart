@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kkw_blog/src/dependency_injection.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
@@ -27,13 +28,17 @@ class MainNotifier extends _$MainNotifier {
   set posts(List<Post> posts) => state = state.copyWith(posts: posts);
 
   void _initalizeState() async {
+    await _updatePosts();
+
+    AsyncValue<AllType> classification = ref.read(allTypeNotifierProvider);
+
+    classification.whenData((value) => type = value);
+  }
+
+  Future<void> _updatePosts() async {
     List<Post> posts = await _supabaseStorageRepository.getPostFiles();
 
     this.posts = posts;
-
-    AsyncValue<AllType> classification = ref.watch(allTypeNotifierProvider);
-
-    classification.whenData((value) => type = value);
   }
 }
 
