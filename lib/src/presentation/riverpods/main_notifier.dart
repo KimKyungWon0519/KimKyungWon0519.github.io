@@ -13,10 +13,11 @@ part 'main_notifier.g.dart';
 class MainNotifier extends _$MainNotifier {
   late final SupabaseStorageRepository _supabaseStorageRepository;
 
+  MainNotifier()
+      : _supabaseStorageRepository = instance<SupabaseStorageRepository>();
+
   @override
   MainNotifierState build() {
-    _supabaseStorageRepository = instance<SupabaseStorageRepository>();
-
     _initalizeState();
 
     return MainNotifierState.empty();
@@ -27,9 +28,9 @@ class MainNotifier extends _$MainNotifier {
   set posts(List<Post> posts) => state = state.copyWith(posts: posts);
 
   void _initalizeState() async {
-    await _updatePosts();
+    _updatePosts();
 
-    AsyncValue<AllType> classification = ref.read(allTypeNotifierProvider);
+    AsyncValue<AllType> classification = ref.watch(allTypeNotifierProvider);
 
     classification.whenData((value) => type = value);
   }
