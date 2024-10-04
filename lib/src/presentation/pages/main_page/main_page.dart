@@ -24,13 +24,16 @@ class MainPage extends HookWidget {
             event,
             scrollController,
           ),
-          child: Scrollbar(
+          child: RawScrollbar(
+            trackColor: Colors.grey.withOpacity(.3),
             thumbVisibility: true,
+            radius: const Radius.circular(30),
             controller: scrollController,
+            thickness: 5,
             child: ScreenTypeLayout.builder(
               desktop: (_) =>
                   Desktop.Layout(scrollController: scrollController),
-              mobile: (_) => Mobile.Lyaout(),
+              mobile: (_) => Mobile.Lyaout(scrollController: scrollController),
             ),
           ),
         ),

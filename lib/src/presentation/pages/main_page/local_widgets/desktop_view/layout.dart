@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../blog_title.dart';
-import '../introduction.dart';
+import '../../sliver_widgets/header.dart';
 import 'classified_panel.dart';
-import 'preview_listview.dart';
+import '../../sliver_widgets/preview_listview.dart';
 
 class Layout extends StatelessWidget {
   final ScrollController scrollController;
@@ -25,27 +24,12 @@ class Layout extends StatelessWidget {
               ScrollConfiguration.of(context).copyWith(scrollbars: false),
           slivers: const [
             _HorizontalPaddingSliver(),
-            SliverToBoxAdapter(child: _Header()),
+            SliverToBoxAdapter(child: Header()),
             _BodyAreaSliver(),
             _HorizontalPaddingSliver(),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        BlogTitle(),
-        SizedBox(height: 10),
-        Introduction(),
-      ],
     );
   }
 }
