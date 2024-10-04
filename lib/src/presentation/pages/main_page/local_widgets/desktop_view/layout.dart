@@ -16,7 +16,8 @@ class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ConstrainedBox(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         constraints: const BoxConstraints(maxWidth: 1200),
         child: CustomScrollView(
           controller: scrollController,
