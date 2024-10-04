@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
 import 'package:kkw_blog/src/presentation/riverpods/classified_types_notifier.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
@@ -45,7 +46,7 @@ class _Categories extends ConsumerWidget {
         ref.watch(categoriesNotifierProvider);
 
     return _CustomExpansionTile(
-      title: '카테고리',
+      title: Messages.of(context).category,
       children: categories.when(
         data: (data) => data
             .map(
@@ -67,7 +68,7 @@ class _Tags extends ConsumerWidget {
     AsyncValue<Set<TagType>> tags = ref.watch(tagsNotifierProvider);
 
     return _CustomExpansionTile(
-      title: '태그',
+      title: Messages.of(context).tag,
       children: tags.when(
         data: (data) => data
             .map(

@@ -3,5 +3,9 @@
     "blogTitle": "얼렁뚱땅 개발 블로그",
     "@blogTitle": {},
     "introduction": "안녕하세요, 플러터 개발자 김경원입니다.\n모두에게 도움이 되는 블로그로 채우도록 노력하겠습니다.",
-    "@introduction": {}
+    "@introduction": {},
+    "category": "카테고리",
+    "@category": {},
+    "tag": "태그",
+    "@tag": {}
 }
