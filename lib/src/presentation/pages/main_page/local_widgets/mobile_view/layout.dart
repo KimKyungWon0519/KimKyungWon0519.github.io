@@ -23,6 +23,7 @@ class Lyaout extends StatelessWidget {
           _HorizontalPaddingSliver(),
           SliverToBoxAdapter(child: Header()),
           PreviewListview(),
+          _HorizontalPaddingSliver(),
         ],
       ),
     );
