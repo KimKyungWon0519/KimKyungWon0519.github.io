@@ -1,7 +1,11 @@
 sealed class ClassificationType {
   final String name;
+  final int count;
 
-  const ClassificationType({required this.name});
+  const ClassificationType({
+    required this.name,
+    required this.count,
+  });
 
   @override
   bool operator ==(covariant ClassificationType other) {
@@ -12,33 +16,33 @@ sealed class ClassificationType {
   int get hashCode => name.hashCode;
 
   @override
-  String toString() => name;
+  String toString() => '$name  ($count)';
 }
 
 class AllType extends ClassificationType {
-  const AllType(int count) : super(name: '전체보기 ($count)');
+  const AllType(int count)
+      : super(
+          name: '전체보기',
+          count: count,
+        );
 }
 
 class CategoryType extends ClassificationType {
   final int id;
-  final String category;
-  final int count;
 
   const CategoryType({
     required this.id,
-    required this.category,
-    required this.count,
-  }) : super(name: '$category ($count)');
+    required super.name,
+    required super.count,
+  });
 }
 
 class TagType extends ClassificationType {
   final int id;
-  final String tag;
-  final int count;
 
   const TagType({
     required this.id,
-    required this.tag,
-    required this.count,
-  }) : super(name: '$tag ($count)');
+    required super.name,
+    required super.count,
+  });
 }

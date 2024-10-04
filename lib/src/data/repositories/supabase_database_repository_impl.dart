@@ -23,7 +23,7 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
     return data
         .map((e) => CategoryType(
               id: e.id,
-              category: e.name,
+              name: e.name,
               count: e.counts,
             ))
         .toSet();
@@ -36,7 +36,7 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
     return data
         .map((e) => TagType(
               id: e.id,
-              tag: e.name,
+              name: e.name,
               count: e.counts,
             ))
         .toSet();
