@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
+import 'package:kkw_blog/src/presentation/riverpods/classified_types_notifier.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
 
 class ClassifiedPanel extends StatelessWidget {
@@ -18,52 +19,63 @@ class ClassifiedPanel extends StatelessWidget {
   }
 }
 
-class _All extends StatelessWidget {
+class _All extends ConsumerWidget {
   const _All();
 
   @override
-  Widget build(BuildContext context) {
-    return const _CustomListView(
-      classificationType: AllType(0),
+  Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<AllType> allType = ref.watch(allTypeNotifierProvider);
+
+    return allType.when(
+      data: (data) => _CustomListView(classificationType: data),
+      error: (error, stackTrace) => _default,
+      loading: () => _default,
     );
   }
+
+  Widget get _default => const _CustomListView(classificationType: AllType(0));
 }
 
-class _Categories extends StatelessWidget {
+class _Categories extends ConsumerWidget {
   const _Categories();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<Set<CategoryType>> categories =
+        ref.watch(categoriesNotifierProvider);
+
     return _CustomExpansionTile(
       title: '카테고리',
-      children: List.generate(
-        10,
-        (index) => _CustomListView(
-          classificationType: CategoryType(
-            category: '카테고리 $index',
-            count: index * 2,
-          ),
-        ),
+      children: categories.when(
+        data: (data) => data
+            .map(
+              (e) => _CustomListView(classificationType: e),
+            )
+            .toList(),
+        error: (error, stackTrace) => [],
+        loading: () => [],
       ),
     );
   }
 }
 
-class _Tags extends StatelessWidget {
+class _Tags extends ConsumerWidget {
   const _Tags();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    AsyncValue<Set<TagType>> tags = ref.watch(tagsNotifierProvider);
+
     return _CustomExpansionTile(
       title: '태그',
-      children: List.generate(
-        10,
-        (index) => _CustomListView(
-          classificationType: TagType(
-            tag: '태그 $index',
-            count: index * 3,
-          ),
-        ),
+      children: tags.when(
+        data: (data) => data
+            .map(
+              (e) => _CustomListView(classificationType: e),
+            )
+            .toList(),
+        error: (error, stackTrace) => [],
+        loading: () => [],
       ),
     );
   }
@@ -79,20 +91,24 @@ class _CustomListView<T> extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ClassificationType type = ref.watch(mainNotifierProvider);
+    ClassificationType type =
+        ref.watch(mainNotifierProvider.select((value) => value.type));
 
     bool isSelected = type == classificationType;
 
     return ListTile(
       title: Text(
-        classificationType.name,
+        '$classificationType',
         style: TextStyle(
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
       ),
       selected: isSelected,
       onTap: () {
-        ref.read(mainNotifierProvider.notifier).update(classificationType);
+        ref.read(mainNotifierProvider.notifier).type = classificationType;
+        ref
+            .read(mainNotifierProvider.notifier)
+            .updatePostsWithType(classificationType);
       },
     );
   }

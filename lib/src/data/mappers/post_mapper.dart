@@ -9,7 +9,6 @@ class PostMapper {
 
   static Model.Post createPost({
     required Entity.Post post,
-    required String category,
     required String thumbnail,
     required Markdown markdown,
   }) {
@@ -20,8 +19,8 @@ class PostMapper {
       id: post.name,
       title: frontMatter['title'],
       content: content,
-      category: category,
-      tags: (frontMatter['tags'] as YamlList).toList().cast<String>(),
+      category: post.categoryName,
+      tags: post.tagsNames,
       createAt: post.createAt,
       thumbnail: thumbnail,
     );

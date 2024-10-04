@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:kkw_blog/src/core/constants/markdown_constant.dart';
-import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/core/utils/markdown.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_database_service.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_storage_service.dart';
@@ -20,11 +19,18 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
         _storageService = stroageService;
 
   @override
-  Future<List<Model.Post>> getAllPostFiles() async {
-    List<Entity.Post> posts = await _databaseService.getAllPosts();
-    Map<int, dynamic> categories = await _getAllCategory(posts);
+  Future<List<Model.Post>> getPostFiles({
+    int startOffset = 0,
+    int? categoryID,
+    int? tagID,
+  }) async {
+    List<Entity.Post> postEntities = await _databaseService.getPosts(
+      startOffset: startOffset,
+      categoryID: categoryID,
+      tagID: tagID,
+    );
 
-    Iterable<Future<Markdown>> downloadComputes = posts.map(
+    Iterable<Future<Markdown>> downloadComputes = postEntities.map(
       (data) => compute(
         _downloadMarkdownFile,
         {
@@ -36,33 +42,16 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
 
     List<Markdown> markdowns = await Future.wait(downloadComputes);
 
-    return posts
-        .map(
-          (post) => PostMapper.createPost(
-            post: post,
-            category: categories[post.categoryID],
-            thumbnail:
-                _storageService.getPublicUrl('${post.name}/thumbnail.png'),
-            markdown: markdowns.singleWhere((element) =>
-                element.path ==
-                '${post.name}/${post.name + markdownExtension}'),
-          ),
-        )
+    return postEntities
+        .map((post) => PostMapper.createPost(
+              post: post,
+              thumbnail:
+                  _storageService.getPublicUrl('${post.name}/thumbnail.png'),
+              markdown: markdowns.singleWhere((element) =>
+                  element.path ==
+                  '${post.name}/${post.name + markdownExtension}'),
+            ))
         .toList();
-  }
-
-  Future<Map<int, dynamic>> _getAllCategory(List<Entity.Post> posts) async {
-    Set<int> categoryIDs = posts.map((post) => post.categoryID).toSet();
-    Map<int, dynamic> categories = {};
-
-    for (int id in categoryIDs) {
-      Map<String, dynamic> category = await _databaseService.getCategory(id);
-      categories.addAll({
-        category[CategoriesTable.id]: category[CategoriesTable.name],
-      });
-    }
-
-    return categories;
   }
 
   static Future<Markdown> _downloadMarkdownFile(Map<String, dynamic> arg) {
