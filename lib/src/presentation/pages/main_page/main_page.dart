@@ -2,8 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import 'local_widgets/desktop_view/layout.dart' as Desktop;
+import 'local_widgets/mobile_view/layout.dart' as Mobile;
 import 'local_widgets/theme_mode_fab.dart';
 
 class MainPage extends HookWidget {
@@ -25,7 +27,11 @@ class MainPage extends HookWidget {
           child: Scrollbar(
             thumbVisibility: true,
             controller: scrollController,
-            child: Desktop.Layout(scrollController: scrollController),
+            child: ScreenTypeLayout.builder(
+              desktop: (_) =>
+                  Desktop.Layout(scrollController: scrollController),
+              mobile: (_) => Mobile.Lyaout(),
+            ),
           ),
         ),
         floatingActionButton: const ThemeModeFab(),
