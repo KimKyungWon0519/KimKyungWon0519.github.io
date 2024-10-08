@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
-import 'package:kkw_blog/src/presentation/pages/main_page/local_widgets/preview.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
+
+import '../local_widgets/preview.dart';
 
 class PreviewListview extends ConsumerWidget {
   const PreviewListview({super.key});

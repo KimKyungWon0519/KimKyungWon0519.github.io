@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kkw_blog/src/presentation/pages/main_page/local_widgets/mobile_view/classified_menu_button.dart';
 
+import 'classified_menu_button.dart';
 import '../../sliver_widgets/header.dart';
 import '../../sliver_widgets/preview_listview.dart';
 
@@ -39,10 +39,10 @@ class Lyaout extends StatelessWidget {
 }
 
 class _HorizontalPaddingSliver extends StatelessWidget {
-  const _HorizontalPaddingSliver({super.key});
+  const _HorizontalPaddingSliver();
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(child: SizedBox(height: 16));
+    return const SliverToBoxAdapter(child: SizedBox(height: 16));
   }
 }
