@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/dependency_injection.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
@@ -66,18 +65,9 @@ class MainNotifier extends _$MainNotifier {
   }
 
   void _initalizeType() {
-    ProviderSubscription<AsyncValue<AllType>>? allTypeSubscription;
+    AsyncValue<AllType> type = ref.watch(allTypeNotifierProvider);
 
-    allTypeSubscription = ref.listen(
-      allTypeNotifierProvider,
-      (previous, next) => next.whenData(
-        (data) {
-          type = data;
-
-          allTypeSubscription?.close();
-        },
-      ),
-    );
+    type.whenData((data) => this.type = data);
   }
 }
 
