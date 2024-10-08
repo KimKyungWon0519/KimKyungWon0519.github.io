@@ -5,7 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'classified_types_notifier.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<AllType> allTypeNotifier(AllTypeNotifierRef ref) async {
   SupabaseDatabaseRepository databaseRepository =
       instance<SupabaseDatabaseRepository>();
@@ -15,15 +15,14 @@ Future<AllType> allTypeNotifier(AllTypeNotifierRef ref) async {
   return AllType(count);
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<Set<CategoryType>> categoriesNotifier(CategoriesNotifierRef ref) async {
   SupabaseDatabaseRepository databaseRepository =
       instance<SupabaseDatabaseRepository>();
-
   return databaseRepository.getCategoriesCount();
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 Future<Set<TagType>> tagsNotifier(TagsNotifierRef ref) async {
   SupabaseDatabaseRepository databaseRepository =
       instance<SupabaseDatabaseRepository>();

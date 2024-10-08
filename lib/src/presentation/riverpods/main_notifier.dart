@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/dependency_injection.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
@@ -18,22 +20,16 @@ class MainNotifier extends _$MainNotifier {
 
   @override
   MainNotifierState build() {
-    _initalizeState();
+    Future.delayed(Durations.long2).then((_) => _initalizeState());
 
     return MainNotifierState.empty();
   }
 
-  set type(ClassificationType type) => state = state.copyWith(type: type);
+  set type(ClassificationType type) {
+    state = state.copyWith(type: type);
+  }
 
   set posts(List<Post> posts) => state = state.copyWith(posts: posts);
-
-  void _initalizeState() async {
-    _updatePosts();
-
-    AsyncValue<AllType> classification = ref.watch(allTypeNotifierProvider);
-
-    classification.whenData((value) => type = value);
-  }
 
   void updatePostsWithType(ClassificationType type) {
     switch (type) {
@@ -52,6 +48,11 @@ class MainNotifier extends _$MainNotifier {
     }
   }
 
+  void _initalizeState() {
+    _updatePosts();
+    _initalizeType();
+  }
+
   Future<void> _updatePosts({
     int? categoryID,
     int? tagID,
@@ -62,6 +63,21 @@ class MainNotifier extends _$MainNotifier {
     );
 
     this.posts = posts;
+  }
+
+  void _initalizeType() {
+    ProviderSubscription<AsyncValue<AllType>>? allTypeSubscription;
+
+    allTypeSubscription = ref.listen(
+      allTypeNotifierProvider,
+      (previous, next) => next.whenData(
+        (data) {
+          type = data;
+
+          allTypeSubscription?.close();
+        },
+      ),
+    );
   }
 }
 

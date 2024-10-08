@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kkw_blog/src/presentation/pages/main_page/local_widgets/mobile_view/classified_menu_button.dart';
 
 import '../../sliver_widgets/header.dart';
 import '../../sliver_widgets/preview_listview.dart';
@@ -19,9 +20,16 @@ class Lyaout extends StatelessWidget {
         controller: scrollController,
         scrollBehavior:
             ScrollConfiguration.of(context).copyWith(scrollbars: false),
-        slivers: [
+        slivers: const [
           _HorizontalPaddingSliver(),
           SliverToBoxAdapter(child: Header()),
+          SliverToBoxAdapter(child: SizedBox(height: 8)),
+          SliverToBoxAdapter(
+            child: UnconstrainedBox(
+              alignment: Alignment.centerLeft,
+              child: ClassifiedMenuButton(),
+            ),
+          ),
           PreviewListview(),
           _HorizontalPaddingSliver(),
         ],

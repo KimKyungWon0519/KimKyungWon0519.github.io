@@ -9,6 +9,7 @@ import 'package:kkw_blog/src/core/riverpods/theme_mode_notifier.dart';
 import 'package:kkw_blog/src/core/routes/app_pages.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:kkw_blog/src/dependency_injection.dart' as DI;
+import 'package:kkw_blog/src/presentation/riverpods/classified_types_notifier.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
