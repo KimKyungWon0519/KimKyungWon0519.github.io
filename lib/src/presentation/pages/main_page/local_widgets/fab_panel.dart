@@ -38,7 +38,7 @@ class FabPanel extends HookWidget {
           isShowScrollUpFab.value = true;
           animationController.forward();
         } else if (isShowScrollUpFab.value &&
-            (scrollController?.offset ?? 0) == 0) {
+            (scrollController?.offset ?? 0) < 100) {
           isShowScrollUpFab.value = false;
           animationController.reverse();
         }
@@ -49,26 +49,32 @@ class FabPanel extends HookWidget {
       return () => scrollController?.removeListener(updateScrollUpFab);
     }, [scrollController]);
 
-    return Stack(
-      alignment: Alignment.bottomRight,
-      children: [
-        SlideTransition(
-          position: slideAnimation,
-          child: const ThemeModeFab(),
-        ),
-        FadeTransition(
-          opacity: fadeAnimation,
-          child: ScrollUpFab(
-            onPressed: () {
-              scrollController?.animateTo(
-                0,
-                duration: Durations.short4,
-                curve: Curves.ease,
-              );
-            },
+    return SizedBox(
+      height: double.infinity,
+      child: Stack(
+        alignment: Alignment.bottomRight,
+        children: [
+          SlideTransition(
+            position: slideAnimation,
+            child: const ThemeModeFab(),
           ),
-        ),
-      ],
+          IgnorePointer(
+            ignoring: !isShowScrollUpFab.value,
+            child: FadeTransition(
+              opacity: fadeAnimation,
+              child: ScrollUpFab(
+                onPressed: () {
+                  scrollController?.animateTo(
+                    0,
+                    duration: Durations.short4,
+                    curve: Curves.ease,
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

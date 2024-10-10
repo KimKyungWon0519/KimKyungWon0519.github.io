@@ -15,6 +15,7 @@ class ThemeModeNotifier extends _$ThemeModeNotifier {
   }
 
   void update() {
+    print('update state');
     state = ThemeMode.light == state ? ThemeMode.dark : ThemeMode.light;
   }
 }
