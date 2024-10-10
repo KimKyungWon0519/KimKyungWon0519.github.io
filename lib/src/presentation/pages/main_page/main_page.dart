@@ -8,28 +8,34 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'local_widgets/desktop_view/layout.dart' as Desktop;
 import 'local_widgets/mobile_view/layout.dart' as Mobile;
-import 'local_widgets/theme_mode_fab.dart';
+import 'local_widgets/fab_panel.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool isUpdate = false;
     final ScrollController scrollController = useScrollController();
+    final ObjectRef<bool> isUpdate = useRef(false);
 
-    scrollController.addListener(() {
-      if (!isUpdate &&
-          scrollController.offset >=
-              scrollController.position.maxScrollExtent * 0.8) {
-        isUpdate = true;
+    useEffect(() {
+      void updateData() {
+        if (!isUpdate.value &&
+            scrollController.offset >=
+                scrollController.position.maxScrollExtent * 0.8) {
+          isUpdate.value = true;
 
-        ref
-            .read(mainNotifierProvider.notifier)
-            .increaseStartOffset()
-            .then((value) => isUpdate = false);
+          ref
+              .read(mainNotifierProvider.notifier)
+              .increaseStartOffset()
+              .then((value) => isUpdate.value = false);
+        }
       }
-    });
+
+      scrollController.addListener(updateData);
+
+      return () => scrollController.removeListener(updateData);
+    }, [scrollController]);
 
     return Title(
       color: Colors.white,
@@ -53,7 +59,7 @@ class MainPage extends HookConsumerWidget {
             ),
           ),
         ),
-        floatingActionButton: const ThemeModeFab(),
+        floatingActionButton: FabPanel(scrollController: scrollController),
       ),
     );
   }
