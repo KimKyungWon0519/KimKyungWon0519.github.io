@@ -46,7 +46,7 @@ class MainNotifier extends _$MainNotifier {
 
   set posts(List<Post> posts) => state = state.copyWith(posts: posts);
   void insertPost(List<Post> posts) {
-    this.posts = state.posts.toList()..addAll(posts);
+    this.posts = [...state.posts, ...posts];
   }
 
   void updatePostsWithType(ClassificationType type) async {
