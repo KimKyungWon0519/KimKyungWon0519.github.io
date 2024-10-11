@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:kkw_blog/src/core/routes/app_routes.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:markdown/markdown.dart' as Markdown;
 
@@ -13,28 +15,31 @@ class Preview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Column(
-          children: _addSpacing(
-            [
-              _UploadDateAndCategory(
-                createAt: post.createAt,
-                category: post.category,
-              ),
-              _Thumbnail(height: constraints.maxWidth * 0.5),
-              _Content(
-                title: post.title,
-                content: post.content,
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: _Tags(tags: post.tags),
-              )
-            ],
-          ),
-        );
-      },
+    return GestureDetector(
+      onTap: () => context.push('/${post.id}'),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            children: _addSpacing(
+              [
+                _UploadDateAndCategory(
+                  createAt: post.createAt,
+                  category: post.category,
+                ),
+                _Thumbnail(height: constraints.maxWidth * 0.5),
+                _Content(
+                  title: post.title,
+                  content: post.content,
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: _Tags(tags: post.tags),
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 
