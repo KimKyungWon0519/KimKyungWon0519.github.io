@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/pages/main_page/main_page.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/post_page.dart';
 
@@ -13,7 +14,9 @@ final class AppRoutes {
 
   static final GoRoute post = GoRoute(
     path: '/:id',
-    builder: (context, state) => const PostPage(),
+    builder: (context, state) => PostPage(
+      post: state.extra! as Post,
+    ),
   );
 
   static final List<RouteBase> routes = [
