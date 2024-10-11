@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
@@ -13,6 +15,10 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
+  usePathUrlStrategy();
+
+  GoRouter.optionURLReflectsImperativeAPIs = true;
+
   WidgetsFlutterBinding.ensureInitialized();
 
   await Supabase.initialize(
