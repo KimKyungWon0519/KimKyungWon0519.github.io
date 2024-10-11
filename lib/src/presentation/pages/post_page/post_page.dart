@@ -11,6 +11,17 @@ class PostPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: kToolbarHeight,
+          ),
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Placeholder(),
+        ),
+      ),
+    );
   }
 }
