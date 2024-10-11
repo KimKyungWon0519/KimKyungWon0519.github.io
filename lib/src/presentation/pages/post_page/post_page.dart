@@ -19,7 +19,15 @@ class PostPage extends StatelessWidget {
             vertical: kToolbarHeight,
           ),
           constraints: const BoxConstraints(maxWidth: 1200),
-          child: Placeholder(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                post.title,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ],
+          ),
         ),
       ),
     );
