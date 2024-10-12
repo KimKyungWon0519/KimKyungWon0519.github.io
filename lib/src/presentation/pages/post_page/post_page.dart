@@ -1,15 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kkw_blog/resource/values/theme.dart';
-import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/sliver_widgets/markdown_view.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/fab_panel.dart';
+import 'dart:html' as html;
 
 import 'sliver_widgets/header.dart';
 
@@ -42,55 +39,52 @@ class PostPage extends HookConsumerWidget {
 
     Post? post = ref.watch(postNotifierProvider);
 
-    return Title(
-      color: Colors.white,
-      title: post?.id ?? '',
-      child: SelectionArea(
-        child: Scaffold(
-          body: Listener(
-            onPointerSignal: (event) => _scrollingOutside(
-              event,
-              scrollController,
-            ),
-            child: RawScrollbar(
-              trackColor: Colors.grey.withOpacity(.3),
-              thumbVisibility: true,
-              radius: const Radius.circular(30),
-              controller: scrollController,
-              thickness: 5,
-              child: Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  constraints: const BoxConstraints(maxWidth: 800),
-                  child: CustomScrollView(
-                    controller: scrollController,
-                    scrollBehavior: ScrollConfiguration.of(context)
-                        .copyWith(scrollbars: false),
-                    slivers: post != null
-                        ? [
-                            const SliverToBoxAdapter(
-                                child: SizedBox(height: kToolbarHeight)),
-                            SliverToBoxAdapter(child: Header(post: post)),
-                            const SliverToBoxAdapter(
-                                child: SizedBox(height: 32)),
-                            const SliverToBoxAdapter(child: Divider()),
-                            SliverToBoxAdapter(
-                              child: MarkdownView(
-                                id: post.id,
-                                content: post.content,
-                              ),
+    html.document.title = post?.title ?? '';
+
+    return SelectionArea(
+      child: Scaffold(
+        body: Listener(
+          onPointerSignal: (event) => _scrollingOutside(
+            event,
+            scrollController,
+          ),
+          child: RawScrollbar(
+            trackColor: Colors.grey.withOpacity(.3),
+            thumbVisibility: true,
+            radius: const Radius.circular(30),
+            controller: scrollController,
+            thickness: 5,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: CustomScrollView(
+                  controller: scrollController,
+                  scrollBehavior: ScrollConfiguration.of(context)
+                      .copyWith(scrollbars: false),
+                  slivers: post != null
+                      ? [
+                          const SliverToBoxAdapter(
+                              child: SizedBox(height: kToolbarHeight)),
+                          SliverToBoxAdapter(child: Header(post: post)),
+                          const SliverToBoxAdapter(child: SizedBox(height: 32)),
+                          const SliverToBoxAdapter(child: Divider()),
+                          SliverToBoxAdapter(
+                            child: MarkdownView(
+                              id: post.id,
+                              content: post.content,
                             ),
-                            const SliverToBoxAdapter(
-                                child: SizedBox(height: kToolbarHeight)),
-                          ]
-                        : [],
-                  ),
+                          ),
+                          const SliverToBoxAdapter(
+                              child: SizedBox(height: kToolbarHeight)),
+                        ]
+                      : [],
                 ),
               ),
             ),
           ),
-          floatingActionButton: FabPanel(scrollController: scrollController),
         ),
+        floatingActionButton: FabPanel(scrollController: scrollController),
       ),
     );
   }
