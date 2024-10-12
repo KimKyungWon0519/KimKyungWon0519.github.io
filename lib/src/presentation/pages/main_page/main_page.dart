@@ -5,10 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:kkw_blog/src/presentation/widgets/fab_panel.dart';
 
 import 'local_widgets/desktop_view/layout.dart' as Desktop;
 import 'local_widgets/mobile_view/layout.dart' as Mobile;
-import 'local_widgets/fab_panel.dart';
 
 class MainPage extends HookConsumerWidget {
   const MainPage({super.key});
