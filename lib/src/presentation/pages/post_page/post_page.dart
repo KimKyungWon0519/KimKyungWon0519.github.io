@@ -1,16 +1,15 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/sliver_widgets/markdown_view.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
-import 'package:kkw_blog/src/presentation/widgets/fab_panel.dart';
+import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
 import 'dart:html' as html;
 
 import 'sliver_widgets/header.dart';
 
-class PostPage extends HookConsumerWidget {
+class PostPage extends BasedScrollLayout {
   final Post? post;
 
   const PostPage({
@@ -19,9 +18,11 @@ class PostPage extends HookConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final ScrollController scrollController = useScrollController();
-
+  Widget childBuild(
+    BuildContext context,
+    WidgetRef ref,
+    ScrollController scrollController,
+  ) {
     useEffect(() {
       String? id = _getIDParameter();
 
@@ -41,50 +42,32 @@ class PostPage extends HookConsumerWidget {
 
     html.document.title = post?.title ?? '';
 
-    return SelectionArea(
-      child: Scaffold(
-        body: Listener(
-          onPointerSignal: (event) => _scrollingOutside(
-            event,
-            scrollController,
-          ),
-          child: RawScrollbar(
-            trackColor: Colors.grey.withOpacity(.3),
-            thumbVisibility: true,
-            radius: const Radius.circular(30),
-            controller: scrollController,
-            thickness: 5,
-            child: Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                constraints: const BoxConstraints(maxWidth: 800),
-                child: CustomScrollView(
-                  controller: scrollController,
-                  scrollBehavior: ScrollConfiguration.of(context)
-                      .copyWith(scrollbars: false),
-                  slivers: post != null
-                      ? [
-                          const SliverToBoxAdapter(
-                              child: SizedBox(height: kToolbarHeight)),
-                          SliverToBoxAdapter(child: Header(post: post)),
-                          const SliverToBoxAdapter(child: SizedBox(height: 32)),
-                          const SliverToBoxAdapter(child: Divider()),
-                          SliverToBoxAdapter(
-                            child: MarkdownView(
-                              id: post.id,
-                              content: post.content,
-                            ),
-                          ),
-                          const SliverToBoxAdapter(
-                              child: SizedBox(height: kToolbarHeight)),
-                        ]
-                      : [],
-                ),
-              ),
-            ),
-          ),
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: CustomScrollView(
+          controller: scrollController,
+          scrollBehavior:
+              ScrollConfiguration.of(context).copyWith(scrollbars: false),
+          slivers: post != null
+              ? [
+                  const SliverToBoxAdapter(
+                      child: SizedBox(height: kToolbarHeight)),
+                  SliverToBoxAdapter(child: Header(post: post)),
+                  const SliverToBoxAdapter(child: SizedBox(height: 32)),
+                  const SliverToBoxAdapter(child: Divider()),
+                  SliverToBoxAdapter(
+                    child: MarkdownView(
+                      id: post.id,
+                      content: post.content,
+                    ),
+                  ),
+                  const SliverToBoxAdapter(
+                      child: SizedBox(height: kToolbarHeight)),
+                ]
+              : [],
         ),
-        floatingActionButton: FabPanel(scrollController: scrollController),
       ),
     );
   }
@@ -93,20 +76,5 @@ class PostPage extends HookConsumerWidget {
     Object? argument = ModalRoute.settingsOf(useContext())?.arguments;
 
     return argument != null ? (argument as Map<String, dynamic>)['id'] : null;
-  }
-
-  void _scrollingOutside(
-    PointerSignalEvent event,
-    ScrollController controller,
-  ) {
-    if (event is! PointerScrollEvent) {
-      return;
-    }
-
-    double newPose = controller.offset + event.scrollDelta.dy;
-
-    if (0 < newPose && newPose < controller.position.maxScrollExtent) {
-      controller.jumpTo(controller.offset + event.scrollDelta.dy);
-    }
   }
 }
