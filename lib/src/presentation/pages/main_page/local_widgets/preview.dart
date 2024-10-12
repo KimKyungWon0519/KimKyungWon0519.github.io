@@ -26,7 +26,10 @@ class Preview extends StatelessWidget {
                   createAt: post.createAtToString,
                   category: post.category,
                 ),
-                _Thumbnail(height: constraints.maxWidth * 0.5),
+                _Thumbnail(
+                  thumbnail: post.thumbnail,
+                  height: constraints.maxWidth * 0.5,
+                ),
                 _Content(
                   title: post.title,
                   content: post.content,
@@ -57,19 +60,20 @@ class Preview extends StatelessWidget {
 }
 
 class _Thumbnail extends StatelessWidget {
+  final String thumbnail;
   final double height;
 
   const _Thumbnail({
+    required this.thumbnail,
     required this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      'https://images-assets.nasa.gov/image/PIA00122/PIA00122~small.jpg',
+      thumbnail,
       height: height,
       width: double.infinity,
-      fit: BoxFit.cover,
     );
   }
 }
