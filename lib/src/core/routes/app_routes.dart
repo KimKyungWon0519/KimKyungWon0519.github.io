@@ -14,9 +14,17 @@ final class AppRoutes {
 
   static final GoRoute post = GoRoute(
     path: '/:id',
-    builder: (context, state) => PostPage(
-      post: state.extra! as Post,
-    ),
+    builder: (context, state) {
+      Post? post;
+
+      if (state.extra != null) {
+        post = state.extra as Post;
+      }
+
+      return PostPage(
+        post: post,
+      );
+    },
   );
 
   static final List<RouteBase> routes = [

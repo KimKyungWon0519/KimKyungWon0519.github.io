@@ -54,6 +54,25 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
         .toList();
   }
 
+  @override
+  Future<Model.Post> getPostFile(String fileName) async {
+    Entity.Post postEntity = await _databaseService.getPost(fileName);
+
+    Markdown markdown = await compute(
+      _downloadMarkdownFile,
+      {
+        'service': _storageService,
+        'path': '${postEntity.name}/${postEntity.name + markdownExtension}'
+      },
+    );
+
+    return PostMapper.createPost(
+        post: postEntity,
+        thumbnail:
+            _storageService.getPublicUrl('${postEntity.name}/thumbnail.png'),
+        markdown: markdown);
+  }
+
   static Future<Markdown> _downloadMarkdownFile(Map<String, dynamic> arg) {
     return (arg['service'] as SupabaseStorageService)
         .downloadMarkdownFile(path: arg['path']);

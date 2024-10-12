@@ -6,4 +6,6 @@ abstract interface class SupabaseStorageRepository {
     int? categoryID,
     int? tagID,
   });
+
+  Future<Post> getPostFile(String fileName);
 }

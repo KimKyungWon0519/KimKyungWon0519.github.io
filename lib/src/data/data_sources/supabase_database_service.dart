@@ -13,7 +13,7 @@ class SupabaseDatabaseService {
     int? tagID,
   }) {
     return _client.rpc<List<Map<String, dynamic>>>(
-      CombineDataPostsRPC.funcName,
+      CombineDataPostsRPC.getPostsRPC,
       params: {
         'start_offset': startOffset,
         'p_category_id': categoryID,
@@ -36,5 +36,13 @@ class SupabaseDatabaseService {
         .rpc<List<Map<String, dynamic>>>(CategoriesCountRPC.funcName)
         .then((result) =>
             result.map((data) => CategoryCount.fromJson(data)).toList());
+  }
+
+  Future<Post> getPost(String name) {
+    return _client.rpc<List<Map<String, dynamic>>>(
+        CombineDataPostsRPC.getPostPRC,
+        params: {
+          'post_name': name,
+        }).then((result) => Post.fromJson(result.single));
   }
 }

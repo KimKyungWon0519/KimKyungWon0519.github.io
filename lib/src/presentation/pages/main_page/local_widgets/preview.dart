@@ -23,7 +23,7 @@ class Preview extends StatelessWidget {
             children: _addSpacing(
               [
                 _UploadDateAndCategory(
-                  createAt: post.createAt,
+                  createAt: post.createAtToString,
                   category: post.category,
                 ),
                 _Thumbnail(height: constraints.maxWidth * 0.5),
@@ -57,7 +57,7 @@ class Preview extends StatelessWidget {
 }
 
 class _UploadDateAndCategory extends StatelessWidget {
-  final DateTime createAt;
+  final String createAt;
   final String category;
 
   const _UploadDateAndCategory({
@@ -70,7 +70,7 @@ class _UploadDateAndCategory extends StatelessWidget {
     return IntrinsicHeight(
       child: Row(
         children: [
-          Text(DateFormat('yyyy년 MM월 dd일').format(createAt)),
+          Text(createAt),
           const VerticalDivider(),
           Text(
             category,
