@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/tags.dart';
@@ -46,20 +48,45 @@ class PostPage extends HookConsumerWidget {
                     vertical: kToolbarHeight,
                   ),
                   constraints: const BoxConstraints(maxWidth: 1200),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        post.title,
-                        style: Theme.of(context).textTheme.titleLarge,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Text(
+                          post.title,
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
                       ),
-                      const SizedBox(height: 8),
-                      UploadDateAndCategory(
-                        createAt: post.createAtToString,
-                        category: post.category,
+                      const SliverToBoxAdapter(child: SizedBox(height: 8)),
+                      SliverToBoxAdapter(
+                        child: UploadDateAndCategory(
+                          createAt: post.createAtToString,
+                          category: post.category,
+                        ),
                       ),
-                      const SizedBox(height: 8),
-                      Tags(tags: post.tags),
+                      const SliverToBoxAdapter(child: SizedBox(height: 8)),
+                      SliverToBoxAdapter(
+                        child: Tags(tags: post.tags),
+                      ),
+                      if (post.thumbnail != null) ...[
+                        const SliverToBoxAdapter(child: SizedBox(height: 8)),
+                        SliverToBoxAdapter(
+                          child: Image.network(
+                            post.thumbnail!,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
+                      const SliverToBoxAdapter(child: SizedBox(height: 32)),
+                      const SliverToBoxAdapter(child: Divider()),
+                      SliverToBoxAdapter(
+                        child: MarkdownBody(
+                          styleSheet: customMarkdownStyleSheet(context),
+                          data: post.content,
+                        ),
+                      ),
                     ],
                   ),
                 ),

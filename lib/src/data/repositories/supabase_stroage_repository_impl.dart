@@ -30,51 +30,60 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
       tagID: tagID,
     );
 
-    Iterable<Future<Markdown>> downloadComputes = postEntities.map(
+    Iterable<Future<Model.Post>> convertPosts = postEntities.map(
       (data) => compute(
-        _downloadMarkdownFile,
+        _convertModelPost,
         {
           'service': _storageService,
-          'path': '${data.name}/${data.name + markdownExtension}'
+          'entity_post': data,
         },
       ),
     );
 
-    List<Markdown> markdowns = await Future.wait(downloadComputes);
+    List<Model.Post> posts = await Future.wait(convertPosts);
 
-    return postEntities
-        .map((post) => PostMapper.createPost(
-              post: post,
-              thumbnail:
-                  _storageService.getPublicUrl('${post.name}/thumbnail.png'),
-              markdown: markdowns.singleWhere((element) =>
-                  element.path ==
-                  '${post.name}/${post.name + markdownExtension}'),
-            ))
-        .toList();
+    return posts;
   }
 
   @override
   Future<Model.Post> getPostFile(String fileName) async {
     Entity.Post postEntity = await _databaseService.getPost(fileName);
 
-    Markdown markdown = await compute(
-      _downloadMarkdownFile,
+    return await compute(
+      _convertModelPost,
       {
         'service': _storageService,
-        'path': '${postEntity.name}/${postEntity.name + markdownExtension}'
+        'entity_post': postEntity,
       },
     );
-
-    return PostMapper.createPost(
-        post: postEntity,
-        thumbnail:
-            _storageService.getPublicUrl('${postEntity.name}/thumbnail.png'),
-        markdown: markdown);
   }
 
-  static Future<Markdown> _downloadMarkdownFile(Map<String, dynamic> arg) {
-    return (arg['service'] as SupabaseStorageService)
-        .downloadMarkdownFile(path: arg['path']);
+  static Future<Model.Post> _convertModelPost(Map<String, dynamic> args) async {
+    Entity.Post post = args['entity_post'] as Entity.Post;
+    SupabaseStorageService storageService =
+        args['service'] as SupabaseStorageService;
+
+    String? thumbnail = await compute(_getThumbnail,
+        {'service': storageService, 'path': '${post.name}/thumbnail.png'});
+
+    Markdown markdown = await compute(_downloadMarkdownFile, {
+      'service': storageService,
+      'path': '${post.name}/${post.name + markdownExtension}'
+    });
+
+    return PostMapper.createPost(
+      post: post,
+      thumbnail: thumbnail,
+      markdown: markdown,
+    );
+  }
+
+  static Future<String?> _getThumbnail(Map<String, dynamic> args) {
+    return (args['service'] as SupabaseStorageService).getFileUrl(args['path']);
+  }
+
+  static Future<Markdown> _downloadMarkdownFile(Map<String, dynamic> args) {
+    return (args['service'] as SupabaseStorageService)
+        .downloadMarkdownFile(path: args['path']);
   }
 }

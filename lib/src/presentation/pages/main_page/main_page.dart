@@ -22,7 +22,7 @@ class MainPage extends HookConsumerWidget {
       void updateData() {
         if (!isUpdate.value &&
             scrollController.offset >=
-                scrollController.position.maxScrollExtent * 0.8) {
+                scrollController.position.maxScrollExtent * 0.5) {
           isUpdate.value = true;
 
           ref

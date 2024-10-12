@@ -9,7 +9,7 @@ class PostMapper {
 
   static Model.Post createPost({
     required Entity.Post post,
-    required String thumbnail,
+    required String? thumbnail,
     required Markdown markdown,
   }) {
     YamlMap frontMatter = markdown.getFrontMatter();
