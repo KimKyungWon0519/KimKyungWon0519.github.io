@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
-import 'package:kkw_blog/src/core/routes/app_routes.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
+import 'package:kkw_blog/src/presentation/widgets/upload_date_and_category.dart';
 import 'package:markdown/markdown.dart' as Markdown;
 
 class Preview extends StatelessWidget {
@@ -22,7 +21,7 @@ class Preview extends StatelessWidget {
           return Column(
             children: _addSpacing(
               [
-                _UploadDateAndCategory(
+                UploadDateAndCategory(
                   createAt: post.createAtToString,
                   category: post.category,
                 ),
@@ -53,35 +52,6 @@ class Preview extends StatelessWidget {
         )
         .toList()
       ..removeLast();
-  }
-}
-
-class _UploadDateAndCategory extends StatelessWidget {
-  final String createAt;
-  final String category;
-
-  const _UploadDateAndCategory({
-    required this.createAt,
-    required this.category,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Text(createAt),
-          const VerticalDivider(),
-          Text(
-            category,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onSecondaryContainer,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
 

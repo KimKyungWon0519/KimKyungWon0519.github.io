@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
+import 'package:kkw_blog/src/presentation/widgets/upload_date_and_category.dart';
 
 class PostPage extends HookConsumerWidget {
   final Post? post;
@@ -49,6 +50,11 @@ class PostPage extends HookConsumerWidget {
                       Text(
                         post.title,
                         style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 8),
+                      UploadDateAndCategory(
+                        createAt: post.createAtToString,
+                        category: post.category,
                       ),
                     ],
                   ),
