@@ -7,10 +7,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
+import 'package:kkw_blog/src/presentation/pages/post_page/sliver_widgets/markdown_view.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/fab_panel.dart';
-import 'package:kkw_blog/src/presentation/widgets/tags.dart';
-import 'package:kkw_blog/src/presentation/widgets/upload_date_and_category.dart';
+
+import 'sliver_widgets/header.dart';
 
 class PostPage extends HookConsumerWidget {
   final Post? post;
@@ -69,69 +70,14 @@ class PostPage extends HookConsumerWidget {
                         ? [
                             const SliverToBoxAdapter(
                                 child: SizedBox(height: kToolbarHeight)),
-                            SliverToBoxAdapter(
-                              child: Text(
-                                post.title,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge
-                                    ?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ),
-                            const SliverToBoxAdapter(
-                                child: SizedBox(height: 8)),
-                            SliverToBoxAdapter(
-                              child: UploadDateAndCategory(
-                                createAt: post.createAtToString,
-                                category: post.category,
-                              ),
-                            ),
-                            const SliverToBoxAdapter(
-                                child: SizedBox(height: 8)),
-                            SliverToBoxAdapter(
-                              child: Tags(tags: post.tags),
-                            ),
-                            SliverToBoxAdapter(
-                              child: Image.network(
-                                post.thumbnail,
-                                frameBuilder: (context, child, frame,
-                                        wasSynchronouslyLoaded) =>
-                                    Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  child: child,
-                                ),
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const SizedBox(),
-                              ),
-                            ),
+                            SliverToBoxAdapter(child: Header(post: post)),
                             const SliverToBoxAdapter(
                                 child: SizedBox(height: 32)),
                             const SliverToBoxAdapter(child: Divider()),
                             SliverToBoxAdapter(
-                              child: MarkdownBody(
-                                styleSheet: customMarkdownStyleSheet(context),
-                                data: post.content,
-                                imageBuilder: (uri, title, alt) {
-                                  String originUri = uri.path;
-                                  Widget child;
-
-                                  if (RegExp(r'.svg').hasMatch(originUri)) {
-                                    child = SvgPicture.network(postBucketURL +
-                                        '${post.id}/$originUri');
-                                  } else {
-                                    child = Image.network(postBucketURL +
-                                        '${post.id}/$originUri');
-                                  }
-
-                                  return Container(
-                                    margin: const EdgeInsets.all(16),
-                                    alignment: Alignment.center,
-                                    child: child,
-                                  );
-                                },
+                              child: MarkdownView(
+                                id: post.id,
+                                content: post.content,
                               ),
                             ),
                             const SliverToBoxAdapter(
