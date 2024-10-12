@@ -65,6 +65,7 @@ class _MyMaterialApp extends ConsumerWidget {
     _intializeThemeMode(context, ref);
 
     return MaterialApp.router(
+      onGenerateTitle: (context) => Messages.of(context).blogTitle,
       localizationsDelegates: const [
         Messages.delegate,
         GlobalMaterialLocalizations.delegate,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
-import 'package:kkw_blog/src/core/routes/app_routes.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
+import 'package:kkw_blog/src/presentation/widgets/tags.dart';
+import 'package:kkw_blog/src/presentation/widgets/upload_date_and_category.dart';
 import 'package:markdown/markdown.dart' as Markdown;
 
 class Preview extends StatelessWidget {
@@ -16,14 +16,14 @@ class Preview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/${post.id}'),
+      onTap: () => context.push('/${post.id}', extra: post),
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Column(
             children: _addSpacing(
               [
-                _UploadDateAndCategory(
-                  createAt: post.createAt,
+                UploadDateAndCategory(
+                  createAt: post.createAtToString,
                   category: post.category,
                 ),
                 _Thumbnail(height: constraints.maxWidth * 0.5),
@@ -33,7 +33,7 @@ class Preview extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.topLeft,
-                  child: _Tags(tags: post.tags),
+                  child: Tags(tags: post.tags),
                 )
               ],
             ),
@@ -53,35 +53,6 @@ class Preview extends StatelessWidget {
         )
         .toList()
       ..removeLast();
-  }
-}
-
-class _UploadDateAndCategory extends StatelessWidget {
-  final DateTime createAt;
-  final String category;
-
-  const _UploadDateAndCategory({
-    required this.createAt,
-    required this.category,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Text(DateFormat('yyyy년 MM월 dd일').format(createAt)),
-          const VerticalDivider(),
-          Text(
-            category,
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onSecondaryContainer,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
 
@@ -138,28 +109,5 @@ class _Content extends StatelessWidget {
   String _removeMarkdownFormat(String markdown) {
     return Markdown.markdownToHtml(markdown)
         .replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), '');
-  }
-}
-
-class _Tags extends StatelessWidget {
-  final List<String> tags;
-
-  const _Tags({
-    required this.tags,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 8,
-      children: tags
-          .map((tag) => Text(
-                tag,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-              ))
-          .toList(),
-    );
   }
 }

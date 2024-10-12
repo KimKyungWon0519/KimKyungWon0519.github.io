@@ -30,32 +30,45 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
       tagID: tagID,
     );
 
-    Iterable<Future<Markdown>> downloadComputes = postEntities.map(
+    Iterable<Future<Model.Post>> convertPosts = postEntities.map(
       (data) => compute(
-        _downloadMarkdownFile,
+        _convertModelPost,
         {
           'service': _storageService,
-          'path': '${data.name}/${data.name + markdownExtension}'
+          'entity_post': data,
         },
       ),
     );
 
-    List<Markdown> markdowns = await Future.wait(downloadComputes);
+    List<Model.Post> posts = await Future.wait(convertPosts);
 
-    return postEntities
-        .map((post) => PostMapper.createPost(
-              post: post,
-              thumbnail:
-                  _storageService.getPublicUrl('${post.name}/thumbnail.png'),
-              markdown: markdowns.singleWhere((element) =>
-                  element.path ==
-                  '${post.name}/${post.name + markdownExtension}'),
-            ))
-        .toList();
+    return posts;
   }
 
-  static Future<Markdown> _downloadMarkdownFile(Map<String, dynamic> arg) {
-    return (arg['service'] as SupabaseStorageService)
-        .downloadMarkdownFile(path: arg['path']);
+  @override
+  Future<Model.Post> getPostFile(String fileName) async {
+    Entity.Post postEntity = await _databaseService.getPost(fileName);
+
+    return await compute(
+      _convertModelPost,
+      {
+        'service': _storageService,
+        'entity_post': postEntity,
+      },
+    );
+  }
+
+  static Future<Model.Post> _convertModelPost(Map<String, dynamic> args) async {
+    Entity.Post post = args['entity_post'] as Entity.Post;
+    SupabaseStorageService storageService =
+        args['service'] as SupabaseStorageService;
+
+    Markdown markdown = await storageService.downloadMarkdownFile(
+        path: '${post.name}/${post.name + markdownExtension}');
+
+    return PostMapper.createPost(
+      post: post,
+      markdown: markdown,
+    );
   }
 }

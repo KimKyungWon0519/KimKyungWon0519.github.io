@@ -1,7 +1,9 @@
 const supabaseUrl = 'https://hzrvlmmdedvyxwnjunyf.supabase.co';
 const supabaseKey = String.fromEnvironment('supabase_key');
 
-const String postsBuckID = 'posts';
+const String postBucketID = 'posts';
+
+late final String postBucketURL;
 
 final class PostsTable {
   const PostsTable._();
@@ -12,7 +14,8 @@ final class PostsTable {
 final class CombineDataPostsRPC {
   const CombineDataPostsRPC._();
 
-  static const String funcName = 'get_combine_data_posts';
+  static const String getPostsRPC = 'get_combine_data_posts';
+  static const String getPostPRC = 'get_combine_data_post';
 
   static const String id = 'id';
   static const String name = 'name';

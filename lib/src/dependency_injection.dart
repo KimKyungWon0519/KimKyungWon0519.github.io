@@ -12,7 +12,9 @@ final GetIt instance = GetIt.instance;
 void initializeDI() {
   SupabaseDatabaseService supabaseDatabaseService = SupabaseDatabaseService();
   SupabaseStorageService supabaseStorageService =
-      SupabaseStorageService(postsBuckID);
+      SupabaseStorageService(postBucketID);
+
+  postBucketURL = supabaseStorageService.getPublicUrl();
 
   SupabaseStorageRepository supabaseStorageRepository =
       SupabaseStorageRepositoryImpl(

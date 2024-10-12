@@ -10,6 +10,7 @@ class ThemeModeFab extends ConsumerWidget {
     ThemeMode themeMode = ref.watch(themeModeNotifierProvider);
 
     return FloatingActionButton(
+      heroTag: 'ThemeModeFab',
       onPressed: () => ref.read(themeModeNotifierProvider.notifier).update(),
       child: Icon(
         themeMode == ThemeMode.light ? Icons.dark_mode : Icons.light_mode,
