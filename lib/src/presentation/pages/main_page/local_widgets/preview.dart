@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
+import 'package:kkw_blog/src/presentation/widgets/tags.dart';
 import 'package:kkw_blog/src/presentation/widgets/upload_date_and_category.dart';
 import 'package:markdown/markdown.dart' as Markdown;
 
@@ -32,7 +33,7 @@ class Preview extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.topLeft,
-                  child: _Tags(tags: post.tags),
+                  child: Tags(tags: post.tags),
                 )
               ],
             ),
@@ -108,28 +109,5 @@ class _Content extends StatelessWidget {
   String _removeMarkdownFormat(String markdown) {
     return Markdown.markdownToHtml(markdown)
         .replaceAll(RegExp(r'<[^>]*>|&[^;]+;'), '');
-  }
-}
-
-class _Tags extends StatelessWidget {
-  final List<String> tags;
-
-  const _Tags({
-    required this.tags,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 8,
-      children: tags
-          .map((tag) => Text(
-                tag,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-              ))
-          .toList(),
-    );
   }
 }
