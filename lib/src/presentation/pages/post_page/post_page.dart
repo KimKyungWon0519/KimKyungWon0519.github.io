@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
+import 'package:kkw_blog/src/presentation/widgets/theme_mode_fab.dart';
 import 'package:kkw_blog/src/presentation/widgets/upload_date_and_category.dart';
 
 class PostPage extends HookConsumerWidget {
@@ -61,6 +62,7 @@ class PostPage extends HookConsumerWidget {
                 ),
               )
             : const SizedBox(),
+        floatingActionButton: const ThemeModeFab(),
       ),
     );
   }
