@@ -1,7 +1,9 @@
 const supabaseUrl = 'https://hzrvlmmdedvyxwnjunyf.supabase.co';
 const supabaseKey = String.fromEnvironment('supabase_key');
 
-const String postsBuckID = 'posts';
+const String postBucketID = 'posts';
+
+late final String postBucketURL;
 
 final class PostsTable {
   const PostsTable._();

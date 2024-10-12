@@ -63,27 +63,12 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
     SupabaseStorageService storageService =
         args['service'] as SupabaseStorageService;
 
-    String? thumbnail = await compute(_getThumbnail,
-        {'service': storageService, 'path': '${post.name}/thumbnail.png'});
-
-    Markdown markdown = await compute(_downloadMarkdownFile, {
-      'service': storageService,
-      'path': '${post.name}/${post.name + markdownExtension}'
-    });
+    Markdown markdown = await storageService.downloadMarkdownFile(
+        path: '${post.name}/${post.name + markdownExtension}');
 
     return PostMapper.createPost(
       post: post,
-      thumbnail: thumbnail,
       markdown: markdown,
     );
-  }
-
-  static Future<String?> _getThumbnail(Map<String, dynamic> args) {
-    return (args['service'] as SupabaseStorageService).getFileUrl(args['path']);
-  }
-
-  static Future<Markdown> _downloadMarkdownFile(Map<String, dynamic> args) {
-    return (args['service'] as SupabaseStorageService)
-        .downloadMarkdownFile(path: args['path']);
   }
 }

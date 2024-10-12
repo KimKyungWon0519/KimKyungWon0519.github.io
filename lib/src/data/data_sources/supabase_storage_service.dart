@@ -12,10 +12,8 @@ class SupabaseStorageService {
     _fileAPI = Supabase.instance.client.storage.from(bucketID);
   }
 
-  Future<String?> getFileUrl(String path) async {
-    String publicUrl = _fileAPI.getPublicUrl(path);
-
-    return await _existFile(publicUrl) ? publicUrl : null;
+  String getPublicUrl() {
+    return _fileAPI.getPublicUrl('');
   }
 
   Future<Markdown> downloadMarkdownFile({required String path}) {
@@ -27,11 +25,5 @@ class SupabaseStorageService {
         content: utf8.decode(value),
       );
     });
-  }
-
-  Future<bool> _existFile(String path) {
-    return Client()
-        .get(Uri.parse(path))
-        .then((value) => value.statusCode ~/ 100 == 2);
   }
 }

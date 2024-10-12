@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
+import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/tags.dart';
@@ -70,21 +72,43 @@ class PostPage extends HookConsumerWidget {
                       SliverToBoxAdapter(
                         child: Tags(tags: post.tags),
                       ),
-                      if (post.thumbnail != null) ...[
-                        const SliverToBoxAdapter(child: SizedBox(height: 8)),
-                        SliverToBoxAdapter(
-                          child: Image.network(
-                            post.thumbnail!,
-                            fit: BoxFit.cover,
+                      SliverToBoxAdapter(
+                        child: Image.network(
+                          post.thumbnail,
+                          frameBuilder:
+                              (context, child, frame, wasSynchronouslyLoaded) =>
+                                  Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: child,
                           ),
+                          errorBuilder: (context, error, stackTrace) =>
+                              const SizedBox(),
                         ),
-                      ],
+                      ),
                       const SliverToBoxAdapter(child: SizedBox(height: 32)),
                       const SliverToBoxAdapter(child: Divider()),
                       SliverToBoxAdapter(
                         child: MarkdownBody(
                           styleSheet: customMarkdownStyleSheet(context),
                           data: post.content,
+                          imageBuilder: (uri, title, alt) {
+                            String originUri = uri.path;
+                            Widget child;
+
+                            if (RegExp(r'.svg').hasMatch(originUri)) {
+                              child = SvgPicture.network(
+                                  postBucketURL + '${post.id}/$originUri');
+                            } else {
+                              child = Image.network(
+                                  postBucketURL + '${post.id}/$originUri');
+                            }
+
+                            return Container(
+                              margin: const EdgeInsets.all(16),
+                              alignment: Alignment.center,
+                              child: child,
+                            );
+                          },
                         ),
                       ),
                     ],
