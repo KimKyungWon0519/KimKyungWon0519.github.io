@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Comment extends StatelessWidget {
-  const Comment({super.key});
+class CommentField extends StatelessWidget {
+  const CommentField({super.key});
 
   @override
   Widget build(BuildContext context) {
