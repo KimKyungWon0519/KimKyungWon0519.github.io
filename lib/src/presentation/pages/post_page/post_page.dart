@@ -7,6 +7,7 @@ import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
 import 'dart:html' as html;
 
+import 'local_widgets/comment.dart';
 import 'local_widgets/header.dart';
 
 class PostPage extends BasedScrollLayout {
@@ -63,6 +64,11 @@ class PostPage extends BasedScrollLayout {
                       content: post.content,
                     ),
                   ),
+                  const SliverPadding(
+                    sliver: SliverToBoxAdapter(child: Divider()),
+                    padding: EdgeInsets.symmetric(vertical: 32),
+                  ),
+                  const SliverToBoxAdapter(child: Comment()),
                   const SliverToBoxAdapter(
                       child: SizedBox(height: kToolbarHeight)),
                 ]
