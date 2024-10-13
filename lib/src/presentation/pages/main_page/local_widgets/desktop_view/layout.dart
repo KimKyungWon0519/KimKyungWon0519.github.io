@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../sliver_widgets/header.dart';
+import '../header.dart';
 import 'classified_panel.dart';
 import '../../sliver_widgets/preview_listview.dart';
 

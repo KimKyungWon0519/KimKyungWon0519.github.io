@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../local_widgets/blog_title.dart';
-import '../local_widgets/introduction.dart';
+import 'blog_title.dart';
+import 'introduction.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
