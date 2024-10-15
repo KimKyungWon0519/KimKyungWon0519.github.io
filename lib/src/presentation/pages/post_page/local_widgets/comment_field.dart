@@ -74,9 +74,12 @@ class _Body extends HookWidget {
   Widget build(BuildContext context) {
     final TextEditingController textEditingController =
         useTextEditingController();
+    final ValueNotifier<String> text = useState('');
 
     useEffect(() {
-      void updateText() {}
+      void updateText() {
+        text.value = textEditingController.text;
+      }
 
       tabController.addListener(updateText);
 
