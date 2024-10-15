@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
 import 'package:kkw_blog/src/presentation/riverpods/classified_types_notifier.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
@@ -123,10 +124,12 @@ class _All extends ConsumerWidget {
         onPressed: () => onSelected?.call(data),
         child: Text('$data'),
       ),
-      error: (error, stackTrace) => const Text('전체보기 (0)'),
-      loading: () => const Text('전체보기 (0)'),
+      error: (error, stackTrace) => _defaultWidget,
+      loading: () => _defaultWidget,
     );
   }
+
+  Widget get _defaultWidget => Text(const AllType(0).toString());
 }
 
 class _Categories extends ConsumerWidget {
@@ -154,7 +157,7 @@ class _Categories extends ConsumerWidget {
         error: (error, stackTrace) => [],
         loading: () => [],
       ),
-      child: const Text('카테고리'),
+      child: Text(Messages.of(context).category),
     );
   }
 }
@@ -183,7 +186,7 @@ class _Tags extends ConsumerWidget {
         error: (error, stackTrace) => [],
         loading: () => [],
       ),
-      child: const Text('태그'),
+      child: Text(Messages.of(context).tag),
     );
   }
 }

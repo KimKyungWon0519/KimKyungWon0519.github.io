@@ -74,7 +74,7 @@ class _SubTitle extends StatelessWidget {
     ThemeData themeData = Theme.of(context);
 
     return Text(
-      '김경원의 개발 블로그',
+      Messages.of(context).subTitle,
       style: themeData.textTheme.bodyMedium,
     );
   }
