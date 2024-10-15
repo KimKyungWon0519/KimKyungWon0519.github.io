@@ -22,7 +22,7 @@ class CommentField extends HookWidget {
       child: Column(
         children: [
           _Header(controller: tabController),
-          _Body(tabController: tabController),
+          _Body(controller: tabController),
         ],
       ),
     );
@@ -64,10 +64,10 @@ class _Header extends StatelessWidget {
 }
 
 class _Body extends HookWidget {
-  final TabController tabController;
+  final TabController controller;
 
   const _Body({
-    required this.tabController,
+    required this.controller,
   });
 
   @override
@@ -81,9 +81,9 @@ class _Body extends HookWidget {
         text.value = textEditingController.text;
       }
 
-      tabController.addListener(updateText);
+      controller.addListener(updateText);
 
-      return () => tabController.removeListener(updateText);
+      return () => controller.removeListener(updateText);
     }, [textEditingController]);
 
     return Expanded(
@@ -91,7 +91,7 @@ class _Body extends HookWidget {
         color: Theme.of(context).colorScheme.primary,
         padding: const EdgeInsets.all(8),
         child: TabBarView(
-          controller: tabController,
+          controller: controller,
           children: [
             _InputField(controller: textEditingController),
             _Preview(text: text.value),
