@@ -21,33 +21,16 @@ class CommentField extends HookWidget {
     return Container(
       height: height * 0.35,
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onPrimaryContainer,
         borderRadius: BorderRadius.circular(5),
       ),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Column(
         children: [
           _Header(controller: tabController),
-          _Body(
-            controller: tabController,
-            scrollController: controller,
-          ),
-          Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.all(8),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                padding: WidgetStatePropertyAll(
-                  EdgeInsets.all(16),
-                ),
-              ),
-              child: Text('작성완료'),
+          Expanded(
+            child: _Body(
+              controller: tabController,
+              scrollController: controller,
             ),
           ),
         ],
@@ -65,27 +48,29 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabBar(
-      controller: controller,
-      dividerColor: Colors.transparent,
-      unselectedLabelColor: Colors.grey,
-      physics: const NeverScrollableScrollPhysics(),
-      isScrollable: true,
-      tabAlignment: TabAlignment.start,
-      indicatorSize: TabBarIndicatorSize.tab,
-      overlayColor: WidgetStateProperty.all(Colors.transparent),
-      indicator: BoxDecoration(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(5),
-          topRight: Radius.circular(5),
+    return ColoredBox(
+      color: Theme.of(context).colorScheme.onPrimaryContainer,
+      child: TabBar(
+        controller: controller,
+        dividerColor: Colors.transparent,
+        unselectedLabelColor: Colors.grey,
+        physics: const NeverScrollableScrollPhysics(),
+        isScrollable: true,
+        tabAlignment: TabAlignment.start,
+        indicatorSize: TabBarIndicatorSize.tab,
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
+        indicator: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),
+          ),
+          color: Theme.of(context).colorScheme.primaryContainer,
         ),
-        color: Theme.of(context).colorScheme.primary,
+        tabs: [
+          Tab(text: Messages.of(context).write),
+          Tab(text: Messages.of(context).preview),
+        ],
       ),
-      labelColor: Theme.of(context).colorScheme.primaryContainer,
-      tabs: [
-        Tab(text: Messages.of(context).write),
-        Tab(text: Messages.of(context).preview),
-      ],
     );
   }
 }
@@ -115,24 +100,46 @@ class _Body extends HookWidget {
       return () => controller.removeListener(updateText);
     }, [textEditingController]);
 
-    return Expanded(
-      child: Container(
-        color: Theme.of(context).colorScheme.primary,
-        padding: const EdgeInsets.all(8),
-        child: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: controller,
-          children: [
-            _InputField(
-              controller: textEditingController,
-              scrollController: scrollController,
+    return Container(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          Expanded(
+            child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: controller,
+              children: [
+                _InputField(
+                  controller: textEditingController,
+                  scrollController: scrollController,
+                ),
+                _Preview(
+                  text: text.value,
+                  scrollController: scrollController,
+                ),
+              ],
             ),
-            _Preview(
-              text: text.value,
-              scrollController: scrollController,
+          ),
+          Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.all(8),
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                shape: WidgetStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                padding: WidgetStatePropertyAll(
+                  EdgeInsets.all(16),
+                ),
+              ),
+              child: Text('작성완료'),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -149,14 +156,14 @@ class _InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = Theme.of(context).colorScheme.primaryContainer;
+    Color color = Theme.of(context).colorScheme.primary;
 
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Theme(
         data: Theme.of(context).copyWith(
           textSelectionTheme: TextSelectionThemeData(
-            selectionColor: Theme.of(context).colorScheme.secondary,
+            selectionColor: Theme.of(context).colorScheme.onSecondaryContainer,
           ),
         ),
         child: TextField(
@@ -169,6 +176,9 @@ class _InputField extends StatelessWidget {
           style: TextStyle(color: color, fontSize: 12),
           textAlignVertical: TextAlignVertical.top,
           decoration: InputDecoration(
+            filled: true,
+            fillColor: Theme.of(context).colorScheme.onPrimary,
+            hoverColor: Theme.of(context).colorScheme.onPrimary,
             counterStyle: TextStyle(color: color),
             border: const OutlineInputBorder(),
             focusedBorder: OutlineInputBorder(
