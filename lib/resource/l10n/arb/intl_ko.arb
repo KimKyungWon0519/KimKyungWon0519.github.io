@@ -15,5 +15,7 @@
     "preview": "미리보기",
     "@preview": {},
     "scrollUp": "맨 위로",
-    "@scrollUp": {}
+    "@scrollUp": {},
+    "completedWriting": "작성완료",
+    "@completedWriting": {}
 }

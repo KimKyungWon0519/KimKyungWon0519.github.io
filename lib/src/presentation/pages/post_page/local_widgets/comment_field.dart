@@ -216,7 +216,7 @@ class _CompletedButton extends StatelessWidget {
           EdgeInsets.all(16),
         ),
       ),
-      child: const Text('작성완료'),
+      child: Text(Messages.of(context).completedWriting),
     );
   }
 }
