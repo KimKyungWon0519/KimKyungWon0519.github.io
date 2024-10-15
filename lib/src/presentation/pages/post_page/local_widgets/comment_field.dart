@@ -75,6 +75,14 @@ class _Body extends HookWidget {
     final TextEditingController textEditingController =
         useTextEditingController();
 
+    useEffect(() {
+      void updateText() {}
+
+      tabController.addListener(updateText);
+
+      return () => tabController.removeListener(updateText);
+    }, [textEditingController]);
+
     return Expanded(
       child: Container(
         color: Theme.of(context).colorScheme.primary,
