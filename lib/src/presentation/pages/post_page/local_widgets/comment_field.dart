@@ -9,8 +9,7 @@ class CommentField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final TabController tabController = useTabController(initialLength: 2);
-    final TextEditingController textEditingController =
-        useTextEditingController();
+
     final double height = MediaQuery.sizeOf(context).height;
 
     return Container(
@@ -23,10 +22,7 @@ class CommentField extends HookWidget {
       child: Column(
         children: [
           _Header(controller: tabController),
-          _Body(
-            tabController: tabController,
-            textEditingController: textEditingController,
-          ),
+          _Body(tabController: tabController),
         ],
       ),
     );
@@ -69,15 +65,16 @@ class _Header extends StatelessWidget {
 
 class _Body extends StatelessWidget {
   final TabController tabController;
-  final TextEditingController textEditingController;
 
   const _Body({
     required this.tabController,
-    required this.textEditingController,
   });
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController textEditingController =
+        useTextEditingController();
+
     return Expanded(
       child: Container(
         color: Theme.of(context).colorScheme.primary,
