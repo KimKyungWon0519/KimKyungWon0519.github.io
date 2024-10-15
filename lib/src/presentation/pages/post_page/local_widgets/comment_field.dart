@@ -135,23 +135,30 @@ class _InputField extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: TextField(
-        scrollController: scrollController,
-        controller: controller,
-        expands: true,
-        maxLines: null,
-        maxLength: 500,
-        cursorColor: color,
-        style: TextStyle(color: color, fontSize: 12),
-        textAlignVertical: TextAlignVertical.top,
-        decoration: InputDecoration(
-          counterStyle: TextStyle(color: color),
-          border: const OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: color),
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          textSelectionTheme: TextSelectionThemeData(
+            selectionColor: Theme.of(context).colorScheme.secondary,
           ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: color),
+        ),
+        child: TextField(
+          scrollController: scrollController,
+          controller: controller,
+          expands: true,
+          maxLines: null,
+          maxLength: 500,
+          cursorColor: color,
+          style: TextStyle(color: color, fontSize: 12),
+          textAlignVertical: TextAlignVertical.top,
+          decoration: InputDecoration(
+            counterStyle: TextStyle(color: color),
+            border: const OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: color),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: color),
+            ),
           ),
         ),
       ),
