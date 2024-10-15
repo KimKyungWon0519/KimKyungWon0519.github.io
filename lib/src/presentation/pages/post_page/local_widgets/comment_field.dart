@@ -94,7 +94,7 @@ class _Body extends HookWidget {
           controller: tabController,
           children: [
             _InputField(controller: textEditingController),
-            _Preview(controller: textEditingController),
+            _Preview(text: text.value),
           ],
         ),
       ),
@@ -139,14 +139,14 @@ class _InputField extends StatelessWidget {
 }
 
 class _Preview extends StatelessWidget {
-  final TextEditingController controller;
+  final String text;
 
   const _Preview({
-    required this.controller,
+    required this.text,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Markdown(data: controller.text);
+    return Markdown(data: text);
   }
 }
