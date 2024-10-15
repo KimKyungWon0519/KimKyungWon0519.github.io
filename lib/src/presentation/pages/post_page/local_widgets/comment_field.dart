@@ -122,23 +122,9 @@ class _Body extends HookWidget {
             ),
           ),
           Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.all(8),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                padding: WidgetStatePropertyAll(
-                  EdgeInsets.all(16),
-                ),
-              ),
-              child: Text('작성완료'),
-            ),
-          ),
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.all(8),
+              child: const _CompletedButton()),
         ],
       ),
     );
@@ -209,6 +195,28 @@ class _Preview extends StatelessWidget {
       data: text,
       controller: scrollController,
       styleSheet: customMarkdownStyleSheet(context),
+    );
+  }
+}
+
+class _CompletedButton extends StatelessWidget {
+  const _CompletedButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ButtonStyle(
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.all(16),
+        ),
+      ),
+      child: const Text('작성완료'),
     );
   }
 }
