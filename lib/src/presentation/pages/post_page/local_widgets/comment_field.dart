@@ -142,7 +142,7 @@ class _InputField extends StatelessWidget {
         maxLines: null,
         maxLength: 500,
         cursorColor: color,
-        style: TextStyle(color: color),
+        style: TextStyle(color: color, fontSize: 12),
         textAlignVertical: TextAlignVertical.top,
         decoration: InputDecoration(
           counterStyle: TextStyle(color: color),
