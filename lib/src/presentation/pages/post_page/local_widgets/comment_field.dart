@@ -63,7 +63,7 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends HookWidget {
   final TabController tabController;
 
   const _Body({
