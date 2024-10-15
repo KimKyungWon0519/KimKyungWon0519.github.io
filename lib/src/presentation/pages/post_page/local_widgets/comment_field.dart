@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
+import 'package:kkw_blog/resource/values/theme.dart';
 
 class CommentField extends HookWidget {
-  const CommentField({super.key});
+  final ScrollController controller;
+
+  const CommentField({
+    super.key,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,10 @@ class CommentField extends HookWidget {
       child: Column(
         children: [
           _Header(controller: tabController),
-          _Body(controller: tabController),
+          _Body(
+            controller: tabController,
+            scrollController: controller,
+          ),
         ],
       ),
     );
@@ -64,9 +73,11 @@ class _Header extends StatelessWidget {
 }
 
 class _Body extends HookWidget {
+  final ScrollController scrollController;
   final TabController controller;
 
   const _Body({
+    required this.scrollController,
     required this.controller,
   });
 
@@ -91,10 +102,17 @@ class _Body extends HookWidget {
         color: Theme.of(context).colorScheme.primary,
         padding: const EdgeInsets.all(8),
         child: TabBarView(
+          physics: const NeverScrollableScrollPhysics(),
           controller: controller,
           children: [
-            _InputField(controller: textEditingController),
-            _Preview(text: text.value),
+            _InputField(
+              controller: textEditingController,
+              scrollController: scrollController,
+            ),
+            _Preview(
+              text: text.value,
+              scrollController: scrollController,
+            ),
           ],
         ),
       ),
@@ -103,9 +121,11 @@ class _Body extends HookWidget {
 }
 
 class _InputField extends StatelessWidget {
+  final ScrollController scrollController;
   final TextEditingController controller;
 
   const _InputField({
+    required this.scrollController,
     required this.controller,
   });
 
@@ -116,6 +136,7 @@ class _InputField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: TextField(
+        scrollController: scrollController,
         controller: controller,
         expands: true,
         maxLines: null,
@@ -139,14 +160,20 @@ class _InputField extends StatelessWidget {
 }
 
 class _Preview extends StatelessWidget {
+  final ScrollController scrollController;
   final String text;
 
   const _Preview({
     required this.text,
+    required this.scrollController,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Markdown(data: text);
+    return Markdown(
+      data: text,
+      controller: scrollController,
+      styleSheet: customMarkdownStyleSheet(context),
+    );
   }
 }

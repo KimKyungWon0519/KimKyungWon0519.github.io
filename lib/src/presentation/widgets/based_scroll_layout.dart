@@ -11,25 +11,31 @@ abstract class BasedScrollLayout extends HookConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     ScrollController scrollController,
+    ObjectRef<bool> canScrolling,
   );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ScrollController scrollController = useScrollController();
+    final ObjectRef<bool> canScrolling = useRef(true);
 
     return Scaffold(
       body: Listener(
-        onPointerSignal: (event) => _scrollingOutside(
-          event,
-          scrollController,
-        ),
+        onPointerSignal: (event) {
+          if (canScrolling.value) {
+            _scrollingOutside(
+              event,
+              scrollController,
+            );
+          }
+        },
         child: RawScrollbar(
           trackColor: Colors.grey.withOpacity(.3),
           thumbVisibility: true,
           radius: const Radius.circular(30),
           controller: scrollController,
           thickness: 5,
-          child: childBuild(context, ref, scrollController),
+          child: childBuild(context, ref, scrollController, canScrolling),
         ),
       ),
       floatingActionButton: FabPanel(scrollController: scrollController),

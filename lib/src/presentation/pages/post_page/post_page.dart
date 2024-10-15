@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,7 +25,10 @@ class PostPage extends BasedScrollLayout {
     BuildContext context,
     WidgetRef ref,
     ScrollController scrollController,
+    ObjectRef<bool> canScrolling,
   ) {
+    final ScrollController commentScrollController = useScrollController();
+
     useEffect(() {
       String? id = _getIDParameter();
 
@@ -38,6 +43,25 @@ class PostPage extends BasedScrollLayout {
 
       return;
     }, []);
+
+    useEffect(() {
+      Timer lateChangeScrollState = Timer(Duration.zero, () {});
+
+      void disableScrollController() {
+        canScrolling.value = false;
+
+        if (lateChangeScrollState.isActive) lateChangeScrollState.cancel();
+
+        lateChangeScrollState = Timer(Durations.long2, () {
+          canScrolling.value = true;
+        });
+      }
+
+      commentScrollController.addListener(disableScrollController);
+
+      return () =>
+          commentScrollController.removeListener(disableScrollController);
+    }, [commentScrollController]);
 
     Post? post = ref.watch(postNotifierProvider);
 
@@ -68,7 +92,11 @@ class PostPage extends BasedScrollLayout {
                     sliver: SliverToBoxAdapter(child: Divider()),
                     padding: EdgeInsets.symmetric(vertical: 32),
                   ),
-                  const SliverToBoxAdapter(child: CommentField()),
+                  SliverToBoxAdapter(
+                    child: CommentField(
+                      controller: commentScrollController,
+                    ),
+                  ),
                   const SliverToBoxAdapter(
                       child: SizedBox(height: kToolbarHeight)),
                 ]

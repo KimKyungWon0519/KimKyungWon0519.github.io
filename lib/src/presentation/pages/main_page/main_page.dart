@@ -13,7 +13,11 @@ class MainPage extends BasedScrollLayout {
 
   @override
   Widget childBuild(
-      BuildContext context, WidgetRef ref, ScrollController scrollController) {
+    BuildContext context,
+    WidgetRef ref,
+    ScrollController scrollController,
+    ObjectRef<bool> canScrolling,
+  ) {
     final ObjectRef<bool> isUpdate = useRef(false);
 
     useEffect(() {
