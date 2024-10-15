@@ -49,26 +49,45 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColoredBox(
       color: Theme.of(context).colorScheme.onPrimaryContainer,
-      child: TabBar(
-        controller: controller,
-        dividerColor: Colors.transparent,
-        unselectedLabelColor: Colors.grey,
-        physics: const NeverScrollableScrollPhysics(),
-        isScrollable: true,
-        tabAlignment: TabAlignment.start,
-        indicatorSize: TabBarIndicatorSize.tab,
-        overlayColor: WidgetStateProperty.all(Colors.transparent),
-        indicator: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(5),
-            topRight: Radius.circular(5),
-          ),
-          color: Theme.of(context).colorScheme.primaryContainer,
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Expanded(
+              child: TabBar(
+                controller: controller,
+                dividerColor: Colors.transparent,
+                unselectedLabelColor: Colors.grey,
+                physics: const NeverScrollableScrollPhysics(),
+                isScrollable: true,
+                tabAlignment: TabAlignment.start,
+                indicatorSize: TabBarIndicatorSize.tab,
+                overlayColor: WidgetStateProperty.all(Colors.transparent),
+                indicator: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    topRight: Radius.circular(5),
+                  ),
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+                tabs: [
+                  Tab(
+                    text: Messages.of(context).write,
+                    height: double.infinity,
+                  ),
+                  Tab(
+                    text: Messages.of(context).preview,
+                    height: double.infinity,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.all(8),
+              child: const _CompletedButton(),
+            ),
+          ],
         ),
-        tabs: [
-          Tab(text: Messages.of(context).write),
-          Tab(text: Messages.of(context).preview),
-        ],
       ),
     );
   }
@@ -120,10 +139,6 @@ class _Body extends HookWidget {
               ],
             ),
           ),
-          Container(
-              alignment: Alignment.centerRight,
-              padding: const EdgeInsets.all(8),
-              child: const _CompletedButton()),
         ],
       ),
     );
