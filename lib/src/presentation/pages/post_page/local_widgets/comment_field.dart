@@ -19,7 +19,7 @@ class CommentField extends HookWidget {
     final double height = MediaQuery.sizeOf(context).height;
 
     return Container(
-      height: height * 0.3,
+      height: height * 0.35,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.onPrimaryContainer,
         borderRadius: BorderRadius.circular(5),
@@ -31,6 +31,24 @@ class CommentField extends HookWidget {
           _Body(
             controller: tabController,
             scrollController: controller,
+          ),
+          Container(
+            alignment: Alignment.centerRight,
+            padding: EdgeInsets.all(8),
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                shape: WidgetStatePropertyAll(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                padding: WidgetStatePropertyAll(
+                  EdgeInsets.all(16),
+                ),
+              ),
+              child: Text('작성완료'),
+            ),
           ),
         ],
       ),
