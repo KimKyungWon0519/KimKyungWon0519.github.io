@@ -67,40 +67,42 @@ class PostPage extends BasedScrollLayout {
 
     html.document.title = post?.title ?? '';
 
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        constraints: const BoxConstraints(maxWidth: 800),
-        child: CustomScrollView(
-          controller: scrollController,
-          scrollBehavior:
-              ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          slivers: post != null
-              ? [
-                  const SliverToBoxAdapter(
-                      child: SizedBox(height: kToolbarHeight)),
-                  SliverToBoxAdapter(child: Header(post: post)),
-                  const SliverToBoxAdapter(child: SizedBox(height: 32)),
-                  const SliverToBoxAdapter(child: Divider()),
-                  SliverToBoxAdapter(
-                    child: MarkdownView(
-                      id: post.id,
-                      content: post.content,
+    return SelectionArea(
+      child: Center(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          constraints: const BoxConstraints(maxWidth: 800),
+          child: CustomScrollView(
+            controller: scrollController,
+            scrollBehavior:
+                ScrollConfiguration.of(context).copyWith(scrollbars: false),
+            slivers: post != null
+                ? [
+                    const SliverToBoxAdapter(
+                        child: SizedBox(height: kToolbarHeight)),
+                    SliverToBoxAdapter(child: Header(post: post)),
+                    const SliverToBoxAdapter(child: SizedBox(height: 32)),
+                    const SliverToBoxAdapter(child: Divider()),
+                    SliverToBoxAdapter(
+                      child: MarkdownView(
+                        id: post.id,
+                        content: post.content,
+                      ),
                     ),
-                  ),
-                  const SliverPadding(
-                    sliver: SliverToBoxAdapter(child: Divider()),
-                    padding: EdgeInsets.symmetric(vertical: 32),
-                  ),
-                  SliverToBoxAdapter(
-                    child: CommentField(
-                      controller: commentScrollController,
+                    const SliverPadding(
+                      sliver: SliverToBoxAdapter(child: Divider()),
+                      padding: EdgeInsets.symmetric(vertical: 32),
                     ),
-                  ),
-                  const SliverToBoxAdapter(
-                      child: SizedBox(height: kToolbarHeight)),
-                ]
-              : [],
+                    SliverToBoxAdapter(
+                      child: CommentField(
+                        controller: commentScrollController,
+                      ),
+                    ),
+                    const SliverToBoxAdapter(
+                        child: SizedBox(height: kToolbarHeight)),
+                  ]
+                : [],
+          ),
         ),
       ),
     );
