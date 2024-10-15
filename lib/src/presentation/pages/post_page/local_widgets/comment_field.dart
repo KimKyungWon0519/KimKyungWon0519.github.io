@@ -9,6 +9,8 @@ class CommentField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final TabController tabController = useTabController(initialLength: 2);
+    final TextEditingController textEditingController =
+        useTextEditingController();
     final double height = MediaQuery.sizeOf(context).height;
 
     return Container(
@@ -21,7 +23,10 @@ class CommentField extends HookWidget {
       child: Column(
         children: [
           _Header(controller: tabController),
-          _Body(controller: tabController),
+          _Body(
+            tabController: tabController,
+            textEditingController: textEditingController,
+          ),
         ],
       ),
     );
@@ -63,10 +68,12 @@ class _Header extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  final TabController controller;
+  final TabController tabController;
+  final TextEditingController textEditingController;
 
   const _Body({
-    required this.controller,
+    required this.tabController,
+    required this.textEditingController,
   });
 
   @override
@@ -76,10 +83,10 @@ class _Body extends StatelessWidget {
         color: Theme.of(context).colorScheme.primary,
         padding: const EdgeInsets.all(8),
         child: TabBarView(
-          controller: controller,
-          children: const [
-            _InputField(),
-            _Preview(),
+          controller: tabController,
+          children: [
+            _InputField(controller: textEditingController),
+            _Preview(controller: textEditingController),
           ],
         ),
       ),
@@ -88,7 +95,11 @@ class _Body extends StatelessWidget {
 }
 
 class _InputField extends StatelessWidget {
-  const _InputField();
+  final TextEditingController controller;
+
+  const _InputField({
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +108,7 @@ class _InputField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: TextField(
+        controller: controller,
         expands: true,
         maxLines: null,
         maxLength: 500,
@@ -119,10 +131,14 @@ class _InputField extends StatelessWidget {
 }
 
 class _Preview extends StatelessWidget {
-  const _Preview({super.key});
+  final TextEditingController controller;
+
+  const _Preview({
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Markdown(data: 'data');
+    return Markdown(data: controller.text);
   }
 }
