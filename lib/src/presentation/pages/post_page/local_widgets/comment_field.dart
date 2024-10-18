@@ -141,7 +141,7 @@ class _Body extends HookWidget {
               ],
             ),
           ),
-          const _GithubLogin(),
+          const _LoginPanel(),
         ],
       ),
     );
@@ -234,6 +234,19 @@ class _CompletedButton extends StatelessWidget {
         ),
       ),
       child: Text(Messages.of(context).completedWriting),
+    );
+  }
+}
+
+class _LoginPanel extends StatelessWidget {
+  const _LoginPanel({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        _GithubLogin(),
+      ],
     );
   }
 }
