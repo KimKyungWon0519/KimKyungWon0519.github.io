@@ -141,7 +141,10 @@ class _Body extends HookWidget {
               ],
             ),
           ),
-          const _LoginPanel(),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: _LoginPanel(),
+          ),
         ],
       ),
     );
