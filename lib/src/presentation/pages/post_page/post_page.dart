@@ -63,7 +63,7 @@ class PostPage extends BasedScrollLayout {
           commentScrollController.removeListener(disableScrollController);
     }, [commentScrollController]);
 
-    Post? post = ref.watch(postNotifierProvider);
+    Post? post = ref.watch(postNotifierProvider.select((value) => value.post));
 
     html.document.title = post?.title ?? '';
 
