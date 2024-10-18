@@ -6,4 +6,8 @@ class SupabaseAuthService {
   Future<bool> loginWithGithub() async {
     return _auth.signInWithOAuth(OAuthProvider.github);
   }
+
+  bool isLogin() {
+    return _auth.currentUser != null;
+  }
 }

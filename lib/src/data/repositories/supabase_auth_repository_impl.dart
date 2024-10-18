@@ -12,4 +12,9 @@ class SupabaseAuthRepositoryImpl implements SupabaseAuthRepository {
   Future<bool> loginWithGithub() {
     return _authService.loginWithGithub();
   }
+
+  @override
+  bool isLogin() {
+    return _authService.isLogin();
+  }
 }
