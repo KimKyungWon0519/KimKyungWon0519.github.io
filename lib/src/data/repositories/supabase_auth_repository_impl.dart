@@ -4,6 +4,10 @@ import 'package:kkw_blog/src/domain/repositories/supabase_auth_repository.dart';
 class SupabaseAuthRepositoryImpl implements SupabaseAuthRepository {
   late final SupabaseAuthService _authService;
 
+  SupabaseAuthRepositoryImpl({
+    required SupabaseAuthService authService,
+  }) : _authService = authService;
+
   @override
   Future<bool> loginWithGithub() {
     return _authService.loginWithGithub();
