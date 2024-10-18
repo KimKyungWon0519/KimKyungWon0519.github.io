@@ -1,1 +1,3 @@
-abstract interface class SupabaseAuthRepository {}
+abstract interface class SupabaseAuthRepository {
+  Future<bool> loginWithGithub();
+}
