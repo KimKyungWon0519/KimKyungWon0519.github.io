@@ -141,6 +141,9 @@ class _Body extends HookWidget {
               ],
             ),
           ),
+          Divider(
+            color: Theme.of(context).colorScheme.primary,
+          ),
           const Align(
             alignment: Alignment.centerLeft,
             child: _LoginPanel(),
@@ -247,7 +250,10 @@ class _LoginPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text('login with'),
+        SizedBox(height: 8),
         _GithubLogin(),
       ],
     );
