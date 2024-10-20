@@ -17,5 +17,7 @@
     "scrollUp": "맨 위로",
     "@scrollUp": {},
     "completedWriting": "작성완료",
-    "@completedWriting": {}
+    "@completedWriting": {},
+    "blockedFieldHint": "로그인 후 작성 가능합니다.",
+    "@blockedFieldHint": {}
 }
