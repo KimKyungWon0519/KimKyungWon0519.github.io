@@ -229,7 +229,7 @@ class _Preview extends StatelessWidget {
 }
 
 class _CompletedButton extends ConsumerWidget {
-  const _CompletedButton({super.key});
+  const _CompletedButton();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -261,7 +261,7 @@ class _CompletedButton extends ConsumerWidget {
 }
 
 class _AuthPanel extends ConsumerWidget {
-  const _AuthPanel({super.key});
+  const _AuthPanel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -273,7 +273,7 @@ class _AuthPanel extends ConsumerWidget {
 }
 
 class _LoginPanel extends StatelessWidget {
-  const _LoginPanel({super.key});
+  const _LoginPanel();
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +289,7 @@ class _LoginPanel extends StatelessWidget {
 }
 
 class _LogoutPanel extends ConsumerWidget {
-  const _LogoutPanel({super.key});
+  const _LogoutPanel();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -322,7 +322,7 @@ class _LogoutPanel extends ConsumerWidget {
 }
 
 class _GithubLogin extends HookConsumerWidget {
-  const _GithubLogin({super.key});
+  const _GithubLogin();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

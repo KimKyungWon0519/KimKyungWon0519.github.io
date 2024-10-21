@@ -2,7 +2,6 @@ import 'package:go_router/go_router.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/pages/main_page/main_page.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/post_page.dart';
-import 'dart:html' as html;
 
 final class AppRoutes {
   const AppRoutes._();

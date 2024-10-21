@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
 import 'package:kkw_blog/src/core/constants/markdown_constant.dart';
 import 'package:kkw_blog/src/core/utils/markdown.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

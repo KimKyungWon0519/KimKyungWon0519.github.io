@@ -19,5 +19,5 @@ class Post with _$Post {
 
   String get createAtToString => DateFormat('yyyy년 MM월 dd일').format(createAt);
 
-  String get thumbnail => postBucketURL + '$id/thumbnail.png';
+  String get thumbnail => '$postBucketURL$id/thumbnail.png';
 }

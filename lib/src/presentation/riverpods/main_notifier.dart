@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kkw_blog/src/dependency_injection.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
-import 'package:kkw_blog/src/domain/repositories/supabase_database_repository.dart';
 import 'package:kkw_blog/src/domain/repositories/supabase_stroage_repository.dart';
 import 'package:kkw_blog/src/presentation/riverpods/classified_types_notifier.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

@@ -24,9 +24,9 @@ class MarkdownView extends StatelessWidget {
         Widget child;
 
         if (RegExp(r'.svg').hasMatch(originUri)) {
-          child = SvgPicture.network(postBucketURL + '$id/$originUri');
+          child = SvgPicture.network('$postBucketURL$id/$originUri');
         } else {
-          child = Image.network(postBucketURL + '$id/$originUri');
+          child = Image.network('$postBucketURL$id/$originUri');
         }
 
         return Container(

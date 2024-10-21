@@ -33,7 +33,7 @@ class Header extends StatelessWidget {
 class _Title extends StatelessWidget {
   final String title;
 
-  const _Title(this.title, {super.key});
+  const _Title(this.title);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _Title extends StatelessWidget {
 class _Thumbnail extends StatelessWidget {
   final String thumbnail;
 
-  const _Thumbnail(this.thumbnail, {super.key});
+  const _Thumbnail(this.thumbnail);
 
   @override
   Widget build(BuildContext context) {
