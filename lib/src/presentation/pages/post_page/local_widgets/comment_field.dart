@@ -148,7 +148,7 @@ class _Body extends HookWidget {
           ),
           const Align(
             alignment: Alignment.centerLeft,
-            child: _LoginPanel(),
+            child: _AuthPanel(),
           ),
         ],
       ),
@@ -260,6 +260,18 @@ class _CompletedButton extends ConsumerWidget {
   }
 }
 
+class _AuthPanel extends ConsumerWidget {
+  const _AuthPanel({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool isLogin =
+        ref.watch(postNotifierProvider.select((value) => value.isLogin));
+
+    return isLogin ? const _LogoutPanel() : const _LoginPanel();
+  }
+}
+
 class _LoginPanel extends StatelessWidget {
   const _LoginPanel({super.key});
 
@@ -273,6 +285,15 @@ class _LoginPanel extends StatelessWidget {
         _GithubLogin(),
       ],
     );
+  }
+}
+
+class _LogoutPanel extends StatelessWidget {
+  const _LogoutPanel({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
 
