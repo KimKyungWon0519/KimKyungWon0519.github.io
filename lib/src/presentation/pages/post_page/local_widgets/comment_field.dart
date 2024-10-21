@@ -348,8 +348,6 @@ class _GithubLogin extends HookConsumerWidget {
 
     String currentURL = html.document.window?.location.toString() ?? '';
 
-    bool result = await postNotifier.loginWithGithub(currentURL);
-
-    postNotifier.isLogin = result;
+    postNotifier.loginWithGithub(currentURL);
   }
 }
