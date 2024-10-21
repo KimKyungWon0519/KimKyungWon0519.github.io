@@ -19,5 +19,7 @@
     "completedWriting": "작성완료",
     "@completedWriting": {},
     "blockedFieldHint": "로그인 후 작성 가능합니다.",
-    "@blockedFieldHint": {}
+    "@blockedFieldHint": {},
+    "logout": "로그아웃",
+    "@logout": {}
 }

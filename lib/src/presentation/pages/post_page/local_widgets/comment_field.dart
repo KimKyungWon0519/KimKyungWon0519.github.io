@@ -293,7 +293,21 @@ class _LogoutPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return ElevatedButton.icon(
+      onPressed: () {},
+      style: ButtonStyle(
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.all(16),
+        ),
+      ),
+      label: Text(Messages.of(context).logout),
+      icon: const Icon(Icons.logout_rounded),
+    );
   }
 }
 
