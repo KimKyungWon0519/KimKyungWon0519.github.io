@@ -1,4 +1,4 @@
 abstract interface class SupabaseAuthRepository {
-  Future<bool> loginWithGithub();
+  Future<bool> loginWithGithub(String redirectURL);
   bool isLogin();
 }

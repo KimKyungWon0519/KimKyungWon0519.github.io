@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/resource/assets.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
+import 'dart:html' as html;
 
 class CommentField extends HookWidget {
   final ScrollController controller;
@@ -277,22 +276,35 @@ class _LoginPanel extends StatelessWidget {
   }
 }
 
-class _GithubLogin extends StatelessWidget {
+class _GithubLogin extends HookConsumerWidget {
   const _GithubLogin({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 40,
-      height: 40,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      padding: const EdgeInsets.all(8),
-      child: SvgPicture.asset(
-        githubLogo,
+  Widget build(BuildContext context, WidgetRef ref) {
+    return GestureDetector(
+      onTap: () => _loginWithGithub(ref),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        padding: const EdgeInsets.all(8),
+        child: SvgPicture.asset(
+          githubLogo,
+        ),
       ),
     );
+  }
+
+  void _loginWithGithub(WidgetRef ref) async {
+    PostNotifier postNotifier = ref.read(postNotifierProvider.notifier);
+
+    String currentURL = html.document.window?.location.toString() ?? '';
+
+    bool result = await postNotifier.loginWithGithub(currentURL);
+
+    postNotifier.isLogin = result;
   }
 }

@@ -23,12 +23,18 @@ class PostNotifier extends _$PostNotifier {
         isLogin: false,
       );
 
+  set isLogin(bool value) => state = state.copyWith(isLogin: value);
+
   void updatePost({Post? post, String? fileName}) async {
     if (fileName == null) return;
 
     post ??= await _supabaseStorageRepository.getPostFile(fileName);
 
     state = state.copyWith(post: post);
+  }
+
+  Future<bool> loginWithGithub(String redirectURL) {
+    return _supabaseAuthRepository.loginWithGithub(redirectURL);
   }
 }
 
