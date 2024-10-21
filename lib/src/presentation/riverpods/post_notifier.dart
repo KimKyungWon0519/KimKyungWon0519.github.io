@@ -18,9 +18,9 @@ class PostNotifier extends _$PostNotifier {
         _supabaseAuthRepository = instance<SupabaseAuthRepository>();
 
   @override
-  PostNotifierState build() => const PostNotifierState(
+  PostNotifierState build() => PostNotifierState(
         post: null,
-        isLogin: false,
+        isLogin: _supabaseAuthRepository.isLogin(),
       );
 
   set isLogin(bool value) => state = state.copyWith(isLogin: value);
