@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/resource/assets.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
+import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
+import 'dart:html' as html;
 
 class CommentField extends HookWidget {
   final ScrollController controller;
@@ -139,13 +143,20 @@ class _Body extends HookWidget {
               ],
             ),
           ),
+          Divider(
+            color: Theme.of(context).colorScheme.primary,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: _AuthPanel(),
+          ),
         ],
       ),
     );
   }
 }
 
-class _InputField extends StatelessWidget {
+class _InputField extends ConsumerWidget {
   final ScrollController scrollController;
   final TextEditingController controller;
 
@@ -155,7 +166,9 @@ class _InputField extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bool isLogin =
+        ref.watch(postNotifierProvider.select((value) => value.isLogin));
     Color color = Theme.of(context).colorScheme.primary;
 
     return Padding(
@@ -167,6 +180,7 @@ class _InputField extends StatelessWidget {
           ),
         ),
         child: TextField(
+          readOnly: !isLogin,
           scrollController: scrollController,
           controller: controller,
           expands: true,
@@ -187,6 +201,7 @@ class _InputField extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: color),
             ),
+            hintText: !isLogin ? Messages.of(context).blockedFieldHint : null,
           ),
         ),
       ),
@@ -213,13 +228,73 @@ class _Preview extends StatelessWidget {
   }
 }
 
-class _CompletedButton extends StatelessWidget {
+class _CompletedButton extends ConsumerWidget {
   const _CompletedButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    bool isLogin =
+        ref.watch(postNotifierProvider.select((value) => value.isLogin));
+
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: isLogin ? () {} : null,
+      style: ButtonStyle(
+        mouseCursor: WidgetStatePropertyAll(
+            isLogin ? null : SystemMouseCursors.forbidden),
+        shape: WidgetStatePropertyAll(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        padding: const WidgetStatePropertyAll(
+          EdgeInsets.all(16),
+        ),
+        backgroundColor: WidgetStatePropertyAll(colorScheme.surface),
+      ),
+      child: Text(
+        Messages.of(context).completedWriting,
+        style: TextStyle(color: colorScheme.primary),
+      ),
+    );
+  }
+}
+
+class _AuthPanel extends ConsumerWidget {
+  const _AuthPanel({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool isLogin =
+        ref.watch(postNotifierProvider.select((value) => value.isLogin));
+
+    return isLogin ? const _LogoutPanel() : const _LoginPanel();
+  }
+}
+
+class _LoginPanel extends StatelessWidget {
+  const _LoginPanel({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('login with'),
+        SizedBox(height: 8),
+        _GithubLogin(),
+      ],
+    );
+  }
+}
+
+class _LogoutPanel extends ConsumerWidget {
+  const _LogoutPanel({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ElevatedButton.icon(
+      onPressed: () => _logout(ref),
       style: ButtonStyle(
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
@@ -230,7 +305,49 @@ class _CompletedButton extends StatelessWidget {
           EdgeInsets.all(16),
         ),
       ),
-      child: Text(Messages.of(context).completedWriting),
+      label: Text(Messages.of(context).logout),
+      icon: const Icon(Icons.logout_rounded),
     );
+  }
+
+  void _logout(WidgetRef ref) {
+    PostNotifier postNotifier = ref.read(postNotifierProvider.notifier);
+
+    postNotifier.logout().then(
+      (value) {
+        postNotifier.isLogin = false;
+      },
+    );
+  }
+}
+
+class _GithubLogin extends HookConsumerWidget {
+  const _GithubLogin({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return GestureDetector(
+      onTap: () => _loginWithGithub(ref),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        padding: const EdgeInsets.all(8),
+        child: SvgPicture.asset(
+          githubLogo,
+        ),
+      ),
+    );
+  }
+
+  void _loginWithGithub(WidgetRef ref) async {
+    PostNotifier postNotifier = ref.read(postNotifierProvider.notifier);
+
+    String currentURL = html.document.window?.location.toString() ?? '';
+
+    postNotifier.loginWithGithub(currentURL);
   }
 }
