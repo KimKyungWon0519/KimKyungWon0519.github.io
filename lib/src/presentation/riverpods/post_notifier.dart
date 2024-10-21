@@ -36,6 +36,10 @@ class PostNotifier extends _$PostNotifier {
   Future<bool> loginWithGithub(String redirectURL) {
     return _supabaseAuthRepository.loginWithGithub(redirectURL);
   }
+
+  Future<void> logout() {
+    return _supabaseAuthRepository.logout();
+  }
 }
 
 @freezed

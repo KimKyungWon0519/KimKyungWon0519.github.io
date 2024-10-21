@@ -288,13 +288,13 @@ class _LoginPanel extends StatelessWidget {
   }
 }
 
-class _LogoutPanel extends StatelessWidget {
+class _LogoutPanel extends ConsumerWidget {
   const _LogoutPanel({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton.icon(
-      onPressed: () {},
+      onPressed: () => _logout(ref),
       style: ButtonStyle(
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
@@ -307,6 +307,16 @@ class _LogoutPanel extends StatelessWidget {
       ),
       label: Text(Messages.of(context).logout),
       icon: const Icon(Icons.logout_rounded),
+    );
+  }
+
+  void _logout(WidgetRef ref) {
+    PostNotifier postNotifier = ref.read(postNotifierProvider.notifier);
+
+    postNotifier.logout().then(
+      (value) {
+        postNotifier.isLogin = false;
+      },
     );
   }
 }

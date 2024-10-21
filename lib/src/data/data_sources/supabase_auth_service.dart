@@ -10,6 +10,10 @@ class SupabaseAuthService {
     );
   }
 
+  Future<void> logout() async {
+    return _auth.signOut(scope: SignOutScope.global);
+  }
+
   bool isLogin() {
     return _auth.currentUser != null;
   }

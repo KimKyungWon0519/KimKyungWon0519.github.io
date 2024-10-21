@@ -14,6 +14,11 @@ class SupabaseAuthRepositoryImpl implements SupabaseAuthRepository {
   }
 
   @override
+  Future<void> logout() {
+    return _authService.logout();
+  }
+
+  @override
   bool isLogin() {
     return _authService.isLogin();
   }
