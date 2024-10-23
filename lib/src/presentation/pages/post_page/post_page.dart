@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
+import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_view.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/markdown_view.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
@@ -97,6 +98,7 @@ class PostPage extends BasedScrollLayout {
                       controller: commentScrollController,
                     ),
                   ),
+                  const SliverToBoxAdapter(child: CommentView()),
                   const SliverToBoxAdapter(
                       child: SizedBox(height: kToolbarHeight)),
                 ]
