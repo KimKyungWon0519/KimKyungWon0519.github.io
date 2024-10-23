@@ -1,5 +1,6 @@
 import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/data/entities/category_count.dart';
+import 'package:kkw_blog/src/data/entities/comment.dart';
 import 'package:kkw_blog/src/data/entities/post.dart';
 import 'package:kkw_blog/src/data/entities/tag_count.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -44,5 +45,9 @@ class SupabaseDatabaseService {
         params: {
           'post_name': name,
         }).then((result) => Post.fromJson(result.single));
+  }
+
+  Future<void> saveComment(Map<String, dynamic> data) {
+    return _client.from(CommentsTable.tableName).insert(data);
   }
 }
