@@ -13,33 +13,85 @@
   - **/l10n/arb**  
     다국어(텍스트) 관리
   - /values
-    - **color_sheme.dart**  
+    - **color_sheme.dart**    
       앱 색상 관리
-    - **theme.dart**  
+    - **theme.dart**    
       앱 테마 관리
-  - **assets.dart**  
+  - **assets.dart**    
     assets 경로 관리
 - /src
   - /core
+    - /constants
+      - **markdown_constant.dart**    
+        마크다운 파일 관련 상수 관리
+      - **supabase.dart**    
+        supabase 관련 상수 관리 (api_key, table 등)
     - /riverpods
-      - **theme_mode_notifier.dart**  
+      - **theme_mode_notifier.dart**    
         테마 상태 관리
     - /routes
-      - **app_pages.dart**  
+      - **app_pages.dart**    
         라우터 config 관리
-      - **app_routes.dart**  
+      - **app_routes.dart**    
         라우터 이름 관리
+    - /utils
+      - **markdown_formatter.dart**    
+        마크다운을 머릿말/본문 분리
+      - **markdown.dart**    
+        마크다운 데이터 객체
+  - /data
+    - /data_sources
+      - **supabase_auth_service.dart**    
+        supabase 로그인 관리 서비스 객체
+      - **supabase_database_service.dart**    
+        supabase 데이터베이스 관리 서비스 객체
+      - **supabase_storage_service.dart**    
+        supabase 저장소 관리 서비스 객체
+    - /entities
+      - **category_count.dart**    
+        특정 카테고리의 글 개수를 가진 데이터 객체
+      - **post.dart**    
+        글 데이터 객체
+      - **tag_count.dart**    
+        특정 태그의 글 개수를 가진 데이터 객체
+    - /mappers
+      - **post_mapper.dart**    
+        Markdown 객체를 Post 객체로 변환하는 도구
+    - **/repositories (구현체)**  
+      domain/repositories의 구현체
+      - supabase_auth_repository_impl.dart
+      - supabase_database_repository_impl.dart
+      - supabase_stroage_repository_impl.dart
   - /domain
-    - /models/
-      - **classification_type.dart**  
+    - /models
+      - **classification_type.dart**      
         전체보기/카테고리/태그 모델 
+      - **post.dart**    
+        글 데이터 객체
+    - /repositories (추상체)
+      - **supabase_auth_repository.dart**  
+        supabase의 로그인 관련 추상 레포 객체
+      - **supabase_database_repository.dart**  
+        supabase의 데이터 베이스 관련 추상 레포 객체
+      - **supabase_stroage_repository.dart**  
+        supabase의 저장소 관련 추상 레포 객체
   - /presentation
     - /pages
+      - **/post_page**  
+        글 페이지 디자인
       - **/main_page**  
         메인 페이지 디자인
     - /riverpods
-      - **main_notifier.dart**  
+      - **main_notifier.dart**    
         메인 페이지 상태 관리
+      - **post_notifier.dart**  
+        글 페이지 상태 관리
+      - **classified_types_notifier.dart**  
+        전체보기/카테고리/태그의 개수 데이터 상태 관리
+    - **/widgets**  
+      글로벌 위젯 관리
+  - **dependency_injection.dart**  
+    의존성 주입
 
 ---
 ### 프로젝트 준비
