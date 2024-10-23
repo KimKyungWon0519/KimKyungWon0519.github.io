@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/data/entities/category_count.dart';
 import 'package:kkw_blog/src/data/entities/comment.dart';
@@ -48,6 +49,9 @@ class SupabaseDatabaseService {
   }
 
   Future<void> saveComment(Map<String, dynamic> data) {
-    return _client.from(CommentsTable.tableName).insert(data);
+    return _client
+        .from(CommentsTable.tableName)
+        .insert(data)
+        .catchError((error) {});
   }
 }

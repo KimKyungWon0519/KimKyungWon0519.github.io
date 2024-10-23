@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/resource/assets.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
+import 'package:kkw_blog/src/core/routes/app_routes.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'dart:html' as html;
 
@@ -247,7 +249,7 @@ class _CompletedButton extends ConsumerWidget {
         ref.watch(postNotifierProvider.select((value) => value.isLogin));
 
     return ElevatedButton(
-      onPressed: isLogin ? () {} : null,
+      onPressed: isLogin ? () => _submit(context, ref) : null,
       style: ButtonStyle(
         mouseCursor: WidgetStatePropertyAll(
             isLogin ? null : SystemMouseCursors.forbidden),
@@ -266,6 +268,32 @@ class _CompletedButton extends ConsumerWidget {
         style: TextStyle(color: colorScheme.primary),
       ),
     );
+  }
+
+  void _submit(BuildContext context, WidgetRef ref) async {
+    TextEditingController textEditingController =
+        _ControllersProvider.of(context).textEditingController;
+    String content =
+        _ControllersProvider.of(context).textEditingController.text;
+
+    if (content.isEmpty) return;
+
+    showDialog(
+      context: context,
+      builder: (_) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+      barrierDismissible: false,
+    );
+
+    await ref
+        .read(postNotifierProvider.notifier)
+        .submitComment(content)
+        .then((_) {
+      textEditingController.clear();
+    });
+
+    context.pop();
   }
 }
 

@@ -49,18 +49,17 @@ class PostNotifier extends _$PostNotifier {
     state = state.copyWith(user: user);
   }
 
-  void submitComment(String content) {
+  Future<void> submitComment(String content) async {
     if (state.post == null || !state.isLogin) return;
 
     Comment comment = Comment(
       userUUID: state.user!.uuid,
       userName: state.user!.userName,
       content: content,
-      createAt: DateTime.now(),
       postID: state.post!.id,
     );
 
-    _supabaseDatabaseRepository.saveComment(comment);
+    await _supabaseDatabaseRepository.saveComment(comment);
   }
 }
 

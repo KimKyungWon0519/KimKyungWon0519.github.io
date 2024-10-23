@@ -13,7 +13,7 @@ final class AppRoutes {
   );
 
   static final GoRoute post = GoRoute(
-    path: '/:id',
+    path: '/:route_id',
     builder: (context, state) {
       Post? post;
 

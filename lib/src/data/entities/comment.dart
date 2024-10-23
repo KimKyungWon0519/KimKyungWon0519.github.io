@@ -7,10 +7,14 @@ part 'comment.g.dart';
 @freezed
 class Comment with _$Comment {
   const factory Comment({
-    required int? id,
+    @JsonKey(includeToJson: false) required int? id,
     required String content,
-    required String userUUID,
-    @JsonKey(name: CommentsTable.createAt) required DateTime createAt,
+    @JsonKey(name: CommentsTable.userUUID) required String userUUID,
+    @JsonKey(
+      name: CommentsTable.createAt,
+      includeToJson: false,
+    )
+    required DateTime? createAt,
     @JsonKey(name: CommentsTable.postID) required int postID,
   }) = _Comment;
 

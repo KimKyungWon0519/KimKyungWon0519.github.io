@@ -52,6 +52,6 @@ final class CommentsTable {
   static const String id = 'id';
   static const String content = 'content';
   static const String userUUID = 'user_uuid';
-  static const String createAt = 'create_at';
+  static const String createAt = 'created_at';
   static const String postID = 'post_id';
 }
