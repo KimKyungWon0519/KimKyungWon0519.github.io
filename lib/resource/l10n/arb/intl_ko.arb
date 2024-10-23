@@ -21,5 +21,13 @@
     "blockedFieldHint": "로그인 후 작성 가능합니다.",
     "@blockedFieldHint": {},
     "logout": "로그아웃",
-    "@logout": {}
+    "@logout": {},
+    "commentCount": "댓글 ({count})",
+    "@commentCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    }
 }
