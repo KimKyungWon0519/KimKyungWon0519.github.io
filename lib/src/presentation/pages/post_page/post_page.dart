@@ -7,6 +7,7 @@ import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_info.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_view.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/markdown_view.dart';
+import 'package:kkw_blog/src/presentation/pages/post_page/sliver_widgets/comment_listview.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
 import 'dart:html' as html;
@@ -105,7 +106,7 @@ class PostPage extends BasedScrollLayout {
                       child: CommentInfo(),
                     ),
                   ),
-                  const SliverToBoxAdapter(child: CommentView()),
+                  const CommentListview(),
                   const SliverToBoxAdapter(
                       child: SizedBox(height: kToolbarHeight)),
                 ]
