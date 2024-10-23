@@ -5,6 +5,7 @@ part 'comment.freezed.dart';
 @freezed
 class Comment with _$Comment {
   const factory Comment({
+    required int? id,
     required String userUUID,
     required String userName,
     required String content,
