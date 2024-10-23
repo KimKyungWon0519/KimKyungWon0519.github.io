@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/dependency_injection.dart';
 import 'package:kkw_blog/src/domain/models/comment.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
@@ -49,7 +50,7 @@ class PostNotifier extends _$PostNotifier {
     state = state.copyWith(user: user);
   }
 
-  Future<void> submitComment(String content) async {
+  Future<ResponseResult> submitComment(String content) async {
     if (state.post == null || !state.isLogin) return;
 
     Comment comment = Comment(
@@ -59,7 +60,7 @@ class PostNotifier extends _$PostNotifier {
       postID: state.post!.id,
     );
 
-    await _supabaseDatabaseRepository.saveComment(comment);
+    return _supabaseDatabaseRepository.saveComment(comment);
   }
 }
 

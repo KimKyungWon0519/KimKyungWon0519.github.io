@@ -1,11 +1,17 @@
 class ResponseResult<T> {
   final bool isSuccess;
   final T? data;
-  final String? message;
+  final Exception? exception;
 
   const ResponseResult({
     required this.isSuccess,
     this.data,
-    this.message,
+    this.exception,
   });
+
+  factory ResponseResult.isSuccess(T data) =>
+      ResponseResult(isSuccess: true, data: data);
+
+  factory ResponseResult.isFailure(Exception exception) =>
+      ResponseResult(isSuccess: false, exception: exception);
 }
