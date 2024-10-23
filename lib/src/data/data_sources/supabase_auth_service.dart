@@ -3,6 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class SupabaseAuthService {
   final GoTrueClient _auth = Supabase.instance.client.auth;
 
+  User? get currentUser => _auth.currentUser;
+
   Future<bool> loginWithGithub(String redirectURL) async {
     return _auth.signInWithOAuth(
       OAuthProvider.github,

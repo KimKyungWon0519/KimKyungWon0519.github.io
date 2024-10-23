@@ -313,11 +313,7 @@ class _LogoutPanel extends ConsumerWidget {
   void _logout(WidgetRef ref) {
     PostNotifier postNotifier = ref.read(postNotifierProvider.notifier);
 
-    postNotifier.logout().then(
-      (value) {
-        postNotifier.isLogin = false;
-      },
-    );
+    postNotifier.logout().then((value) => postNotifier.updateUser());
   }
 }
 
