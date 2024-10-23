@@ -5,7 +5,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_info.dart';
-import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_view.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/markdown_view.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/sliver_widgets/comment_listview.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';

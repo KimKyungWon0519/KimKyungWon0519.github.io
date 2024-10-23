@@ -9,8 +9,8 @@ class CommentInfo extends StatelessWidget {
     return Row(
       children: [
         Text(Messages.of(context).commentCount(0)),
-        SizedBox(width: 8),
-        Expanded(
+        const SizedBox(width: 8),
+        const Expanded(
           child: Divider(),
         ),
       ],

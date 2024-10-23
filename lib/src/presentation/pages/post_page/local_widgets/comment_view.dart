@@ -7,7 +7,7 @@ class CommentView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
+        const Row(
           children: [
             CircleAvatar(),
             SizedBox(width: 8),
@@ -16,7 +16,7 @@ class CommentView extends StatelessWidget {
             Text('yyyy/MM/dd'),
           ],
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text('쀏' * 500),
       ],
     );
