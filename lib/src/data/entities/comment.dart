@@ -11,6 +11,7 @@ class Comment with _$Comment {
     required String content,
     required String userUUID,
     @JsonKey(name: CommentsTable.createAt) required DateTime createAt,
+    @JsonKey(name: CommentsTable.postID) required int postID,
   }) = _Comment;
 
   factory Comment.fromJson(Map<String, dynamic> json) =>
