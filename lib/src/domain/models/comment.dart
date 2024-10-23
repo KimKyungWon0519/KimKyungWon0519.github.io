@@ -10,5 +10,6 @@ class Comment with _$Comment {
     required String userName,
     required String content,
     required DateTime createAt,
+    required int postID,
   }) = _Comment;
 }
