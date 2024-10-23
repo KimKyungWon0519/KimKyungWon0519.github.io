@@ -289,8 +289,10 @@ class _CompletedButton extends ConsumerWidget {
     await ref
         .read(postNotifierProvider.notifier)
         .submitComment(content)
-        .then((_) {
-      textEditingController.clear();
+        .then((value) {
+      if (value != null && value.isSuccess) {
+        textEditingController.clear();
+      }
     });
 
     context.pop();

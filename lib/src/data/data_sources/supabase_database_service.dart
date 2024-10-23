@@ -50,9 +50,9 @@ class SupabaseDatabaseService {
   }
 
   Future<ResponseResult> saveComment(Map<String, dynamic> data) {
-    return _client.from(CommentsTable.tableName).insert({'test': 1}).then(
-      (value) => ResponseResult.isSuccess(null),
-      onError: (error, stackTrace) => ResponseResult.isFailure(error),
-    );
+    return _client.from(CommentsTable.tableName).insert(data).then(
+          (value) => ResponseResult.isSuccess(null),
+          onError: (error, stackTrace) => ResponseResult.isFailure(error),
+        );
   }
 }
