@@ -43,3 +43,14 @@ final class TagsCountRPC {
   static const String name = 'name';
   static const String postCount = 'post_count';
 }
+
+final class CommentsTable {
+  const CommentsTable._();
+
+  static const String tableName = 'comments';
+
+  static const String id = 'id';
+  static const String content = 'content';
+  static const String userUUID = 'user_uuid';
+  static const String createAt = 'create_at';
+}
