@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kkw_blog/src/dependency_injection.dart';
+import 'package:kkw_blog/src/domain/models/comment.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/domain/models/user.dart';
 import 'package:kkw_blog/src/domain/repositories/supabase_auth_repository.dart';
@@ -46,6 +47,20 @@ class PostNotifier extends _$PostNotifier {
     User? user = _supabaseAuthRepository.currentUser;
 
     state = state.copyWith(user: user);
+  }
+
+  void submitComment(String content) {
+    if (state.post == null || !state.isLogin) return;
+
+    Comment comment = Comment(
+      userUUID: state.user!.uuid,
+      userName: state.user!.userName,
+      content: content,
+      createAt: DateTime.now(),
+      postID: state.post!.id,
+    );
+
+    _supabaseDatabaseRepository.saveComment(comment);
   }
 }
 
