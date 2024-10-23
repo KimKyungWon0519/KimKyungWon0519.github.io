@@ -5,13 +5,13 @@ import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:kkw_blog/src/core/constants/supabase.dart';
 
 class MarkdownView extends StatelessWidget {
-  final String id;
+  final String routeID;
   final String content;
 
   const MarkdownView({
     super.key,
     required this.content,
-    required this.id,
+    required this.routeID,
   });
 
   @override
@@ -24,9 +24,9 @@ class MarkdownView extends StatelessWidget {
         Widget child;
 
         if (RegExp(r'.svg').hasMatch(originUri)) {
-          child = SvgPicture.network('$postBucketURL$id/$originUri');
+          child = SvgPicture.network('$postBucketURL$routeID/$originUri');
         } else {
-          child = Image.network('$postBucketURL$id/$originUri');
+          child = Image.network('$postBucketURL$routeID/$originUri');
         }
 
         return Container(

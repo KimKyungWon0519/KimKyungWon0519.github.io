@@ -9,7 +9,8 @@ class Post with _$Post {
   const Post._();
 
   const factory Post({
-    required String id,
+    required int id,
+    required String routeID,
     required String title,
     required String content,
     required String category,
@@ -19,5 +20,5 @@ class Post with _$Post {
 
   String get createAtToString => DateFormat('yyyy년 MM월 dd일').format(createAt);
 
-  String get thumbnail => '$postBucketURL$id/thumbnail.png';
+  String get thumbnail => '$postBucketURL$routeID/thumbnail.png';
 }

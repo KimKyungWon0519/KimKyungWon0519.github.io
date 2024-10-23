@@ -86,7 +86,7 @@ class PostPage extends BasedScrollLayout {
                   const SliverToBoxAdapter(child: Divider()),
                   SliverToBoxAdapter(
                     child: MarkdownView(
-                      id: post.id,
+                      routeID: post.routeID,
                       content: post.content,
                     ),
                   ),
