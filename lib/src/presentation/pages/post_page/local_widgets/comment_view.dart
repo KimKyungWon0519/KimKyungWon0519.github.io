@@ -5,13 +5,19 @@ class CommentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        CircleAvatar(),
-        SizedBox(width: 8),
-        Text('유저 이름'),
-        Spacer(),
-        Text('yyyy/MM/dd'),
+        Row(
+          children: [
+            CircleAvatar(),
+            SizedBox(width: 8),
+            Text('유저 이름'),
+            Spacer(),
+            Text('yyyy/MM/dd'),
+          ],
+        ),
+        SizedBox(height: 8),
+        Text('쀏' * 500),
       ],
     );
   }
