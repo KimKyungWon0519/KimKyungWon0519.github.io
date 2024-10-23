@@ -50,8 +50,8 @@ class PostNotifier extends _$PostNotifier {
     state = state.copyWith(user: user);
   }
 
-  Future<ResponseResult> submitComment(String content) async {
-    if (state.post == null || !state.isLogin) return;
+  Future<ResponseResult?> submitComment(String content) async {
+    if (state.post == null || !state.isLogin) return null;
 
     Comment comment = Comment(
       userUUID: state.user!.uuid,
