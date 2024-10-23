@@ -17,4 +17,8 @@ class SupabaseAuthService {
   bool isLogin() {
     return _auth.currentUser != null;
   }
+
+  Future<User?> getUser(String uid) {
+    return _auth.admin.getUserById(uid).then((value) => value.user);
+  }
 }
