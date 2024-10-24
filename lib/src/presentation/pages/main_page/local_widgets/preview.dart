@@ -74,6 +74,8 @@ class _Thumbnail extends StatelessWidget {
       thumbnail,
       height: height,
       width: double.infinity,
+      errorBuilder: (context, error, stackTrace) => const SizedBox(),
+      loadingBuilder: (_, __, ___) => const SizedBox(),
     );
   }
 }
@@ -89,24 +91,27 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-        ),
-        Text(
-          _removeMarkdownFormat(content),
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          ),
+          Text(
+            _removeMarkdownFormat(content),
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 
