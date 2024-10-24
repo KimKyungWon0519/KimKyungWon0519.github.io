@@ -13,6 +13,7 @@ import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'dart:html' as html;
 
 import 'package:kkw_blog/src/presentation/widgets/error_dialog.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_dialog.dart';
 
 class _ControllersProvider extends InheritedWidget {
   final TabController tabController;
@@ -281,13 +282,7 @@ class _CompletedButton extends ConsumerWidget {
 
     if (content.isEmpty) return;
 
-    showDialog(
-      context: context,
-      builder: (_) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-      barrierDismissible: false,
-    );
+    showLoadingDialog(context);
 
     ResponseResult? responseResult = await ref
         .read(postNotifierProvider.notifier)
