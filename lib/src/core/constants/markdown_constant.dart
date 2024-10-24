@@ -1,2 +1,2 @@
 const String markdownExtension = '.md';
-const String frontMatterDelimiter = r'---';
+const String frontMatterDelimiter = r'===';
