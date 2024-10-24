@@ -130,7 +130,16 @@ $ flutter run -d Chrome <build_mode> --dart-define=supabase_key=<your supabase k
 ```
 ---
 ### 프로젝트 빌드
+**build**
 ```
-$ flutter build web --release
+$ flutter build web --release --dart-define-from-file=.env
+```
+or
+```
+$ flutter build web --release --dart-define=supabase_key=<your supabase key> --dart-define=supabase_url=<your supabase url>
+```
+
+**run web**
+```
 $ dhttpd --path build/web 
 ```
