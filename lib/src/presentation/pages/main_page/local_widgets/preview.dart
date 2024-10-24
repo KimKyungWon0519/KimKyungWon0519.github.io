@@ -16,7 +16,7 @@ class Preview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push('/${post.id}', extra: post),
+      onTap: () => context.push('/${post.routeID}', extra: post),
       child: LayoutBuilder(
         builder: (context, constraints) {
           return Column(

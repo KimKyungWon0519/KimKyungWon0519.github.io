@@ -1,7 +1,10 @@
+import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_database_service.dart';
 import 'package:kkw_blog/src/data/entities/category_count.dart';
 import 'package:kkw_blog/src/data/entities/tag_count.dart';
+import 'package:kkw_blog/src/data/mappers/comment_mapper.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
+import 'package:kkw_blog/src/domain/models/comment.dart';
 import 'package:kkw_blog/src/domain/repositories/supabase_database_repository.dart';
 
 class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
@@ -40,5 +43,10 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
               count: e.counts,
             ))
         .toSet();
+  }
+
+  @override
+  Future<ResponseResult> saveComment(Comment comment) {
+    return _databaseService.saveComment(comment.toEntity().toJson());
   }
 }

@@ -2,12 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/resource/assets.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
+import 'package:kkw_blog/src/core/routes/app_routes.dart';
+import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'dart:html' as html;
+
+import 'package:kkw_blog/src/presentation/widgets/error_dialog.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_dialog.dart';
+
+class _ControllersProvider extends InheritedWidget {
+  final TabController tabController;
+  final TextEditingController textEditingController;
+  final ScrollController scrollController;
+
+  const _ControllersProvider({
+    super.key,
+    required this.tabController,
+    required this.textEditingController,
+    required this.scrollController,
+    required super.child,
+  });
+
+  static _ControllersProvider? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<_ControllersProvider>();
+  }
+
+  static _ControllersProvider of(BuildContext context) {
+    final _ControllersProvider? result = maybeOf(context);
+    return result!;
+  }
+
+  @override
+  bool updateShouldNotify(covariant _ControllersProvider oldWidget) =>
+      oldWidget.tabController != tabController ||
+      oldWidget.textEditingController != textEditingController ||
+      oldWidget.scrollController != scrollController;
+}
 
 class CommentField extends HookWidget {
   final ScrollController controller;
@@ -19,35 +54,31 @@ class CommentField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TabController tabController = useTabController(initialLength: 2);
-
-    return Container(
-      height: 350,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-      ),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: Column(
-        children: [
-          _Header(controller: tabController),
-          Expanded(
-            child: _Body(
-              controller: tabController,
-              scrollController: controller,
+    return _ControllersProvider(
+      tabController: useTabController(initialLength: 2),
+      textEditingController: useTextEditingController(),
+      scrollController: controller,
+      child: Container(
+        height: 350,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: const Column(
+          children: [
+            _Header(),
+            Expanded(
+              child: _Body(),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
 class _Header extends StatelessWidget {
-  final TabController controller;
-
-  const _Header({
-    required this.controller,
-  });
+  const _Header();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +89,7 @@ class _Header extends StatelessWidget {
           children: [
             Expanded(
               child: TabBar(
-                controller: controller,
+                controller: _ControllersProvider.of(context).tabController,
                 dividerColor: Colors.transparent,
                 unselectedLabelColor: Colors.grey,
                 physics: const NeverScrollableScrollPhysics(),
@@ -98,18 +129,17 @@ class _Header extends StatelessWidget {
 }
 
 class _Body extends HookWidget {
-  final ScrollController scrollController;
-  final TabController controller;
-
-  const _Body({
-    required this.scrollController,
-    required this.controller,
-  });
+  const _Body();
 
   @override
   Widget build(BuildContext context) {
+    final _ControllersProvider controllersProvider =
+        _ControllersProvider.of(context);
     final TextEditingController textEditingController =
-        useTextEditingController();
+        controllersProvider.textEditingController;
+    final ScrollController scrollController =
+        controllersProvider.scrollController;
+    final TabController tabController = controllersProvider.tabController;
     final ValueNotifier<String> text = useState('');
 
     useEffect(() {
@@ -117,9 +147,9 @@ class _Body extends HookWidget {
         text.value = textEditingController.text;
       }
 
-      controller.addListener(updateText);
+      tabController.addListener(updateText);
 
-      return () => controller.removeListener(updateText);
+      return () => tabController.removeListener(updateText);
     }, [textEditingController]);
 
     return Container(
@@ -130,16 +160,10 @@ class _Body extends HookWidget {
           Expanded(
             child: TabBarView(
               physics: const NeverScrollableScrollPhysics(),
-              controller: controller,
-              children: [
-                _InputField(
-                  controller: textEditingController,
-                  scrollController: scrollController,
-                ),
-                _Preview(
-                  text: text.value,
-                  scrollController: scrollController,
-                ),
+              controller: tabController,
+              children: const [
+                _InputField(),
+                _Preview(),
               ],
             ),
           ),
@@ -157,16 +181,11 @@ class _Body extends HookWidget {
 }
 
 class _InputField extends ConsumerWidget {
-  final ScrollController scrollController;
-  final TextEditingController controller;
-
-  const _InputField({
-    required this.scrollController,
-    required this.controller,
-  });
+  const _InputField();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    _ControllersProvider controllersProvider = _ControllersProvider.of(context);
     final bool isLogin =
         ref.watch(postNotifierProvider.select((value) => value.isLogin));
     Color color = Theme.of(context).colorScheme.primary;
@@ -181,8 +200,8 @@ class _InputField extends ConsumerWidget {
         ),
         child: TextField(
           readOnly: !isLogin,
-          scrollController: scrollController,
-          controller: controller,
+          scrollController: controllersProvider.scrollController,
+          controller: controllersProvider.textEditingController,
           expands: true,
           maxLines: null,
           maxLength: 500,
@@ -210,19 +229,15 @@ class _InputField extends ConsumerWidget {
 }
 
 class _Preview extends StatelessWidget {
-  final ScrollController scrollController;
-  final String text;
-
-  const _Preview({
-    required this.text,
-    required this.scrollController,
-  });
+  const _Preview();
 
   @override
   Widget build(BuildContext context) {
+    _ControllersProvider controllersProvider = _ControllersProvider.of(context);
+
     return Markdown(
-      data: text,
-      controller: scrollController,
+      data: controllersProvider.textEditingController.text,
+      controller: controllersProvider.scrollController,
       styleSheet: customMarkdownStyleSheet(context),
     );
   }
@@ -238,7 +253,7 @@ class _CompletedButton extends ConsumerWidget {
         ref.watch(postNotifierProvider.select((value) => value.isLogin));
 
     return ElevatedButton(
-      onPressed: isLogin ? () {} : null,
+      onPressed: isLogin ? () => _submit(context, ref) : null,
       style: ButtonStyle(
         mouseCursor: WidgetStatePropertyAll(
             isLogin ? null : SystemMouseCursors.forbidden),
@@ -257,6 +272,33 @@ class _CompletedButton extends ConsumerWidget {
         style: TextStyle(color: colorScheme.primary),
       ),
     );
+  }
+
+  void _submit(BuildContext context, WidgetRef ref) async {
+    TextEditingController textEditingController =
+        _ControllersProvider.of(context).textEditingController;
+    String content =
+        _ControllersProvider.of(context).textEditingController.text;
+
+    if (content.isEmpty) return;
+
+    showLoadingDialog(context);
+
+    ResponseResult? responseResult = await ref
+        .read(postNotifierProvider.notifier)
+        .submitComment(content)
+        .then((value) {
+      context.pop();
+
+      return value;
+    });
+
+    if (responseResult != null && !responseResult.isSuccess) {
+      showErrorDialog(
+        context: context,
+        errorMsg: Messages.of(context).failureCommentSubmit,
+      );
+    }
   }
 }
 
@@ -313,11 +355,7 @@ class _LogoutPanel extends ConsumerWidget {
   void _logout(WidgetRef ref) {
     PostNotifier postNotifier = ref.read(postNotifierProvider.notifier);
 
-    postNotifier.logout().then(
-      (value) {
-        postNotifier.isLogin = false;
-      },
-    );
+    postNotifier.logout().then((value) => postNotifier.updateUser());
   }
 }
 

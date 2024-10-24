@@ -1,7 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/dependency_injection.dart';
+import 'package:kkw_blog/src/domain/models/comment.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
+import 'package:kkw_blog/src/domain/models/user.dart';
 import 'package:kkw_blog/src/domain/repositories/supabase_auth_repository.dart';
+import 'package:kkw_blog/src/domain/repositories/supabase_database_repository.dart';
 import 'package:kkw_blog/src/domain/repositories/supabase_stroage_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -12,18 +16,17 @@ part 'post_notifier.freezed.dart';
 class PostNotifier extends _$PostNotifier {
   late final SupabaseStorageRepository _supabaseStorageRepository;
   late final SupabaseAuthRepository _supabaseAuthRepository;
+  late final SupabaseDatabaseRepository _supabaseDatabaseRepository;
 
   PostNotifier()
       : _supabaseStorageRepository = instance<SupabaseStorageRepository>(),
-        _supabaseAuthRepository = instance<SupabaseAuthRepository>();
+        _supabaseAuthRepository = instance<SupabaseAuthRepository>(),
+        _supabaseDatabaseRepository = instance<SupabaseDatabaseRepository>();
 
   @override
   PostNotifierState build() => PostNotifierState(
-        post: null,
-        isLogin: _supabaseAuthRepository.isLogin(),
+        user: _supabaseAuthRepository.currentUser,
       );
-
-  set isLogin(bool value) => state = state.copyWith(isLogin: value);
 
   void updatePost({Post? post, String? fileName}) async {
     if (fileName == null) return;
@@ -40,12 +43,35 @@ class PostNotifier extends _$PostNotifier {
   Future<void> logout() {
     return _supabaseAuthRepository.logout();
   }
+
+  void updateUser() async {
+    User? user = _supabaseAuthRepository.currentUser;
+
+    state = state.copyWith(user: user);
+  }
+
+  Future<ResponseResult?> submitComment(String content) async {
+    if (state.post == null || !state.isLogin) return null;
+
+    Comment comment = Comment(
+      userUUID: state.user!.uuid,
+      userName: state.user!.userName,
+      content: content,
+      postID: state.post!.id,
+    );
+
+    return _supabaseDatabaseRepository.saveComment(comment);
+  }
 }
 
 @freezed
 class PostNotifierState with _$PostNotifierState {
+  const PostNotifierState._();
+
   const factory PostNotifierState({
-    required Post? post,
-    required bool isLogin,
+    Post? post,
+    User? user,
   }) = _PostNotifierState;
+
+  bool get isLogin => user != null;
 }

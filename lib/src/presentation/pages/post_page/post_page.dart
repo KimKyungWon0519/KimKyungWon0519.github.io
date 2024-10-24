@@ -32,13 +32,13 @@ class PostPage extends BasedScrollLayout {
     final ScrollController commentScrollController = useScrollController();
 
     useEffect(() {
-      String? id = _getIDParameter();
+      String? routeID = _getIDParameter();
 
       Future.delayed(Duration.zero).then(
         (value) {
           ref.read(postNotifierProvider.notifier).updatePost(
                 post: this.post,
-                fileName: id,
+                fileName: routeID,
               );
         },
       );
@@ -86,7 +86,7 @@ class PostPage extends BasedScrollLayout {
                   const SliverToBoxAdapter(child: Divider()),
                   SliverToBoxAdapter(
                     child: MarkdownView(
-                      id: post.id,
+                      routeID: post.routeID,
                       content: post.content,
                     ),
                   ),
@@ -118,6 +118,8 @@ class PostPage extends BasedScrollLayout {
   String? _getIDParameter() {
     Object? argument = ModalRoute.settingsOf(useContext())?.arguments;
 
-    return argument != null ? (argument as Map<String, dynamic>)['id'] : null;
+    return argument != null
+        ? (argument as Map<String, dynamic>)['route_id']
+        : null;
   }
 }

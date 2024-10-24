@@ -15,7 +15,8 @@ class PostMapper {
     String content = markdown.getContent();
 
     return Model.Post(
-      id: post.name,
+      id: post.id,
+      routeID: post.name,
       title: frontMatter['title'],
       content: content,
       category: post.categoryName,
