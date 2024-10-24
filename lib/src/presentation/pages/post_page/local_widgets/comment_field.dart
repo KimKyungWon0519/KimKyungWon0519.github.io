@@ -8,8 +8,11 @@ import 'package:kkw_blog/resource/assets.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:kkw_blog/src/core/routes/app_routes.dart';
+import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'dart:html' as html;
+
+import 'package:kkw_blog/src/presentation/widgets/error_dialog.dart';
 
 class _ControllersProvider extends InheritedWidget {
   final TabController tabController;
@@ -286,16 +289,21 @@ class _CompletedButton extends ConsumerWidget {
       barrierDismissible: false,
     );
 
-    await ref
+    ResponseResult? responseResult = await ref
         .read(postNotifierProvider.notifier)
         .submitComment(content)
         .then((value) {
-      if (value != null && value.isSuccess) {
-        textEditingController.clear();
-      }
+      context.pop();
+
+      return value;
     });
 
-    context.pop();
+    if (responseResult != null && !responseResult.isSuccess) {
+      showErrorDialog(
+        context: context,
+        errorMsg: Messages.of(context).failureCommentSubmit,
+      );
+    }
   }
 }
 
