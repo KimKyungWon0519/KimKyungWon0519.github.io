@@ -39,6 +39,8 @@
         마크다운을 머릿말/본문 분리
       - **markdown.dart**    
         마크다운 데이터 객체
+      - **response_result**  
+        api 결과 데이터 객체
   - /data
     - /data_sources
       - **supabase_auth_service.dart**    
@@ -54,9 +56,15 @@
         글 데이터 객체
       - **tag_count.dart**    
         특정 태그의 글 개수를 가진 데이터 객체
+      - **comment.dart**  
+        댓글 데이터 객체
     - /mappers
       - **post_mapper.dart**    
         Markdown 객체를 Post 객체로 변환하는 도구
+      - **comment_mapper**  
+        Model.Comment와 Entity.Comment를 서로 변환하는 도구
+      - **user_mapper**  
+        supabase user 객체를 Model.User로 변환하는 도구
     - **/repositories (구현체)**  
       domain/repositories의 구현체
       - supabase_auth_repository_impl.dart
@@ -68,6 +76,10 @@
         전체보기/카테고리/태그 모델 
       - **post.dart**    
         글 데이터 객체
+      - **comment.dart**  
+        댓글 데이터 객체
+      - **user.dart**  
+        유저 데이터 객체
     - /repositories (추상체)
       - **supabase_auth_repository.dart**  
         supabase의 로그인 관련 추상 레포 객체
@@ -110,7 +122,11 @@ $ flutter pub run intl_utils:generate
 ---
 ### 프로젝트 실행
 ```
-$ flutter run -d Chrome <build_mode>
+$ flutter run -d Chrome <build_mode> --dart-define-from-file=.env
+```
+or
+```
+$ flutter run -d Chrome <build_mode> --dart-define=supabase_key=<your supabase key> --dart-define=supabase_url=<your supabase url>
 ```
 ---
 ### 프로젝트 빌드

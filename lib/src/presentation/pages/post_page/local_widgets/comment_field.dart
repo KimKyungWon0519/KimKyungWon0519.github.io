@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/resource/assets.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
-import 'package:kkw_blog/src/core/routes/app_routes.dart';
 import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'dart:html' as html;
@@ -21,7 +20,6 @@ class _ControllersProvider extends InheritedWidget {
   final ScrollController scrollController;
 
   const _ControllersProvider({
-    super.key,
     required this.tabController,
     required this.textEditingController,
     required this.scrollController,
