@@ -35,5 +35,6 @@
     "failureCommentSubmit": "댓글 작성을 실패했습니다.",
     "@failureCommentSubmit": {},
     "retry": "다시 시도해주세요.",
-    "@retry": {}
+    "@retry": {},
+    "ok": "확인"
 }
