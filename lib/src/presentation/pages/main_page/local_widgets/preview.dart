@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_dialog.dart';
 import 'package:kkw_blog/src/presentation/widgets/tags.dart';
 import 'package:kkw_blog/src/presentation/widgets/upload_date_and_category.dart';
 import 'package:markdown/markdown.dart' as Markdown;
@@ -72,10 +73,25 @@ class _Thumbnail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.network(
       thumbnail,
-      height: height,
       width: double.infinity,
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (frame == null) {
+          return child;
+        } else {
+          return SizedBox(
+            height: height,
+            child: child,
+          );
+        }
+      },
       errorBuilder: (context, error, stackTrace) => const SizedBox(),
-      loadingBuilder: (_, __, ___) => const SizedBox(),
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 }
