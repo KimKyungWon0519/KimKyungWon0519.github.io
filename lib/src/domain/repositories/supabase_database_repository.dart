@@ -7,4 +7,5 @@ abstract interface class SupabaseDatabaseRepository {
   Future<Set<CategoryType>> getCategoriesCount();
   Future<Set<TagType>> getTagsCount();
   Future<ResponseResult> saveComment(Comment comment);
+  Future<List<Comment>> getComments(int postID);
 }

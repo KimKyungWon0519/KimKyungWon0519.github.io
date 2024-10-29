@@ -1,3 +1,4 @@
+import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseAuthService {
@@ -21,6 +22,8 @@ class SupabaseAuthService {
   }
 
   Future<User?> getUser(String uid) {
-    return _auth.admin.getUserById(uid).then((value) => value.user);
+    SupabaseClient adminClient = SupabaseClient(supabaseUrl, supabaseRoleKey);
+
+    return adminClient.auth.admin.getUserById(uid).then((value) => value.user);
   }
 }

@@ -20,7 +20,7 @@ void main() async {
 
   await Supabase.initialize(
     url: supabaseUrl,
-    anonKey: supabaseKey,
+    anonKey: supabaseAnnoKey,
   );
 
   await initializeDateFormatting();

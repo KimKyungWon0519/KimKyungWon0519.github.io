@@ -23,7 +23,7 @@ jobs:
       run : flutter pub run build_runner build && flutter pub run intl_utils:generate
 
     - name: Build Web 
-      run: flutter build web --release --dart-define=supabase_key=${{ secrets.SUPABASE_KEY }} --dart-define=supabase_url=${{ secrets.SUPABASE_URL }}
+      run: flutter build web --release --dart-define=supabase_url=${{ secrets.SUPABASE_URL }} --dart-define=supabase_anno_key=${{ secrets.SUPABASE_ANNO_KEY }} --dart-define=supabase_role_key=${{ secrets.SUPABASE_ROLE_KEY }} 
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3.9.3

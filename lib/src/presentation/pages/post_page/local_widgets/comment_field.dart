@@ -291,7 +291,11 @@ class _CompletedButton extends ConsumerWidget {
       return value;
     });
 
-    if (responseResult != null && !responseResult.isSuccess) {
+    if (responseResult != null && responseResult.isSuccess) {
+      textEditingController.clear();
+
+      ref.read(postNotifierProvider.notifier).updateComment();
+    } else {
       showErrorDialog(
         context: context,
         errorMsg: Messages.of(context).failureCommentSubmit,
