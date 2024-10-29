@@ -1,5 +1,6 @@
 const supabaseUrl = String.fromEnvironment('supabase_url');
-const supabaseKey = String.fromEnvironment('supabase_key');
+const supabaseAnnoKey = String.fromEnvironment('supabase_anno_key');
+const supabaseRoleKey = String.fromEnvironment('supabase_role_key');
 
 const String postBucketID = 'posts';
 
@@ -48,6 +49,7 @@ final class CommentsTable {
   const CommentsTable._();
 
   static const String tableName = 'comments';
+  static const String functionName = 'get_comments_in_post';
 
   static const String id = 'id';
   static const String content = 'content';

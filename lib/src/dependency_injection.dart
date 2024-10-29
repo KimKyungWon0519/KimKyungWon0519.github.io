@@ -29,6 +29,7 @@ void initializeDI() {
   SupabaseDatabaseRepository supabaseDatabaseRepository =
       SupabaseDatabaseRepositoryImpl(
     databaseSerivce: supabaseDatabaseService,
+    authService: supabaseAuthService,
   );
 
   SupabaseAuthRepository supabaseAuthRepository = SupabaseAuthRepositoryImpl(

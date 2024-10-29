@@ -1,6 +1,7 @@
 import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/data/entities/category_count.dart';
+import 'package:kkw_blog/src/data/entities/comment.dart';
 import 'package:kkw_blog/src/data/entities/post.dart';
 import 'package:kkw_blog/src/data/entities/tag_count.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -52,5 +53,12 @@ class SupabaseDatabaseService {
           (value) => ResponseResult.isSuccess(null),
           onError: (error, stackTrace) => ResponseResult.isFailure(error),
         );
+  }
+
+  Future<List<Comment>> getComments(int postID) {
+    return _client.rpc<List<Map<String, dynamic>>>(
+      CommentsTable.functionName,
+      params: {'p_post_id': postID},
+    ).then((result) => result.map((data) => Comment.fromJson(data)).toList());
   }
 }

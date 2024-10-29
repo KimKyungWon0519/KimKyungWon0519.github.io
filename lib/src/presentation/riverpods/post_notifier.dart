@@ -54,8 +54,7 @@ class PostNotifier extends _$PostNotifier {
     if (state.post == null || !state.isLogin) return null;
 
     Comment comment = Comment(
-      userUUID: state.user!.uuid,
-      userName: state.user!.userName,
+      user: state.user!,
       content: content,
       postID: state.post!.id,
     );

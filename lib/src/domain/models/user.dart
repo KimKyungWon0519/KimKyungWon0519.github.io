@@ -9,4 +9,10 @@ class User with _$User {
     required String userName,
     required String? avatar,
   }) = _User;
+
+  factory User.unknown() => const User(
+        uuid: '',
+        userName: 'UnknownUser',
+        avatar: '',
+      );
 }
