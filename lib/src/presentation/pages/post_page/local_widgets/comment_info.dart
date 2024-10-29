@@ -21,7 +21,7 @@ class CommentInfo extends StatelessWidget {
 }
 
 class _CommentCount extends ConsumerWidget {
-  const _CommentCount({super.key});
+  const _CommentCount();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

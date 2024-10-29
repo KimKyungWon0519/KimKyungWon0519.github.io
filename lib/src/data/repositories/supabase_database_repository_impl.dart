@@ -70,7 +70,7 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
 
       commentsModel.add(
         commentEntity.toModel(
-          user: user != null ? user!.toModel() : Model.User.unknown(),
+          user: user != null ? user.toModel() : Model.User.unknown(),
         ),
       );
     }
