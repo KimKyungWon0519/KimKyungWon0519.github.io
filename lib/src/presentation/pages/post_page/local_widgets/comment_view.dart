@@ -27,7 +27,7 @@ class CommentView extends StatelessWidget {
                 maxLines: 1,
               ),
             ),
-            Text(DateFormat('yyyy/MM/dd hh:mm').format(comment.createAt!)),
+            Text(DateFormat('yyyy/MM/dd hh:mm a').format(comment.createAt!)),
           ],
         ),
         const SizedBox(height: 8),

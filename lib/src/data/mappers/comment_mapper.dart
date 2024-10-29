@@ -20,7 +20,7 @@ extension CommentEntityMapper on Entity.Comment {
       id: id,
       content: content,
       user: user,
-      createAt: createAt,
+      createAt: createAt?.toLocal(),
       postID: postID,
     );
   }
