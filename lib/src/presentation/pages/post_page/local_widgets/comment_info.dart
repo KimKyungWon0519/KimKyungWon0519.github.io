@@ -10,8 +10,10 @@ class CommentInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Row(
       children: [
-        SizedBox(width: 8),
-        _CommentCount(),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: _CommentCount(),
+        ),
         Expanded(
           child: Divider(),
         ),
