@@ -293,6 +293,8 @@ class _CompletedButton extends ConsumerWidget {
 
     if (responseResult != null && responseResult.isSuccess) {
       textEditingController.clear();
+
+      ref.read(postNotifierProvider.notifier).updateComment();
     } else {
       showErrorDialog(
         context: context,

@@ -66,6 +66,13 @@ class PostNotifier extends _$PostNotifier {
 
     return _supabaseDatabaseRepository.saveComment(comment);
   }
+
+  void updateComment() async {
+    List<Comment> comments =
+        await _supabaseDatabaseRepository.getComments(state.post!.id);
+
+    state = state.copyWith(comments: comments);
+  }
 }
 
 @freezed
