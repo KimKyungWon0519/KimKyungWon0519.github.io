@@ -36,7 +36,7 @@ class PostPage extends BasedScrollLayout {
 
       Future.delayed(Duration.zero).then(
         (value) {
-          ref.read(postNotifierProvider.notifier).updatePost(
+          ref.read(postNotifierProvider.notifier).updatePostAndComments(
                 post: this.post,
                 fileName: routeID,
               );

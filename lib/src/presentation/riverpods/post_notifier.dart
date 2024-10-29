@@ -28,12 +28,17 @@ class PostNotifier extends _$PostNotifier {
         user: _supabaseAuthRepository.currentUser,
       );
 
-  void updatePost({Post? post, String? fileName}) async {
+  void updatePostAndComments({Post? post, String? fileName}) async {
     if (fileName == null) return;
 
     post ??= await _supabaseStorageRepository.getPostFile(fileName);
+    List<Comment> comments =
+        await _supabaseDatabaseRepository.getComments(post.id);
 
-    state = state.copyWith(post: post);
+    state = state.copyWith(
+      post: post,
+      comments: comments,
+    );
   }
 
   Future<bool> loginWithGithub(String redirectURL) {
@@ -70,6 +75,7 @@ class PostNotifierState with _$PostNotifierState {
   const factory PostNotifierState({
     Post? post,
     User? user,
+    @Default([]) List<Comment> comments,
   }) = _PostNotifierState;
 
   bool get isLogin => user != null;
