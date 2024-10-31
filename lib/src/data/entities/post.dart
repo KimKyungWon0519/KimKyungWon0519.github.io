@@ -15,6 +15,8 @@ class Post with _$Post {
     required String categoryName,
     @JsonKey(name: CombineDataPostsFunction.tagsNames)
     required List<String> tagsNames,
+    @JsonKey(name: CombineDataPostsFunction.commentsCount)
+    required int commentCount,
   }) = _Post;
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);
