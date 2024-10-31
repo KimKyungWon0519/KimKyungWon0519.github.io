@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/domain/models/favorite.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_field.dart';
@@ -41,6 +42,7 @@ class FavoriteIcon extends ConsumerWidget {
     _FavoriteIconState favoriteState,
   ) async {
     PostNotifier postNotifier = ref.read(postNotifierProvider.notifier);
+
     showLoadingDialog(context);
 
     ResponseResult? responseResult;
@@ -59,9 +61,9 @@ class FavoriteIcon extends ConsumerWidget {
       String errorMsg = '';
 
       if (responseResult == null) {
-        errorMsg = '로그인이 필요합니다.';
+        errorMsg = Messages.of(context).neededLogin;
       } else {
-        errorMsg = '추천 활성화/비활성화에 실패했습니다.';
+        errorMsg = Messages.of(context).failureChaningFavorite;
       }
 
       showErrorDialog(
