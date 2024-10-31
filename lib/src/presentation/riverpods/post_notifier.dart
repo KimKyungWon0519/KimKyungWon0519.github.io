@@ -91,4 +91,9 @@ class PostNotifierState with _$PostNotifierState {
   }) = _PostNotifierState;
 
   bool get isLogin => user != null;
+
+  bool get isActiveFavorite =>
+      favorites.indexWhere(
+          (element) => user != null && user!.uuid == element.uuid) !=
+      -1;
 }

@@ -10,6 +10,8 @@ class FavoriteIcon extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     List<Favorite> favorite =
         ref.watch(postNotifierProvider.select((value) => value.favorites));
+    bool isActiveFavorite = ref
+        .read(postNotifierProvider.select((value) => value.isActiveFavorite));
 
     return ElevatedButton.icon(
       style: ButtonStyle(
@@ -18,7 +20,9 @@ class FavoriteIcon extends ConsumerWidget {
         ),
       ),
       onPressed: () {},
-      icon: const Icon(Icons.favorite_border_rounded),
+      icon: Icon(isActiveFavorite
+          ? Icons.favorite_rounded
+          : Icons.favorite_border_rounded),
       label: Text('${favorite.length}'),
     );
   }
