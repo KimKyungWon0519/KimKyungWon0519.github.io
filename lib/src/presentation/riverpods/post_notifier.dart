@@ -82,11 +82,24 @@ class PostNotifier extends _$PostNotifier {
     return _supabaseDatabaseRepository.activeFavorite(favorite);
   }
 
+  Future<ResponseResult?> deactiveFavorite() async {
+    if (state.post == null) return null;
+
+    return _supabaseDatabaseRepository.deactiveFavorite(state.post!.id);
+  }
+
   void updateComment() async {
     List<Comment> comments =
         await _supabaseDatabaseRepository.getComments(state.post!.id);
 
     state = state.copyWith(comments: comments);
+  }
+
+  void updateFavorite() async {
+    List<Favorite> favorites =
+        await _supabaseDatabaseRepository.getFavorites(state.post!.id);
+
+    state = state.copyWith(favorites: favorites);
   }
 }
 

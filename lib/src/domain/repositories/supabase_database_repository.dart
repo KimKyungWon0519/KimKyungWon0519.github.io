@@ -11,4 +11,5 @@ abstract interface class SupabaseDatabaseRepository {
   Future<List<Comment>> getComments(int postID);
   Future<List<Favorite>> getFavorites(int postID);
   Future<ResponseResult> activeFavorite(Favorite favorite);
+  Future<ResponseResult> deactiveFavorite(int postID);
 }

@@ -92,4 +92,9 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
   Future<ResponseResult> activeFavorite(Model.Favorite favorite) {
     return _databaseService.activeFavorite(favorite.toEntity().toJson());
   }
+
+  @override
+  Future<ResponseResult> deactiveFavorite(int postID) {
+    return _databaseService.deleteFavorite(postID);
+  }
 }

@@ -27,15 +27,20 @@ class FavoriteIcon extends ConsumerWidget {
       onPressed: () async {
         showLoadingDialog(context);
 
-        ResponseResult? responseResult = null;
+        ResponseResult? responseResult;
 
         if (!isActiveFavorite) {
-          await ref.read(postNotifierProvider.notifier).activeFavorite();
+          responseResult =
+              await ref.read(postNotifierProvider.notifier).activeFavorite();
+        } else {
+          responseResult =
+              await ref.read(postNotifierProvider.notifier).deactiveFavorite();
         }
 
         context.pop();
 
         if (responseResult != null && responseResult.isSuccess) {
+          ref.read(postNotifierProvider.notifier).updateFavorite();
         } else {
           String errorMsg = '';
 

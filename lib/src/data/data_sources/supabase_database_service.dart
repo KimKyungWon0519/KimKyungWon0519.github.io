@@ -83,12 +83,19 @@ class SupabaseDatabaseService {
 
   Future<ResponseResult> activeFavorite(Map<String, dynamic> data) {
     return _client.from(FavoritesTable.tableName).insert(data).then(
-      (value) => ResponseResult.isSuccess(true),
-      onError: (error, stackTrace) {
-        print(error);
+          (value) => ResponseResult.isSuccess(true),
+          onError: (error, stackTrace) => ResponseResult.isFailure(error),
+        );
+  }
 
-        return ResponseResult.isFailure(error);
-      },
-    );
+  Future<ResponseResult> deleteFavorite(int postID) {
+    return _client
+        .from(FavoritesTable.tableName)
+        .delete()
+        .eq(FavoritesTable.postID, postID)
+        .then(
+          (value) => ResponseResult.isSuccess(true),
+          onError: (error, stackTrace) => ResponseResult.isFailure(error),
+        );
   }
 }
