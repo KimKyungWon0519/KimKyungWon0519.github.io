@@ -71,7 +71,6 @@ class _CommentAndFavorite extends StatelessWidget {
   final int commentsCount;
 
   const _CommentAndFavorite({
-    super.key,
     required this.commentsCount,
   });
 
@@ -97,7 +96,6 @@ class _IconText extends StatelessWidget {
   final String text;
   final IconData icon;
   const _IconText({
-    super.key,
     required this.text,
     required this.icon,
   });
