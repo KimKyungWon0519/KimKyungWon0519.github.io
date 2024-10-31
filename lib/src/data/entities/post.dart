@@ -9,10 +9,11 @@ class Post with _$Post {
   const factory Post({
     required int id,
     required String name,
-    @JsonKey(name: CombineDataPostsRPC.createAt) required DateTime createAt,
-    @JsonKey(name: CombineDataPostsRPC.categoryName)
+    @JsonKey(name: CombineDataPostsFunction.createAt)
+    required DateTime createAt,
+    @JsonKey(name: CombineDataPostsFunction.categoryName)
     required String categoryName,
-    @JsonKey(name: CombineDataPostsRPC.tagsNames)
+    @JsonKey(name: CombineDataPostsFunction.tagsNames)
     required List<String> tagsNames,
   }) = _Post;
 

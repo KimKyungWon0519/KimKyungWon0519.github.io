@@ -37,10 +37,10 @@ final class CombineDataPostsFunction {
   }
 }
 
-final class CombineDataPostsRPC {
-  const CombineDataPostsRPC._();
+final class CombineDataPostFunction {
+  const CombineDataPostFunction._();
 
-  static const String getPostPRC = 'get_combine_data_post';
+  static const String functionName = 'get_combine_data_post';
 
   static const String id = 'id';
   static const String name = 'name';
@@ -49,20 +49,20 @@ final class CombineDataPostsRPC {
   static const String tagsNames = 'tags_names';
 }
 
-final class CategoriesCountRPC {
-  const CategoriesCountRPC._();
+final class CategoriesCountFunction {
+  const CategoriesCountFunction._();
 
-  static const String funcName = 'get_category_post_counts';
+  static const String functionName = 'get_category_post_counts';
 
   static const String id = 'id';
   static const String name = 'name';
   static const String postCount = 'post_count';
 }
 
-final class TagsCountRPC {
-  const TagsCountRPC._();
+final class TagsCountFunction {
+  const TagsCountFunction._();
 
-  static const String funcName = 'get_tag_posts_count';
+  static const String functionName = 'get_tag_posts_count';
 
   static const String id = 'id';
   static const String name = 'name';

@@ -27,8 +27,10 @@ class SupabaseDatabaseService {
   }
 
   Future<List<TagCount>> getTags() {
-    return _client.rpc<List<Map<String, dynamic>>>(TagsCountRPC.funcName).then(
-        (result) => result.map((data) => TagCount.fromJson(data)).toList());
+    return _client
+        .rpc<List<Map<String, dynamic>>>(TagsCountFunction.functionName)
+        .then(
+            (result) => result.map((data) => TagCount.fromJson(data)).toList());
   }
 
   Future<int> getPostsCount() {
@@ -37,14 +39,14 @@ class SupabaseDatabaseService {
 
   Future<List<CategoryCount>> getCategoriesCount() {
     return _client
-        .rpc<List<Map<String, dynamic>>>(CategoriesCountRPC.funcName)
+        .rpc<List<Map<String, dynamic>>>(CategoriesCountFunction.functionName)
         .then((result) =>
             result.map((data) => CategoryCount.fromJson(data)).toList());
   }
 
   Future<Post> getPost(String name) {
     return _client.rpc<List<Map<String, dynamic>>>(
-        CombineDataPostsRPC.getPostPRC,
+        CombineDataPostFunction.functionName,
         params: {
           'post_name': name,
         }).then((result) => Post.fromJson(result.single));
