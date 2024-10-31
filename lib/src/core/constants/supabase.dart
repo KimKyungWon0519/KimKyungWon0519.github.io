@@ -23,6 +23,7 @@ final class CombineDataPostsFunction {
   static const String categoryName = 'category_name';
   static const String tagsNames = 'tags_names';
   static const String commentsCount = 'comments_count';
+  static const String favoritesCount = 'favorites_count';
 
   static Map<String, dynamic> setParameter({
     required int startOffset,
