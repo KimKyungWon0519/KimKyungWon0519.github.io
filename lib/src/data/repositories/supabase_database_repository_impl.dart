@@ -2,13 +2,16 @@ import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_auth_service.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_database_service.dart';
 import 'package:kkw_blog/src/data/entities/category_count.dart';
+import 'package:kkw_blog/src/data/entities/favorite.dart' as Entity;
 import 'package:kkw_blog/src/data/entities/tag_count.dart';
 import 'package:kkw_blog/src/data/entities/comment.dart' as Entity;
 import 'package:kkw_blog/src/data/mappers/comment_mapper.dart';
+import 'package:kkw_blog/src/data/mappers/favorite_mapper.dart';
 import 'package:kkw_blog/src/data/mappers/user_mapper.dart';
 import 'package:kkw_blog/src/domain/models/classification_type.dart';
 import 'package:kkw_blog/src/domain/models/comment.dart' as Model;
 import 'package:kkw_blog/src/domain/models/user.dart' as Model;
+import 'package:kkw_blog/src/domain/models/favorite.dart' as Model;
 import 'package:kkw_blog/src/domain/repositories/supabase_database_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -76,5 +79,12 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
     }
 
     return commentsModel;
+  }
+
+  @override
+  Future<List<Model.Favorite>> getFavorites(int postID) {
+    return _databaseService
+        .getFavorites(postID)
+        .then((reuslt) => reuslt.map((data) => data.toModel()).toList());
   }
 }
