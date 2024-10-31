@@ -45,11 +45,12 @@ class SupabaseDatabaseService {
   }
 
   Future<Post> getPost(String name) {
-    return _client.rpc<List<Map<String, dynamic>>>(
-        CombineDataPostFunction.functionName,
-        params: {
-          'post_name': name,
-        }).then((result) => Post.fromJson(result.single));
+    return _client
+        .rpc<List<Map<String, dynamic>>>(
+          CombineDataPostFunction.functionName,
+          params: CombineDataPostFunction.setParameter(postName: name),
+        )
+        .then((result) => Post.fromJson(result.single));
   }
 
   Future<ResponseResult> saveComment(Map<String, dynamic> data) {
@@ -60,9 +61,12 @@ class SupabaseDatabaseService {
   }
 
   Future<List<Comment>> getComments(int postID) {
-    return _client.rpc<List<Map<String, dynamic>>>(
-      CommentsTable.functionName,
-      params: {'p_post_id': postID},
-    ).then((result) => result.map((data) => Comment.fromJson(data)).toList());
+    return _client
+        .rpc<List<Map<String, dynamic>>>(
+          CommentsTable.functionName,
+          params: CommentsTable.setParameter(postID: postID),
+        )
+        .then(
+            (result) => result.map((data) => Comment.fromJson(data)).toList());
   }
 }

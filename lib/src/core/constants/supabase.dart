@@ -47,6 +47,10 @@ final class CombineDataPostFunction {
   static const String createAt = 'create_at';
   static const String categoryName = 'category_name';
   static const String tagsNames = 'tags_names';
+
+  static Map<String, dynamic> setParameter({required String postName}) {
+    return {'post_name': postName};
+  }
 }
 
 final class CategoriesCountFunction {
@@ -80,4 +84,10 @@ final class CommentsTable {
   static const String userUUID = 'user_uuid';
   static const String createAt = 'created_at';
   static const String postID = 'post_id';
+
+  static Map<String, dynamic> setParameter({required int postID}) {
+    return {
+      'p_post_id': postID,
+    };
+  }
 }
