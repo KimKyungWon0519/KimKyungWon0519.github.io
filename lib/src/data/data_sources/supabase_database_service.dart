@@ -2,6 +2,7 @@ import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/data/entities/category_count.dart';
 import 'package:kkw_blog/src/data/entities/comment.dart';
+import 'package:kkw_blog/src/data/entities/favorite.dart';
 import 'package:kkw_blog/src/data/entities/post.dart';
 import 'package:kkw_blog/src/data/entities/tag_count.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -68,5 +69,15 @@ class SupabaseDatabaseService {
         )
         .then(
             (result) => result.map((data) => Comment.fromJson(data)).toList());
+  }
+
+  Future<List<Favorite>> getFavorites(int postID) {
+    return _client
+        .rpc<List<Map<String, dynamic>>>(
+          FavoritesTable.functionName,
+          params: FavoritesTable.setParameter(postID: postID),
+        )
+        .then(
+            (result) => result.map((data) => Favorite.fromJson(data)).toList());
   }
 }
