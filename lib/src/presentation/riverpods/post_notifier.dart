@@ -71,6 +71,17 @@ class PostNotifier extends _$PostNotifier {
     return _supabaseDatabaseRepository.saveComment(comment);
   }
 
+  Future<ResponseResult?> activeFavorite() async {
+    if (state.post == null || !state.isLogin) return null;
+
+    Favorite favorite = Favorite(
+      uuid: state.user!.uuid,
+      postID: state.post!.id,
+    );
+
+    return _supabaseDatabaseRepository.activeFavorite(favorite);
+  }
+
   void updateComment() async {
     List<Comment> comments =
         await _supabaseDatabaseRepository.getComments(state.post!.id);

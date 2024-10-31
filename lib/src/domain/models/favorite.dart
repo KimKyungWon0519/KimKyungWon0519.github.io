@@ -5,7 +5,7 @@ part 'favorite.freezed.dart';
 @freezed
 class Favorite with _$Favorite {
   const factory Favorite({
-    required int id,
+    int? id,
     required String uuid,
     required int postID,
   }) = _Favorite;

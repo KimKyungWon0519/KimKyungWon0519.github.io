@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/domain/models/favorite.dart';
+import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_field.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
+import 'package:kkw_blog/src/presentation/widgets/error_dialog.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_dialog.dart';
 
 class FavoriteIcon extends ConsumerWidget {
   const FavoriteIcon({super.key});
@@ -19,7 +24,33 @@ class FavoriteIcon extends ConsumerWidget {
           Theme.of(context).colorScheme.primaryContainer,
         ),
       ),
-      onPressed: () {},
+      onPressed: () async {
+        showLoadingDialog(context);
+
+        ResponseResult? responseResult = null;
+
+        if (!isActiveFavorite) {
+          await ref.read(postNotifierProvider.notifier).activeFavorite();
+        }
+
+        context.pop();
+
+        if (responseResult != null && responseResult.isSuccess) {
+        } else {
+          String errorMsg = '';
+
+          if (responseResult == null) {
+            errorMsg = '로그인이 필요합니다.';
+          } else {
+            errorMsg = '추천 활성화/비활성화에 실패했습니다.';
+          }
+
+          showErrorDialog(
+            context: context,
+            errorMsg: errorMsg,
+          );
+        }
+      },
       icon: Icon(isActiveFavorite
           ? Icons.favorite_rounded
           : Icons.favorite_border_rounded),

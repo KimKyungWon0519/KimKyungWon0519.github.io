@@ -10,3 +10,13 @@ extension FavoriteEntityMapper on Entity.Favorite {
     );
   }
 }
+
+extension FavoriteModelMapper on Model.Favorite {
+  Entity.Favorite toEntity() {
+    return Entity.Favorite(
+      id: id,
+      uuid: uuid,
+      postID: postID,
+    );
+  }
+}

@@ -80,4 +80,15 @@ class SupabaseDatabaseService {
         .then(
             (result) => result.map((data) => Favorite.fromJson(data)).toList());
   }
+
+  Future<ResponseResult> activeFavorite(Map<String, dynamic> data) {
+    return _client.from(FavoritesTable.tableName).insert(data).then(
+      (value) => ResponseResult.isSuccess(true),
+      onError: (error, stackTrace) {
+        print(error);
+
+        return ResponseResult.isFailure(error);
+      },
+    );
+  }
 }

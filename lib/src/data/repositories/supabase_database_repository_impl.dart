@@ -87,4 +87,9 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
         .getFavorites(postID)
         .then((reuslt) => reuslt.map((data) => data.toModel()).toList());
   }
+
+  @override
+  Future<ResponseResult> activeFavorite(Model.Favorite favorite) {
+    return _databaseService.activeFavorite(favorite.toEntity().toJson());
+  }
 }
