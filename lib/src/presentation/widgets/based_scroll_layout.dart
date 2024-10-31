@@ -52,8 +52,12 @@ abstract class BasedScrollLayout extends HookConsumerWidget {
 
     double newPose = controller.offset + event.scrollDelta.dy;
 
-    if (0 < newPose && newPose < controller.position.maxScrollExtent) {
-      controller.jumpTo(controller.offset + event.scrollDelta.dy);
+    if (0 > newPose) {
+      newPose = 0;
+    } else if (controller.position.maxScrollExtent < newPose) {
+      newPose = controller.position.maxScrollExtent;
     }
+
+    controller.jumpTo(newPose);
   }
 }
