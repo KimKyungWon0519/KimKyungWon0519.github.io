@@ -22,9 +22,17 @@ class Preview extends StatelessWidget {
           return Column(
             children: _addSpacing(
               [
-                UploadDateAndCategory(
-                  createAt: post.createAtToString,
-                  category: post.category,
+                Row(
+                  children: [
+                    UploadDateAndCategory(
+                      createAt: post.createAtToString,
+                      category: post.category,
+                    ),
+                    const Spacer(),
+                    _CommentAndFavorite(
+                      commentsCount: post.commentCounts ?? 0,
+                    ),
+                  ],
                 ),
                 _Thumbnail(
                   thumbnail: post.thumbnail,
@@ -56,6 +64,51 @@ class Preview extends StatelessWidget {
         )
         .toList()
       ..removeLast();
+  }
+}
+
+class _CommentAndFavorite extends StatelessWidget {
+  final int commentsCount;
+
+  const _CommentAndFavorite({
+    required this.commentsCount,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _IconText(
+          text: '$commentsCount',
+          icon: Icons.comment_outlined,
+        ),
+        const SizedBox(width: 16),
+        const _IconText(
+          text: '0',
+          icon: Icons.favorite_border_rounded,
+        ),
+      ],
+    );
+  }
+}
+
+class _IconText extends StatelessWidget {
+  final String text;
+  final IconData icon;
+  const _IconText({
+    required this.text,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon),
+        const SizedBox(width: 8),
+        Text(text),
+      ],
+    );
   }
 }
 

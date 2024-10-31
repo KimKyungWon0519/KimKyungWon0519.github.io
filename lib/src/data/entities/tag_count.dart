@@ -9,7 +9,7 @@ class TagCount with _$TagCount {
   const factory TagCount({
     required int id,
     required String name,
-    @JsonKey(name: TagsCountRPC.postCount) required int counts,
+    @JsonKey(name: TagsCountFunction.postCount) required int counts,
   }) = _TagCount;
 
   factory TagCount.fromJson(Map<String, dynamic> json) =>

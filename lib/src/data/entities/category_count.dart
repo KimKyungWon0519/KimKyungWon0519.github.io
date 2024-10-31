@@ -9,7 +9,7 @@ class CategoryCount with _$CategoryCount {
   const factory CategoryCount({
     required int id,
     required String name,
-    @JsonKey(name: CategoriesCountRPC.postCount) required int counts,
+    @JsonKey(name: CategoriesCountFunction.postCount) required int counts,
   }) = _CategoryCount;
 
   factory CategoryCount.fromJson(Map<String, dynamic> json) =>

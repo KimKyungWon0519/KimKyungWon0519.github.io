@@ -14,19 +14,23 @@ class SupabaseDatabaseService {
     int? categoryID,
     int? tagID,
   }) {
-    return _client.rpc<List<Map<String, dynamic>>>(
-      CombineDataPostsRPC.getPostsRPC,
-      params: {
-        'start_offset': startOffset,
-        'p_category_id': categoryID,
-        'p_tag_id': tagID,
-      },
-    ).then((result) => result.map((data) => Post.fromJson(data)).toList());
+    return _client
+        .rpc<List<Map<String, dynamic>>>(
+          CombineDataPostsFunction.functionName,
+          params: CombineDataPostsFunction.setParameter(
+            startOffset: startOffset,
+            categoryID: categoryID,
+            tagID: tagID,
+          ),
+        )
+        .then((result) => result.map((data) => Post.fromJson(data)).toList());
   }
 
   Future<List<TagCount>> getTags() {
-    return _client.rpc<List<Map<String, dynamic>>>(TagsCountRPC.funcName).then(
-        (result) => result.map((data) => TagCount.fromJson(data)).toList());
+    return _client
+        .rpc<List<Map<String, dynamic>>>(TagsCountFunction.functionName)
+        .then(
+            (result) => result.map((data) => TagCount.fromJson(data)).toList());
   }
 
   Future<int> getPostsCount() {
@@ -35,17 +39,18 @@ class SupabaseDatabaseService {
 
   Future<List<CategoryCount>> getCategoriesCount() {
     return _client
-        .rpc<List<Map<String, dynamic>>>(CategoriesCountRPC.funcName)
+        .rpc<List<Map<String, dynamic>>>(CategoriesCountFunction.functionName)
         .then((result) =>
             result.map((data) => CategoryCount.fromJson(data)).toList());
   }
 
   Future<Post> getPost(String name) {
-    return _client.rpc<List<Map<String, dynamic>>>(
-        CombineDataPostsRPC.getPostPRC,
-        params: {
-          'post_name': name,
-        }).then((result) => Post.fromJson(result.single));
+    return _client
+        .rpc<List<Map<String, dynamic>>>(
+          CombineDataPostFunction.functionName,
+          params: CombineDataPostFunction.setParameter(postName: name),
+        )
+        .then((result) => Post.fromJson(result.single));
   }
 
   Future<ResponseResult> saveComment(Map<String, dynamic> data) {
@@ -56,9 +61,12 @@ class SupabaseDatabaseService {
   }
 
   Future<List<Comment>> getComments(int postID) {
-    return _client.rpc<List<Map<String, dynamic>>>(
-      CommentsTable.functionName,
-      params: {'p_post_id': postID},
-    ).then((result) => result.map((data) => Comment.fromJson(data)).toList());
+    return _client
+        .rpc<List<Map<String, dynamic>>>(
+          CommentsTable.functionName,
+          params: CommentsTable.setParameter(postID: postID),
+        )
+        .then(
+            (result) => result.map((data) => Comment.fromJson(data)).toList());
   }
 }

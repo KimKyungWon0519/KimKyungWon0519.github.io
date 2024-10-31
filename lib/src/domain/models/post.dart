@@ -16,6 +16,7 @@ class Post with _$Post {
     required String category,
     required List<String> tags,
     required DateTime createAt,
+    int? commentCounts,
   }) = _Post;
 
   String get createAtToString => DateFormat('yyyy년 MM월 dd일').format(createAt);

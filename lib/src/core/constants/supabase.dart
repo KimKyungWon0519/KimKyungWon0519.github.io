@@ -12,33 +12,61 @@ final class PostsTable {
   static const String table = 'posts';
 }
 
-final class CombineDataPostsRPC {
-  const CombineDataPostsRPC._();
+final class CombineDataPostsFunction {
+  const CombineDataPostsFunction._();
 
-  static const String getPostsRPC = 'get_combine_data_posts';
-  static const String getPostPRC = 'get_combine_data_post';
+  static const String functionName = 'get_combine_data_posts';
 
   static const String id = 'id';
   static const String name = 'name';
   static const String createAt = 'create_at';
   static const String categoryName = 'category_name';
   static const String tagsNames = 'tags_names';
+  static const String commentsCount = 'comments_count';
+
+  static Map<String, dynamic> setParameter({
+    required int startOffset,
+    required int? categoryID,
+    required int? tagID,
+  }) {
+    return {
+      'start_offset': startOffset,
+      'p_category_id': categoryID,
+      'p_tag_id': tagID,
+    };
+  }
 }
 
-final class CategoriesCountRPC {
-  const CategoriesCountRPC._();
+final class CombineDataPostFunction {
+  const CombineDataPostFunction._();
 
-  static const String funcName = 'get_category_post_counts';
+  static const String functionName = 'get_combine_data_post';
+
+  static const String id = 'id';
+  static const String name = 'name';
+  static const String createAt = 'create_at';
+  static const String categoryName = 'category_name';
+  static const String tagsNames = 'tags_names';
+
+  static Map<String, dynamic> setParameter({required String postName}) {
+    return {'post_name': postName};
+  }
+}
+
+final class CategoriesCountFunction {
+  const CategoriesCountFunction._();
+
+  static const String functionName = 'get_category_post_counts';
 
   static const String id = 'id';
   static const String name = 'name';
   static const String postCount = 'post_count';
 }
 
-final class TagsCountRPC {
-  const TagsCountRPC._();
+final class TagsCountFunction {
+  const TagsCountFunction._();
 
-  static const String funcName = 'get_tag_posts_count';
+  static const String functionName = 'get_tag_posts_count';
 
   static const String id = 'id';
   static const String name = 'name';
@@ -56,4 +84,10 @@ final class CommentsTable {
   static const String userUUID = 'user_uuid';
   static const String createAt = 'created_at';
   static const String postID = 'post_id';
+
+  static Map<String, dynamic> setParameter({required int postID}) {
+    return {
+      'p_post_id': postID,
+    };
+  }
 }
