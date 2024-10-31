@@ -13,10 +13,13 @@ class FavoriteIcon extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<Favorite> favorite =
-        ref.watch(postNotifierProvider.select((value) => value.favorites));
-    bool isActiveFavorite = ref
-        .read(postNotifierProvider.select((value) => value.isActiveFavorite));
+    _FavoriteIconState favoriteState = ref.watch(
+      postNotifierProvider.select(
+        (value) => _FavoriteIconState(
+            favorite: value.favorites,
+            isActiveFavorite: value.isActiveFavorite),
+      ),
+    );
 
     return ElevatedButton.icon(
       style: ButtonStyle(
@@ -24,42 +27,57 @@ class FavoriteIcon extends ConsumerWidget {
           Theme.of(context).colorScheme.primaryContainer,
         ),
       ),
-      onPressed: () async {
-        showLoadingDialog(context);
-
-        ResponseResult? responseResult;
-
-        if (!isActiveFavorite) {
-          responseResult =
-              await ref.read(postNotifierProvider.notifier).activeFavorite();
-        } else {
-          responseResult =
-              await ref.read(postNotifierProvider.notifier).deactiveFavorite();
-        }
-
-        context.pop();
-
-        if (responseResult != null && responseResult.isSuccess) {
-          ref.read(postNotifierProvider.notifier).updateFavorite();
-        } else {
-          String errorMsg = '';
-
-          if (responseResult == null) {
-            errorMsg = '로그인이 필요합니다.';
-          } else {
-            errorMsg = '추천 활성화/비활성화에 실패했습니다.';
-          }
-
-          showErrorDialog(
-            context: context,
-            errorMsg: errorMsg,
-          );
-        }
-      },
-      icon: Icon(isActiveFavorite
+      onPressed: () => _onPressedEvent(context, ref, favoriteState),
+      icon: Icon(favoriteState.isActiveFavorite
           ? Icons.favorite_rounded
           : Icons.favorite_border_rounded),
-      label: Text('${favorite.length}'),
+      label: Text('${favoriteState.favorite.length}'),
     );
   }
+
+  void _onPressedEvent(
+    BuildContext context,
+    WidgetRef ref,
+    _FavoriteIconState favoriteState,
+  ) async {
+    PostNotifier postNotifier = ref.read(postNotifierProvider.notifier);
+    showLoadingDialog(context);
+
+    ResponseResult? responseResult;
+
+    if (!favoriteState.isActiveFavorite) {
+      responseResult = await postNotifier.activeFavorite();
+    } else {
+      responseResult = await postNotifier.deactiveFavorite();
+    }
+
+    context.pop();
+
+    if (responseResult != null && responseResult.isSuccess) {
+      postNotifier.updateFavorite();
+    } else {
+      String errorMsg = '';
+
+      if (responseResult == null) {
+        errorMsg = '로그인이 필요합니다.';
+      } else {
+        errorMsg = '추천 활성화/비활성화에 실패했습니다.';
+      }
+
+      showErrorDialog(
+        context: context,
+        errorMsg: errorMsg,
+      );
+    }
+  }
+}
+
+class _FavoriteIconState {
+  final List<Favorite> favorite;
+  final bool isActiveFavorite;
+
+  const _FavoriteIconState({
+    required this.favorite,
+    required this.isActiveFavorite,
+  });
 }
