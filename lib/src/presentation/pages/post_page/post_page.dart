@@ -95,7 +95,7 @@ class PostPage extends BasedScrollLayout {
                     sliver: SliverToBoxAdapter(child: Divider()),
                     padding: EdgeInsets.symmetric(vertical: 32),
                   ),
-                  SliverToBoxAdapter(
+                  const SliverToBoxAdapter(
                     child: UnconstrainedBox(child: FavoriteIcon()),
                   ),
                   const SliverToBoxAdapter(child: SizedBox(height: 8)),

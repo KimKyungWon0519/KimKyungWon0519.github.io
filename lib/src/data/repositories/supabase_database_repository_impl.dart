@@ -2,7 +2,6 @@ import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_auth_service.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_database_service.dart';
 import 'package:kkw_blog/src/data/entities/category_count.dart';
-import 'package:kkw_blog/src/data/entities/favorite.dart' as Entity;
 import 'package:kkw_blog/src/data/entities/tag_count.dart';
 import 'package:kkw_blog/src/data/entities/comment.dart' as Entity;
 import 'package:kkw_blog/src/data/mappers/comment_mapper.dart';
