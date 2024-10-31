@@ -12,10 +12,34 @@ final class PostsTable {
   static const String table = 'posts';
 }
 
+final class CombineDataPostsFunction {
+  const CombineDataPostsFunction._();
+
+  static const String functionName = 'get_combine_data_posts';
+
+  static const String id = 'id';
+  static const String name = 'name';
+  static const String createAt = 'create_at';
+  static const String categoryName = 'category_name';
+  static const String tagsNames = 'tags_names';
+  static const String commentsCount = 'comment_counts';
+
+  static Map<String, dynamic> setParameter({
+    required int startOffset,
+    required int? categoryID,
+    required int? tagID,
+  }) {
+    return {
+      'start_offset': startOffset,
+      'p_category_id': categoryID,
+      'p_tag_id': tagID,
+    };
+  }
+}
+
 final class CombineDataPostsRPC {
   const CombineDataPostsRPC._();
 
-  static const String getPostsRPC = 'get_combine_data_posts';
   static const String getPostPRC = 'get_combine_data_post';
 
   static const String id = 'id';

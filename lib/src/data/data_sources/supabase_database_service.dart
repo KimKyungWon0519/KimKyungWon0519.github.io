@@ -14,14 +14,16 @@ class SupabaseDatabaseService {
     int? categoryID,
     int? tagID,
   }) {
-    return _client.rpc<List<Map<String, dynamic>>>(
-      CombineDataPostsRPC.getPostsRPC,
-      params: {
-        'start_offset': startOffset,
-        'p_category_id': categoryID,
-        'p_tag_id': tagID,
-      },
-    ).then((result) => result.map((data) => Post.fromJson(data)).toList());
+    return _client
+        .rpc<List<Map<String, dynamic>>>(
+          CombineDataPostsFunction.functionName,
+          params: CombineDataPostsFunction.setParameter(
+            startOffset: startOffset,
+            categoryID: categoryID,
+            tagID: tagID,
+          ),
+        )
+        .then((result) => result.map((data) => Post.fromJson(data)).toList());
   }
 
   Future<List<TagCount>> getTags() {
