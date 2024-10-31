@@ -12,6 +12,7 @@ import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
 import 'dart:html' as html;
 
 import 'local_widgets/comment_field.dart';
+import 'local_widgets/favorite_icon.dart';
 import 'local_widgets/header.dart';
 
 class PostPage extends BasedScrollLayout {
@@ -94,6 +95,10 @@ class PostPage extends BasedScrollLayout {
                     sliver: SliverToBoxAdapter(child: Divider()),
                     padding: EdgeInsets.symmetric(vertical: 32),
                   ),
+                  SliverToBoxAdapter(
+                    child: UnconstrainedBox(child: FavoriteIcon()),
+                  ),
+                  const SliverToBoxAdapter(child: SizedBox(height: 8)),
                   SliverToBoxAdapter(
                     child: CommentField(
                       controller: commentScrollController,
