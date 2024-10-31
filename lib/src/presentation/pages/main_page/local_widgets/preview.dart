@@ -31,6 +31,7 @@ class Preview extends StatelessWidget {
                     const Spacer(),
                     _CommentAndFavorite(
                       commentsCount: post.commentCounts ?? 0,
+                      favoritesCount: post.favoritesCount ?? 0,
                     ),
                   ],
                 ),
@@ -69,9 +70,11 @@ class Preview extends StatelessWidget {
 
 class _CommentAndFavorite extends StatelessWidget {
   final int commentsCount;
+  final int favoritesCount;
 
   const _CommentAndFavorite({
     required this.commentsCount,
+    required this.favoritesCount,
   });
 
   @override
@@ -83,8 +86,8 @@ class _CommentAndFavorite extends StatelessWidget {
           icon: Icons.comment_outlined,
         ),
         const SizedBox(width: 16),
-        const _IconText(
-          text: '0',
+        _IconText(
+          text: '$favoritesCount',
           icon: Icons.favorite_border_rounded,
         ),
       ],

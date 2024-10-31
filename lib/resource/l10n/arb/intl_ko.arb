@@ -36,5 +36,10 @@
     "@failureCommentSubmit": {},
     "retry": "다시 시도해주세요.",
     "@retry": {},
-    "ok": "확인"
+    "ok": "확인",
+    "@ok": {},
+    "neededLogin": "로그인이 필요합니다.",
+    "@neededLogin": {},
+    "failureChaningFavorite": "추천 활성화/비활성화에 실패했습니다.",
+    "@failureChaningFavorite": {}
 }

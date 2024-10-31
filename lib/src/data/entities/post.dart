@@ -17,6 +17,8 @@ class Post with _$Post {
     required List<String> tagsNames,
     @JsonKey(name: CombineDataPostsFunction.commentsCount)
     required int? commentCount,
+    @JsonKey(name: CombineDataPostsFunction.favoritesCount)
+    required int? favoritesCount,
   }) = _Post;
 
   factory Post.fromJson(Map<String, dynamic> json) => _$PostFromJson(json);

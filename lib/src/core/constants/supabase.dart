@@ -23,6 +23,7 @@ final class CombineDataPostsFunction {
   static const String categoryName = 'category_name';
   static const String tagsNames = 'tags_names';
   static const String commentsCount = 'comments_count';
+  static const String favoritesCount = 'favorites_count';
 
   static Map<String, dynamic> setParameter({
     required int startOffset,
@@ -83,6 +84,23 @@ final class CommentsTable {
   static const String content = 'content';
   static const String userUUID = 'user_uuid';
   static const String createAt = 'created_at';
+  static const String postID = 'post_id';
+
+  static Map<String, dynamic> setParameter({required int postID}) {
+    return {
+      'p_post_id': postID,
+    };
+  }
+}
+
+final class FavoritesTable {
+  const FavoritesTable._();
+
+  static const String tableName = 'favorites';
+  static const String functionName = 'get_favorites_with_post';
+
+  static const String id = 'id';
+  static const String uuid = 'uuid';
   static const String postID = 'post_id';
 
   static Map<String, dynamic> setParameter({required int postID}) {

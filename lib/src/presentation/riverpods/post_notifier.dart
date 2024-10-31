@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:kkw_blog/src/core/utils/response_result.dart';
+import 'package:kkw_blog/src/domain/models/favorite.dart';
 import 'package:kkw_blog/src/dependency_injection.dart';
 import 'package:kkw_blog/src/domain/models/comment.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
@@ -34,10 +35,13 @@ class PostNotifier extends _$PostNotifier {
     post ??= await _supabaseStorageRepository.getPostFile(fileName);
     List<Comment> comments =
         await _supabaseDatabaseRepository.getComments(post.id);
+    List<Favorite> favorites =
+        await _supabaseDatabaseRepository.getFavorites(post.id);
 
     state = state.copyWith(
       post: post,
       comments: comments,
+      favorites: favorites,
     );
   }
 
@@ -67,11 +71,35 @@ class PostNotifier extends _$PostNotifier {
     return _supabaseDatabaseRepository.saveComment(comment);
   }
 
+  Future<ResponseResult?> activeFavorite() async {
+    if (state.post == null || !state.isLogin) return null;
+
+    Favorite favorite = Favorite(
+      uuid: state.user!.uuid,
+      postID: state.post!.id,
+    );
+
+    return _supabaseDatabaseRepository.activeFavorite(favorite);
+  }
+
+  Future<ResponseResult?> deactiveFavorite() async {
+    if (state.post == null) return null;
+
+    return _supabaseDatabaseRepository.deactiveFavorite(state.post!.id);
+  }
+
   void updateComment() async {
     List<Comment> comments =
         await _supabaseDatabaseRepository.getComments(state.post!.id);
 
     state = state.copyWith(comments: comments);
+  }
+
+  void updateFavorite() async {
+    List<Favorite> favorites =
+        await _supabaseDatabaseRepository.getFavorites(state.post!.id);
+
+    state = state.copyWith(favorites: favorites);
   }
 }
 
@@ -83,7 +111,14 @@ class PostNotifierState with _$PostNotifierState {
     Post? post,
     User? user,
     @Default([]) List<Comment> comments,
+    @Default([]) List<Favorite> favorites,
   }) = _PostNotifierState;
 
   bool get isLogin => user != null;
+
+  bool get isActiveFavorite =>
+      isLogin &&
+      favorites.indexWhere(
+              (element) => user != null && user!.uuid == element.uuid) !=
+          -1;
 }

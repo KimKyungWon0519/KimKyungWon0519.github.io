@@ -23,6 +23,7 @@ class PostMapper {
       tags: post.tagsNames,
       createAt: post.createAt,
       commentCounts: post.commentCount,
+      favoritesCount: post.favoritesCount,
     );
   }
 }
