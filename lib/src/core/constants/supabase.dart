@@ -92,3 +92,20 @@ final class CommentsTable {
     };
   }
 }
+
+final class FavoritesTable {
+  const FavoritesTable._();
+
+  static const String tableName = 'favorites';
+  static const String functionName = 'get_favorites_with_post';
+
+  static const String id = 'id';
+  static const String uuid = 'uuid';
+  static const String postID = 'post_id';
+
+  static Map<String, dynamic> setParameter({required int postID}) {
+    return {
+      'p_post_id': postID,
+    };
+  }
+}
