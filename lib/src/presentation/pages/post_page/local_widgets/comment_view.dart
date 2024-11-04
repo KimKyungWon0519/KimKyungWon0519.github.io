@@ -4,10 +4,12 @@ import 'package:kkw_blog/src/domain/models/comment.dart';
 
 class CommentView extends StatelessWidget {
   final Comment comment;
+  final String authUUID;
 
   const CommentView({
     super.key,
     required this.comment,
+    required this.authUUID,
   });
 
   @override
@@ -32,7 +34,31 @@ class CommentView extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text(comment.content),
+        if (authUUID == comment.user.uuid) ...[
+          const SizedBox(height: 8),
+          const Align(
+            alignment: Alignment.bottomRight,
+            child: _DeleteButton(),
+          ),
+        ]
       ],
+    );
+  }
+}
+
+class _DeleteButton extends StatelessWidget {
+  const _DeleteButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Text(
+        '삭제',
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
     );
   }
 }
