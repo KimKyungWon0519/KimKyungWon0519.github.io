@@ -88,6 +88,12 @@ class PostNotifier extends _$PostNotifier {
     return _supabaseDatabaseRepository.deactiveFavorite(state.post!.id);
   }
 
+  Future<ResponseResult?> deleteComment(int commentID) async {
+    if (state.post == null) return null;
+
+    return _supabaseDatabaseRepository.deleteComment(commentID);
+  }
+
   void updateComment() async {
     List<Comment> comments =
         await _supabaseDatabaseRepository.getComments(state.post!.id);

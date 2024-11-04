@@ -98,4 +98,15 @@ class SupabaseDatabaseService {
           onError: (error, stackTrace) => ResponseResult.isFailure(error),
         );
   }
+
+  Future<ResponseResult> deleteComment(int commentID) {
+    return _client
+        .from(CommentsTable.tableName)
+        .delete()
+        .eq(CommentsTable.id, commentID)
+        .then(
+          (value) => ResponseResult.isSuccess(true),
+          onError: (error, stackTrace) => ResponseResult.isFailure(error),
+        );
+  }
 }

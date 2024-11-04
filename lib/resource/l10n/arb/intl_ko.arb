@@ -41,5 +41,7 @@
     "neededLogin": "로그인이 필요합니다.",
     "@neededLogin": {},
     "failureChaningFavorite": "추천 활성화/비활성화에 실패했습니다.",
-    "@failureChaningFavorite": {}
+    "@failureChaningFavorite": {},
+    "failureDeleteComment": "댓글 삭제를 실패했습니다.",
+    "@failureDeleteComment": {}
 }

@@ -96,4 +96,9 @@ class SupabaseDatabaseRepositoryImpl implements SupabaseDatabaseRepository {
   Future<ResponseResult> deactiveFavorite(int postID) {
     return _databaseService.deleteFavorite(postID);
   }
+
+  @override
+  Future<ResponseResult> deleteComment(int commentID) {
+    return _databaseService.deleteComment(commentID);
+  }
 }

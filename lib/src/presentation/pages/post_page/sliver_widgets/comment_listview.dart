@@ -11,12 +11,15 @@ class CommentListview extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     List<Comment> comments =
         ref.watch(postNotifierProvider.select((value) => value.comments));
+    String uuid = ref
+        .watch(postNotifierProvider.select((value) => value.user?.uuid ?? ''));
 
     return SliverList.builder(
       itemBuilder: (context, index) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: CommentView(
           comment: comments[index],
+          authUUID: uuid,
         ),
       ),
       itemCount: comments.length,
