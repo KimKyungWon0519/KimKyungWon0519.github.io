@@ -9,6 +9,7 @@ abstract interface class SupabaseDatabaseRepository {
   Future<Set<TagType>> getTagsCount();
   Future<ResponseResult> saveComment(Comment comment);
   Future<List<Comment>> getComments(int postID);
+  Future<ResponseResult> deleteComment(int id);
   Future<List<Favorite>> getFavorites(int postID);
   Future<ResponseResult> activeFavorite(Favorite favorite);
   Future<ResponseResult> deactiveFavorite(int postID);

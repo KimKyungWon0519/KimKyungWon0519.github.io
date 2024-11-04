@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
+import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/domain/models/comment.dart';
+import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
+import 'package:kkw_blog/src/presentation/widgets/error_dialog.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_dialog.dart';
 
 class CommentView extends StatelessWidget {
   final Comment comment;
@@ -36,9 +43,11 @@ class CommentView extends StatelessWidget {
         Text(comment.content),
         if (authUUID == comment.user.uuid) ...[
           const SizedBox(height: 8),
-          const Align(
+          Align(
             alignment: Alignment.bottomRight,
-            child: _DeleteButton(),
+            child: _DeleteButton(
+              commentID: comment.id ?? -1,
+            ),
           ),
         ]
       ],
@@ -46,13 +55,18 @@ class CommentView extends StatelessWidget {
   }
 }
 
-class _DeleteButton extends StatelessWidget {
-  const _DeleteButton({super.key});
+class _DeleteButton extends ConsumerWidget {
+  final int commentID;
+
+  const _DeleteButton({
+    super.key,
+    required this.commentID,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => _deleteEvent(context, ref),
       child: Text(
         '삭제',
         style: TextStyle(
@@ -60,5 +74,29 @@ class _DeleteButton extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _deleteEvent(BuildContext context, WidgetRef ref) async {
+    showLoadingDialog(context);
+
+    PostNotifier postNotifier = ref.read(postNotifierProvider.notifier);
+
+    ResponseResult? responseResult =
+        await postNotifier.deleteComment(commentID);
+
+    context.pop();
+
+    if (responseResult != null && responseResult.isSuccess) {
+      postNotifier.updateComment();
+    } else {
+      String errorMsg = '';
+
+      errorMsg = Messages.of(context).failureDeleteComment;
+
+      showErrorDialog(
+        context: context,
+        errorMsg: errorMsg,
+      );
+    }
   }
 }
