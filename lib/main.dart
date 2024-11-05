@@ -11,6 +11,7 @@ import 'package:kkw_blog/src/core/routes/app_pages.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:kkw_blog/src/dependency_injection.dart' as DI;
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:seo/seo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -47,7 +48,11 @@ class MainApp extends StatelessWidget {
 
         return ScreenUtilInit(
           designSize: size,
-          builder: (context, child) => const _MyMaterialApp(),
+          builder: (context, child) => SeoController(
+            enabled: true,
+            tree: WidgetTree(context: context),
+            child: const _MyMaterialApp(),
+          ),
         );
       },
     );

@@ -5,7 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/presentation/widgets/fab_panel.dart';
 
 abstract class BasedScrollLayout extends HookConsumerWidget {
-  const BasedScrollLayout({super.key});
+  const BasedScrollLayout({
+    super.key,
+  });
 
   Widget childBuild(
     BuildContext context,

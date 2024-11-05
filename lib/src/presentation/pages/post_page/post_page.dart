@@ -3,12 +3,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
+import 'package:kkw_blog/src/core/utils/seo.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_info.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/markdown_view.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/sliver_widgets/comment_listview.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
+import 'package:seo/seo.dart';
 import 'dart:html' as html;
 
 import 'local_widgets/comment_field.dart';
@@ -69,6 +72,14 @@ class PostPage extends BasedScrollLayout {
     Post? post = ref.watch(postNotifierProvider.select((value) => value.post));
 
     html.document.title = post?.title ?? '';
+
+    String title = post?.title ?? '';
+    String description = post?.content ?? '';
+    String href = html.window.location.href;
+
+    createMetaTag(title, description);
+    createLinkTag(href);
+    createOpenGraph(title, description, href);
 
     return Center(
       child: Container(
