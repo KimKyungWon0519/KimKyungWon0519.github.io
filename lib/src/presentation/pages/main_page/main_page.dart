@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
+import 'package:kkw_blog/src/core/utils/seo.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:seo/head_tag.dart';
+import 'dart:html';
 
 import 'local_widgets/desktop_view/layout.dart' as Desktop;
 import 'local_widgets/mobile_view/layout.dart' as Mobile;
@@ -19,6 +23,18 @@ class MainPage extends BasedScrollLayout {
     ObjectRef<bool> canScrolling,
   ) {
     final ObjectRef<bool> isUpdate = useRef(false);
+
+    useEffect(() {
+      Future.delayed(Duration.zero).then(
+        (value) {
+          createMetaTag(
+            Messages.of(context).blogTitle,
+            Messages.of(context).introduction,
+          );
+          createLinkTag(window.location.href);
+        },
+      );
+    }, []);
 
     useEffect(() {
       void updateData() {
