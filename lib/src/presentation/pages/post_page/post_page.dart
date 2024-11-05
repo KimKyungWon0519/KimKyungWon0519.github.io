@@ -73,11 +73,13 @@ class PostPage extends BasedScrollLayout {
 
     html.document.title = post?.title ?? '';
 
-    createMetaTag(
-      post?.title ?? '',
-      post?.content ?? '',
-    );
-    createLinkTag(html.window.location.href);
+    String title = post?.title ?? '';
+    String description = post?.content ?? '';
+    String href = html.window.location.href;
+
+    createMetaTag(title, description);
+    createLinkTag(href);
+    createOpenGraph(title, description, href);
 
     return Center(
       child: Container(

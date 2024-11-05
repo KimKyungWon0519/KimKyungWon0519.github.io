@@ -27,11 +27,13 @@ class MainPage extends BasedScrollLayout {
     useEffect(() {
       Future.delayed(Duration.zero).then(
         (value) {
-          createMetaTag(
-            Messages.of(context).blogTitle,
-            Messages.of(context).introduction,
-          );
-          createLinkTag(window.location.href);
+          String title = Messages.of(context).blogTitle;
+          String description = Messages.of(context).introduction;
+          String href = window.location.href;
+
+          createMetaTag(title, description);
+          createLinkTag(href);
+          createOpenGraph(title, description, href);
         },
       );
     }, []);
