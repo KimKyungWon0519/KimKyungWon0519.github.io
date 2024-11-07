@@ -10,5 +10,23 @@
                 }
             }
         }
+    },
+    "hosting": {
+        "public": "build/web",
+        "site": "kimkyungwon0519-blog",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ]
+    },
+    "emulators": {
+        "hosting": {
+            "port": 5000
+        },
+        "ui": {
+            "enabled": true
+        },
+        "singleProjectMode": true
     }
 }
