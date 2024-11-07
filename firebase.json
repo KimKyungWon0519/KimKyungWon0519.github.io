@@ -1,0 +1,14 @@
+{
+    "flutter": {
+        "platforms": {
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "kkw-blog-6e661",
+                    "configurations": {
+                        "web": "1:184501997558:web:9b6288ce6b4fd5b13581d7"
+                    }
+                }
+            }
+        }
+    }
+}
