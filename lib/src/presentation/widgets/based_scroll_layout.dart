@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kkw_blog/src/presentation/widgets/custom_header.dart';
 import 'package:kkw_blog/src/presentation/widgets/fab_panel.dart';
 
 abstract class BasedScrollLayout extends HookConsumerWidget {
@@ -31,13 +32,22 @@ abstract class BasedScrollLayout extends HookConsumerWidget {
             );
           }
         },
-        child: RawScrollbar(
-          trackColor: Colors.grey.withOpacity(.3),
-          thumbVisibility: true,
-          radius: const Radius.circular(30),
+        child: SingleChildScrollView(
           controller: scrollController,
-          thickness: 5,
-          child: childBuild(context, ref, scrollController, canScrolling),
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                const Align(
+                  alignment: Alignment.topRight,
+                  child: CustomHeader(),
+                ),
+                childBuild(context, ref, scrollController, canScrolling),
+                const SizedBox(height: kToolbarHeight),
+              ],
+            ),
+          ),
         ),
       ),
       floatingActionButton: FabPanel(scrollController: scrollController),

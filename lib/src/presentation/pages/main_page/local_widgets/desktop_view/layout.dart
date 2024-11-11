@@ -14,59 +14,36 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        constraints: const BoxConstraints(maxWidth: 1200),
-        child: CustomScrollView(
-          controller: scrollController,
-          scrollBehavior:
-              ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          slivers: const [
-            _HorizontalPaddingSliver(),
-            SliverToBoxAdapter(child: Header()),
-            _BodyAreaSliver(),
-            _HorizontalPaddingSliver(),
-          ],
-        ),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 1200),
+      child: const Column(
+        children: [
+          Header(),
+          _Body(),
+        ],
       ),
     );
   }
 }
 
-class _BodyAreaSliver extends StatelessWidget {
-  const _BodyAreaSliver();
+class _Body extends StatelessWidget {
+  const _Body();
 
   @override
   Widget build(BuildContext context) {
-    return const SliverCrossAxisGroup(
-      slivers: [
-        SliverCrossAxisExpanded(
+    return const Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
           flex: 1,
-          sliver: SliverToBoxAdapter(
-            child: ClassifiedPanel(),
-          ),
+          child: ClassifiedPanel(),
         ),
-        SliverCrossAxisExpanded(
+        Expanded(
           flex: 3,
-          sliver: PreviewListview(),
+          child: PreviewListview(),
         ),
-        SliverCrossAxisExpanded(
-          flex: 1,
-          sliver: SliverToBoxAdapter(),
-        ),
+        Spacer(flex: 1),
       ],
-    );
-  }
-}
-
-class _HorizontalPaddingSliver extends StatelessWidget {
-  const _HorizontalPaddingSliver();
-
-  @override
-  Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(
-      child: SizedBox(height: kToolbarHeight),
     );
   }
 }

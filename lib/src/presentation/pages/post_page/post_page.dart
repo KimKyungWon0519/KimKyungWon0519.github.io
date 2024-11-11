@@ -7,10 +7,13 @@ import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/src/core/utils/seo.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_info.dart';
+import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_view.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/markdown_view.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/sliver_widgets/comment_listview.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
+import 'package:kkw_blog/src/presentation/widgets/custom_header.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_dialog.dart';
 import 'package:seo/seo.dart';
 import 'dart:html' as html;
 
@@ -81,53 +84,33 @@ class PostPage extends BasedScrollLayout {
     createLinkTag(href);
     createOpenGraph(title, description, href);
 
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        constraints: const BoxConstraints(maxWidth: 800),
-        child: CustomScrollView(
-          controller: scrollController,
-          scrollBehavior:
-              ScrollConfiguration.of(context).copyWith(scrollbars: false),
-          slivers: post != null
-              ? [
-                  const SliverToBoxAdapter(
-                      child: SizedBox(height: kToolbarHeight)),
-                  SliverToBoxAdapter(child: Header(post: post)),
-                  const SliverToBoxAdapter(child: SizedBox(height: 32)),
-                  const SliverToBoxAdapter(child: Divider()),
-                  SliverToBoxAdapter(
-                    child: MarkdownView(
-                      routeID: post.routeID,
-                      content: post.content,
-                    ),
-                  ),
-                  const SliverPadding(
-                    sliver: SliverToBoxAdapter(child: Divider()),
-                    padding: EdgeInsets.symmetric(vertical: 32),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: UnconstrainedBox(child: FavoriteIcon()),
-                  ),
-                  const SliverToBoxAdapter(child: SizedBox(height: 8)),
-                  SliverToBoxAdapter(
-                    child: CommentField(
-                      controller: commentScrollController,
-                    ),
-                  ),
-                  const SliverPadding(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    sliver: SliverToBoxAdapter(
-                      child: CommentInfo(),
-                    ),
-                  ),
-                  const CommentListview(),
-                  const SliverToBoxAdapter(
-                      child: SizedBox(height: kToolbarHeight)),
-                ]
-              : [],
-        ),
-      ),
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 800),
+      child: post == null
+          ? const LoadingDialog()
+          : Column(
+              children: [
+                Header(post: post),
+                const SizedBox(height: 32),
+                const Divider(),
+                MarkdownView(
+                  content: post.content,
+                  routeID: post.routeID,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 32),
+                  child: Divider(),
+                ),
+                const FavoriteIcon(),
+                const SizedBox(height: 8),
+                CommentField(controller: commentScrollController),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: CommentInfo(),
+                ),
+                CommentListview(),
+              ],
+            ),
     );
   }
 
@@ -137,5 +120,14 @@ class PostPage extends BasedScrollLayout {
     return argument != null
         ? (argument as Map<String, dynamic>)['route_id']
         : null;
+  }
+}
+
+class _LodingPost extends StatelessWidget {
+  const _LodingPost({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const LoadingDialog();
   }
 }

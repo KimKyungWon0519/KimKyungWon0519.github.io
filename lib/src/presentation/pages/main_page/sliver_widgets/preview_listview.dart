@@ -13,6 +13,11 @@ class PreviewListview extends ConsumerWidget {
     List<Post> posts =
         ref.watch(mainNotifierProvider.select((value) => value.posts));
 
+    return ListView(
+      shrinkWrap: true,
+      children: _addDivider(posts.map((post) => Preview(post: post)).toList()),
+    );
+
     return SliverList.list(
       children: _addDivider(posts.map((post) => Preview(post: post)).toList()),
     );
