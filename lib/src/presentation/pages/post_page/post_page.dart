@@ -13,7 +13,7 @@ import 'package:kkw_blog/src/presentation/pages/post_page/sliver_widgets/comment
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
 import 'package:kkw_blog/src/presentation/widgets/custom_header.dart';
-import 'package:kkw_blog/src/presentation/widgets/loading_dialog.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_progress.dart';
 import 'package:seo/seo.dart';
 import 'dart:html' as html;
 
@@ -87,7 +87,7 @@ class PostPage extends BasedScrollLayout {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 800),
       child: post == null
-          ? const LoadingDialog()
+          ? const LoadingProgress()
           : Column(
               children: [
                 Header(post: post),
@@ -128,6 +128,6 @@ class _LodingPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const LoadingDialog();
+    return const LoadingProgress();
   }
 }

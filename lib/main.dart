@@ -5,16 +5,20 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
+import 'package:kkw_blog/src/core/constants/app_constants.dart';
 import 'package:kkw_blog/src/core/constants/supabase.dart';
 import 'package:kkw_blog/src/core/riverpods/theme_mode_notifier.dart';
 import 'package:kkw_blog/src/core/routes/app_pages.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:kkw_blog/src/dependency_injection.dart' as DI;
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:seo/seo.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
+  packageInfo = await PackageInfo.fromPlatform();
+
   GoRouter.optionURLReflectsImperativeAPIs = true;
 
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LoadingDialog extends StatelessWidget {
-  const LoadingDialog({super.key});
+class LoadingProgress extends StatelessWidget {
+  const LoadingProgress({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,6 @@ class LoadingDialog extends StatelessWidget {
 
 void showLoadingDialog(BuildContext context) => showDialog(
       context: context,
-      builder: (_) => const LoadingDialog(),
+      builder: (_) => const LoadingProgress(),
       barrierDismissible: false,
     );
