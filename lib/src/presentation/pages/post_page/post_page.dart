@@ -3,18 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/src/core/utils/seo.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_info.dart';
-import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/comment_view.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/markdown_view.dart';
 import 'package:kkw_blog/src/presentation/pages/post_page/sliver_widgets/comment_listview.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
-import 'package:kkw_blog/src/presentation/widgets/custom_header.dart';
 import 'package:kkw_blog/src/presentation/widgets/loading_progress.dart';
-import 'package:seo/seo.dart';
 import 'dart:html' as html;
 
 import 'local_widgets/comment_field.dart';
@@ -124,7 +120,7 @@ class PostPage extends BasedScrollLayout {
 }
 
 class _LodingPost extends StatelessWidget {
-  const _LodingPost({super.key});
+  const _LodingPost();
 
   @override
   Widget build(BuildContext context) {

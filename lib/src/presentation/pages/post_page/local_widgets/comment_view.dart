@@ -59,7 +59,6 @@ class _DeleteButton extends ConsumerWidget {
   final int commentID;
 
   const _DeleteButton({
-    super.key,
     required this.commentID,
   });
 

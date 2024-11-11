@@ -6,7 +6,6 @@ import 'package:kkw_blog/src/core/utils/seo.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:seo/head_tag.dart';
 import 'dart:html';
 
 import 'local_widgets/desktop_view/layout.dart' as Desktop;
@@ -36,6 +35,7 @@ class MainPage extends BasedScrollLayout {
           createOpenGraph(title, description, href);
         },
       );
+      return null;
     }, []);
 
     useEffect(() {

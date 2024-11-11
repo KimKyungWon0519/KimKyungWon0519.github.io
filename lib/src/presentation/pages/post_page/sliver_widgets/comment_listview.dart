@@ -16,7 +16,7 @@ class CommentListview extends ConsumerWidget {
 
     return ListView.builder(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: CommentView(comment: comments[index], authUUID: uuid),

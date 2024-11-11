@@ -17,7 +17,7 @@ class CustomHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             const Text('(C) 2024. KimKyungWon All rights reserved.'),
-            Text('${packageInfo.version}'),
+            Text(packageInfo.version),
           ],
         ),
       ),
