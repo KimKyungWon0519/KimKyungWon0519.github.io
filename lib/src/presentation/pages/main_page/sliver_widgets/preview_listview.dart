@@ -15,10 +15,7 @@ class PreviewListview extends ConsumerWidget {
 
     return ListView(
       shrinkWrap: true,
-      children: _addDivider(posts.map((post) => Preview(post: post)).toList()),
-    );
-
-    return SliverList.list(
+      physics: const NeverScrollableScrollPhysics(),
       children: _addDivider(posts.map((post) => Preview(post: post)).toList()),
     );
   }

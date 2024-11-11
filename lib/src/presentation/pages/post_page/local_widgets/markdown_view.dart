@@ -18,6 +18,7 @@ class MarkdownView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MarkdownBody(
       shrinkWrap: true,
+      softLineBreak: true,
       styleSheet: customMarkdownStyleSheet(context),
       data: content,
       imageBuilder: (uri, title, alt) {

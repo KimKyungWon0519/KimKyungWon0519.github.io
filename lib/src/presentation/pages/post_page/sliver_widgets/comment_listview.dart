@@ -16,20 +16,10 @@ class CommentListview extends ConsumerWidget {
 
     return ListView.builder(
       shrinkWrap: true,
-      itemBuilder: (context, index) => Padding(
-        padding: EdgeInsets.symmetric(vertical: 16),
-        child: CommentView(comment: comments[index], authUUID: uuid),
-      ),
-      itemCount: comments.length,
-    );
-
-    return SliverList.builder(
+      physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
-        child: CommentView(
-          comment: comments[index],
-          authUUID: uuid,
-        ),
+        child: CommentView(comment: comments[index], authUUID: uuid),
       ),
       itemCount: comments.length,
     );

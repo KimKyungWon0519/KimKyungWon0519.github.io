@@ -108,7 +108,7 @@ class PostPage extends BasedScrollLayout {
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: CommentInfo(),
                 ),
-                CommentListview(),
+                const CommentListview(),
               ],
             ),
     );
