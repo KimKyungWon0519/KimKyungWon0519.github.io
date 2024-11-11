@@ -6,7 +6,7 @@ import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/domain/models/favorite.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/error_dialog.dart';
-import 'package:kkw_blog/src/presentation/widgets/loading_dialog.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_progress.dart';
 
 class FavoriteIcon extends ConsumerWidget {
   const FavoriteIcon({super.key});

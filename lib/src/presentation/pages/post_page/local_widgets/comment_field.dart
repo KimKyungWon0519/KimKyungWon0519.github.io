@@ -12,7 +12,7 @@ import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'dart:html' as html;
 
 import 'package:kkw_blog/src/presentation/widgets/error_dialog.dart';
-import 'package:kkw_blog/src/presentation/widgets/loading_dialog.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_progress.dart';
 
 class _ControllersProvider extends InheritedWidget {
   final TabController tabController;
