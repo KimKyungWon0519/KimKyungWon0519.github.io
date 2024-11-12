@@ -39,8 +39,10 @@
         마크다운을 머릿말/본문 분리
       - **markdown.dart**    
         마크다운 데이터 객체
-      - **response_result**  
+      - **response_result.dart**  
         api 결과 데이터 객체
+      - **seo.dart**
+        seo 관련 Meta Tag 업데이트하는 도구
   - /data
     - /data_sources
       - **supabase_auth_service.dart**    
@@ -58,13 +60,17 @@
         특정 태그의 글 개수를 가진 데이터 객체
       - **comment.dart**  
         댓글 데이터 객체
+      - **favorite.dart**
+        좋아요 데이터 객체
     - /mappers
       - **post_mapper.dart**    
         Markdown 객체를 Post 객체로 변환하는 도구
-      - **comment_mapper**  
+      - **comment_mapper.dart**  
         Model.Comment와 Entity.Comment를 서로 변환하는 도구
-      - **user_mapper**  
+      - **user_mapper.dart**  
         supabase user 객체를 Model.User로 변환하는 도구
+      - **favorite_mapper.dart**
+        Model.Favorite와 Entity.Favorite를 서로 변환하는 도구
     - **/repositories (구현체)**  
       domain/repositories의 구현체
       - supabase_auth_repository_impl.dart
@@ -80,6 +86,8 @@
         댓글 데이터 객체
       - **user.dart**  
         유저 데이터 객체
+      - **favorite.dart**
+        좋아요 데이터 객체
     - /repositories (추상체)
       - **supabase_auth_repository.dart**  
         supabase의 로그인 관련 추상 레포 객체
