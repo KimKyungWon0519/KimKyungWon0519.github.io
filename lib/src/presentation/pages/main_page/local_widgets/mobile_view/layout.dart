@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'classified_menu_button.dart';
 import '../header.dart';
-import '../../sliver_widgets/preview_listview.dart';
+import '../preview_listview.dart';
 
 class Lyaout extends StatelessWidget {
   final ScrollController scrollController;

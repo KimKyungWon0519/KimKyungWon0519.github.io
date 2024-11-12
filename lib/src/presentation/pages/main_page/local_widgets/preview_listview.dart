@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
 
-import '../local_widgets/preview.dart';
+import 'preview.dart';
 
 class PreviewListview extends ConsumerWidget {
   const PreviewListview({super.key});

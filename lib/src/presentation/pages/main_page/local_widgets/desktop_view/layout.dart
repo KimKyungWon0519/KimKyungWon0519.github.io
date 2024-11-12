@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../header.dart';
 import 'classified_panel.dart';
-import '../../sliver_widgets/preview_listview.dart';
+import '../preview_listview.dart';
 
 class Layout extends StatelessWidget {
   final ScrollController scrollController;
