@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kkw_blog/resource/l10n/generated/l10n.dart';
 import 'package:kkw_blog/resource/assets.dart' as Assets;
 
@@ -36,15 +37,15 @@ class _ProfileImage extends StatelessWidget {
       width: 50,
       height: 50,
       decoration: BoxDecoration(
-        image: const DecorationImage(
-          image: AssetImage(Assets.profile),
-        ),
         border: Border.all(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.primaryContainer,
           width: 1,
+          strokeAlign: BorderSide.strokeAlignOutside,
         ),
         shape: BoxShape.circle,
       ),
+      clipBehavior: Clip.hardEdge,
+      child: SvgPicture.asset(Assets.profile),
     );
   }
 }
