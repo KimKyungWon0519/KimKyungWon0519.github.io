@@ -1,0 +1,32 @@
+name: Deploy Flutter Web App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
+
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2.12.0
+      with:
+        flutter-version: '3.24.2'
+
+    - run : flutter pub get
+
+    - name: Generate Files
+      run : flutter pub run build_runner build && flutter pub run intl_utils:generate
+
+    - name: Build Web 
+      run: flutter build web --release --dart-define=supabase_url=${{ secrets.SUPABASE_URL }} --dart-define=supabase_anno_key=${{ secrets.SUPABASE_ANNO_KEY }} --dart-define=supabase_role_key=${{ secrets.SUPABASE_ROLE_KEY }} 
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3.9.3
+      with:
+        github_token: ${{ secrets.WEB_DEPLOY }}
+        publish_dir: ./build/web

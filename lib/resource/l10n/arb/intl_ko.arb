@@ -1,0 +1,49 @@
+{
+    "@@locale": "ko",
+    "blogTitle": "기술의 여정",
+    "@blogTitle": {},
+    "subTitle": "김경원의 개발 블로그",
+    "@subTitle": {},
+    "introduction": "안녕하세요, 플러터 개발자 김경원입니다.\n모두에게 도움이 되는 블로그로 채우도록 노력하겠습니다.",
+    "@introduction": {},
+    "category": "카테고리",
+    "@category": {},
+    "tag": "태그",
+    "@tag": {},
+    "write": "작성하기",
+    "@write": {},
+    "preview": "미리보기",
+    "@preview": {},
+    "scrollUp": "맨 위로",
+    "@scrollUp": {},
+    "completedWriting": "작성완료",
+    "@completedWriting": {},
+    "blockedFieldHint": "로그인 후 작성 가능합니다.",
+    "@blockedFieldHint": {},
+    "logout": "로그아웃",
+    "@logout": {},
+    "commentCount": "댓글 ({count})",
+    "@commentCount": {
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "error": "오류",
+    "@error": {},
+    "failureCommentSubmit": "댓글 작성을 실패했습니다.",
+    "@failureCommentSubmit": {},
+    "retry": "다시 시도해주세요.",
+    "@retry": {},
+    "ok": "확인",
+    "@ok": {},
+    "neededLogin": "로그인이 필요합니다.",
+    "@neededLogin": {},
+    "failureChaningFavorite": "추천 활성화/비활성화에 실패했습니다.",
+    "@failureChaningFavorite": {},
+    "failureDeleteComment": "댓글 삭제를 실패했습니다.",
+    "@failureDeleteComment": {},
+    "errorPost": "예기치 않은 오류가 발생하여, 게시글을 받아올 수 없습니다.\n다시 시도해주세요.",
+    "@errorPost": {}
+}

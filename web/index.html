@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,12 +28,46 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" href="favicon.ico" />
 
-  <title>kkw_blog</title>
+  <!-- Meta Tag -->
+  <meta name="author" content="Kim Kyungwon">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <meta name="title" content="기술의 여정">
+  <meta name="description" content="김경원의 개인 개발 블로그">
+
+  <title>기술의 여정</title>
+
+  <meta property="og:title" content="기술의 여정">
+  <meta property="og:description" content="김경원의 개인 개발 블로그">
+  <meta property="og:image" content="opengraph/logo.png">
+
   <link rel="manifest" href="manifest.json">
+
+  <meta name="google-site-verification" content="j9M4NSwS82zuGDavl6UCKu7DwF34YObOEbm-k2zJC0U" />
+
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <div id="loading"></div>
+
   <script src="flutter_bootstrap.js" async></script>
+  <script>
+    window.addEventListener('load', function (ev) {
+      var loading = document.querySelector('#loading');
+      _flutter.loader.load({
+        serviceWorker: {
+          serviceWorkerVersion,
+        },
+        onEntrypointLoaded: async function (engineInitializer) {
+          let appRunner = await engineInitializer.initializeEngine();
+
+          await appRunner.runApp();
+        }
+      });
+    });
+  </script>
 </body>
+
 </html>
