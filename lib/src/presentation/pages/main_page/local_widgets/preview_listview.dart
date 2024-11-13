@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
 import 'package:kkw_blog/src/presentation/riverpods/main_notifier.dart';
+import 'package:kkw_blog/src/presentation/widgets/loading_progress.dart';
 
 import 'preview.dart';
 
@@ -10,13 +11,22 @@ class PreviewListview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<Post> posts =
-        ref.watch(mainNotifierProvider.select((value) => value.posts));
+    _WidgetState state = ref.watch(
+      mainNotifierProvider.select(
+        (value) => _WidgetState(posts: value.posts, isLoading: value.isLoading),
+      ),
+    );
 
-    return ListView(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      children: _addDivider(posts.map((post) => Preview(post: post)).toList()),
+    return Column(
+      children: [
+        ListView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: _addDivider(
+              state.posts.map((post) => Preview(post: post)).toList()),
+        ),
+        if (state.isLoading) const LoadingProgress(),
+      ],
     );
   }
 
@@ -38,4 +48,14 @@ class PreviewListview extends ConsumerWidget {
 
     return newWidgets;
   }
+}
+
+class _WidgetState {
+  final List<Post> posts;
+  final bool isLoading;
+
+  const _WidgetState({
+    required this.posts,
+    required this.isLoading,
+  });
 }

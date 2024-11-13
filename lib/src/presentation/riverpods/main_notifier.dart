@@ -52,6 +52,7 @@ class MainNotifier extends _$MainNotifier {
     _startOffset = 0;
     _categoryID = null;
     _tagID = null;
+    this.posts = [];
 
     if (type case CategoryType()) {
       _categoryID = type.id;
@@ -74,11 +75,15 @@ class MainNotifier extends _$MainNotifier {
   }
 
   Future<List<Post>> _updatePosts() async {
-    return _supabaseStorageRepository.getPostFiles(
-      startOffset: _startOffset,
-      tagID: _tagID,
-      categoryID: _categoryID,
-    );
+    state = state.copyWith(isLoading: true);
+
+    return _supabaseStorageRepository
+        .getPostFiles(
+          startOffset: _startOffset,
+          tagID: _tagID,
+          categoryID: _categoryID,
+        )
+        .whenComplete(() => state = state.copyWith(isLoading: false));
   }
 
   void _initalizeType() {
@@ -96,6 +101,7 @@ class MainNotifierState with _$MainNotifierState {
   const factory MainNotifierState({
     required ClassificationType type,
     required List<Post> posts,
+    @Default(false) bool isLoading,
   }) = _MainNotifierState;
 
   factory MainNotifierState.empty() => const MainNotifierState(
