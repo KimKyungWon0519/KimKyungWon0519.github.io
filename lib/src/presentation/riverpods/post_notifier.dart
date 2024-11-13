@@ -32,14 +32,29 @@ class PostNotifier extends _$PostNotifier {
   void updatePostAndComments({Post? post, String? fileName}) async {
     if (fileName == null) return;
 
-    post ??= await _supabaseStorageRepository.getPostFile(fileName);
-    List<Comment> comments =
-        await _supabaseDatabaseRepository.getComments(post.id);
-    List<Favorite> favorites =
-        await _supabaseDatabaseRepository.getFavorites(post.id);
+    AsyncValue<Post> postResult;
+    List<Comment> comments = [];
+    List<Favorite> favorites = [];
+
+    if (post == null) {
+      postResult = await _supabaseStorageRepository.getPostFile(fileName).then(
+            (value) => value.isSuccess
+                ? AsyncData(value.data!)
+                : AsyncError(value.error!, StackTrace.current),
+          );
+    } else {
+      postResult = AsyncData(post);
+    }
+
+    if (postResult.hasValue) {
+      int id = postResult.value!.id;
+
+      comments = await _supabaseDatabaseRepository.getComments(id);
+      favorites = await _supabaseDatabaseRepository.getFavorites(id);
+    }
 
     state = state.copyWith(
-      post: post,
+      post: postResult,
       comments: comments,
       favorites: favorites,
     );
@@ -60,32 +75,36 @@ class PostNotifier extends _$PostNotifier {
   }
 
   Future<ResponseResult?> submitComment(String content) async {
-    if (state.post == null || !state.isLogin) return null;
+    if ((state.post == null || !state.post!.hasValue) || !state.isLogin) {
+      return null;
+    }
 
     Comment comment = Comment(
       user: state.user!,
       content: content,
-      postID: state.post!.id,
+      postID: state.post!.value!.id,
     );
 
     return _supabaseDatabaseRepository.saveComment(comment);
   }
 
   Future<ResponseResult?> activeFavorite() async {
-    if (state.post == null || !state.isLogin) return null;
+    if ((state.post == null || !state.post!.hasValue) || !state.isLogin) {
+      return null;
+    }
 
     Favorite favorite = Favorite(
       uuid: state.user!.uuid,
-      postID: state.post!.id,
+      postID: state.post!.value!.id,
     );
 
     return _supabaseDatabaseRepository.activeFavorite(favorite);
   }
 
   Future<ResponseResult?> deactiveFavorite() async {
-    if (state.post == null) return null;
+    if (state.post == null || !state.post!.hasValue) return null;
 
-    return _supabaseDatabaseRepository.deactiveFavorite(state.post!.id);
+    return _supabaseDatabaseRepository.deactiveFavorite(state.post!.value!.id);
   }
 
   Future<ResponseResult?> deleteComment(int commentID) async {
@@ -96,14 +115,14 @@ class PostNotifier extends _$PostNotifier {
 
   void updateComment() async {
     List<Comment> comments =
-        await _supabaseDatabaseRepository.getComments(state.post!.id);
+        await _supabaseDatabaseRepository.getComments(state.post!.value!.id);
 
     state = state.copyWith(comments: comments);
   }
 
   void updateFavorite() async {
     List<Favorite> favorites =
-        await _supabaseDatabaseRepository.getFavorites(state.post!.id);
+        await _supabaseDatabaseRepository.getFavorites(state.post!.value!.id);
 
     state = state.copyWith(favorites: favorites);
   }
@@ -114,7 +133,7 @@ class PostNotifierState with _$PostNotifierState {
   const PostNotifierState._();
 
   const factory PostNotifierState({
-    Post? post,
+    AsyncValue<Post>? post,
     User? user,
     @Default([]) List<Comment> comments,
     @Default([]) List<Favorite> favorites,

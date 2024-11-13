@@ -43,5 +43,7 @@
     "failureChaningFavorite": "추천 활성화/비활성화에 실패했습니다.",
     "@failureChaningFavorite": {},
     "failureDeleteComment": "댓글 삭제를 실패했습니다.",
-    "@failureDeleteComment": {}
+    "@failureDeleteComment": {},
+    "errorPost": "예기치 않은 오류가 발생하여, 게시글을 받아올 수 없습니다.\n다시 시도해주세요.",
+    "@errorPost": {}
 }

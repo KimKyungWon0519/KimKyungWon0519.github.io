@@ -72,4 +72,7 @@ abstract class BasedScrollLayout extends HookConsumerWidget {
 
     controller.jumpTo(newPose);
   }
+
+  double getStaticBodySize(BuildContext context) =>
+      MediaQuery.sizeOf(context).height - kToolbarHeight * 2 - 16 * 2;
 }

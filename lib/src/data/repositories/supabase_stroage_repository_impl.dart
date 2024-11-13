@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:kkw_blog/src/core/constants/markdown_constant.dart';
 import 'package:kkw_blog/src/core/utils/markdown.dart';
+import 'package:kkw_blog/src/core/utils/response_result.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_database_service.dart';
 import 'package:kkw_blog/src/data/data_sources/supabase_storage_service.dart';
 import 'package:kkw_blog/src/data/entities/post.dart' as Entity;
@@ -46,16 +47,22 @@ class SupabaseStorageRepositoryImpl implements SupabaseStorageRepository {
   }
 
   @override
-  Future<Model.Post> getPostFile(String fileName) async {
-    Entity.Post postEntity = await _databaseService.getPost(fileName);
+  Future<ResponseResult<Model.Post>> getPostFile(String fileName) async {
+    try {
+      Entity.Post postEntity = await _databaseService.getPost(fileName);
 
-    return await compute(
-      _convertModelPost,
-      {
-        'service': _storageService,
-        'entity_post': postEntity,
-      },
-    );
+      return await compute(
+        _convertModelPost,
+        {
+          'service': _storageService,
+          'entity_post': postEntity,
+        },
+      ).then(
+        (value) => ResponseResult.isSuccess(value),
+      );
+    } catch (e) {
+      return ResponseResult.isFailure(e);
+    }
   }
 
   static Future<Model.Post> _convertModelPost(Map<String, dynamic> args) async {

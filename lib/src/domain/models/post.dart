@@ -20,6 +20,16 @@ class Post with _$Post {
     int? favoritesCount,
   }) = _Post;
 
+  factory Post.empty() => Post(
+        id: -1,
+        routeID: '',
+        title: '',
+        content: '',
+        category: '',
+        tags: [],
+        createAt: DateTime.now(),
+      );
+
   String get createAtToString => DateFormat('yyyy년 MM월 dd일').format(createAt);
 
   String get thumbnail => '$postBucketURL$routeID/thumbnail.png';

@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kkw_blog/src/core/utils/seo.dart';
 import 'package:kkw_blog/src/domain/models/post.dart';
+import 'package:kkw_blog/src/presentation/pages/post_page/local_widgets/error_panel.dart';
 import 'package:kkw_blog/src/presentation/riverpods/post_notifier.dart';
 import 'package:kkw_blog/src/presentation/widgets/based_scroll_layout.dart';
 import 'package:kkw_blog/src/presentation/widgets/loading_progress.dart';
@@ -68,45 +69,56 @@ class PostPage extends BasedScrollLayout {
           commentScrollController.removeListener(disableScrollController);
     }, [commentScrollController]);
 
-    Post? post = ref.watch(postNotifierProvider.select((value) => value.post));
+    AsyncValue<Post> post = ref.watch(postNotifierProvider
+        .select((value) => value.post ?? const AsyncLoading()));
 
-    html.document.title = post?.title ?? '';
+    post.whenData((value) {
+      html.document.title = value.title;
 
-    String title = post?.title ?? '';
-    String description = post?.content ?? '';
-    String href = html.window.location.href;
+      String title = value.title;
+      String description = value.content;
+      String href = html.window.location.href;
 
-    createMetaTag(title, description);
-    createLinkTag(href);
-    createOpenGraph(title, description, href);
+      createMetaTag(title, description);
+      createLinkTag(href);
+      createOpenGraph(title, description, href);
+    });
 
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 800),
-      child: post == null
-          ? const LoadingProgress()
-          : Column(
-              children: [
-                Header(post: post),
-                const SizedBox(height: 32),
-                const Divider(),
-                MarkdownView(
-                  content: post.content,
-                  routeID: post.routeID,
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 32),
-                  child: Divider(),
-                ),
-                const FavoriteIcon(),
-                const SizedBox(height: 8),
-                CommentField(controller: commentScrollController),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8),
-                  child: CommentInfo(),
-                ),
-                const CommentListview(),
-              ],
+      child: post.when(
+        data: (value) => Column(
+          children: [
+            Header(post: value),
+            const SizedBox(height: 32),
+            const Divider(),
+            MarkdownView(
+              content: value.content,
+              routeID: value.routeID,
             ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 32),
+              child: Divider(),
+            ),
+            const FavoriteIcon(),
+            const SizedBox(height: 8),
+            CommentField(controller: commentScrollController),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 8),
+              child: CommentInfo(),
+            ),
+            const CommentListview(),
+          ],
+        ),
+        error: (_, __) => SizedBox(
+          height: getStaticBodySize(context),
+          child: const ErrorPanel(),
+        ),
+        loading: () => SizedBox(
+          height: getStaticBodySize(context),
+          child: const LoadingProgress(),
+        ),
+      ),
     );
   }
 
@@ -116,14 +128,5 @@ class PostPage extends BasedScrollLayout {
     return argument != null
         ? (argument as Map<String, dynamic>)['route_id']
         : null;
-  }
-}
-
-class _LodingPost extends StatelessWidget {
-  const _LodingPost();
-
-  @override
-  Widget build(BuildContext context) {
-    return const LoadingProgress();
   }
 }
