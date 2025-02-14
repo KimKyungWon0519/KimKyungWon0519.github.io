@@ -6,7 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kkw_blog/resource/values/theme.dart';
 import 'package:kkw_blog/src/core/constants/supabase.dart';
+import 'package:kkw_blog/src/core/utils/markdown_formatter.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:yaml/yaml.dart';
 
 class MarkdownView extends StatelessWidget {
   final String routeID;
@@ -84,15 +86,19 @@ class InlineCodeBuilder extends MarkdownElementBuilder {
 class CodeBlockBuilder extends MarkdownElementBuilder {
   @override
   Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+    String content = element.textContent;
+    YamlMap languageInfo = content.getFrontMatter();
+    String code = content.getContent();
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
       ),
       child: HighlightView(
-        element.textContent.substring(0, element.textContent.length - 1),
+        code,
         theme: atomOneDarkTheme,
-        language: 'kotlin',
+        language: languageInfo['language'],
         padding: const EdgeInsets.all(16),
         textStyle: GoogleFonts.robotoMono(),
       ),
