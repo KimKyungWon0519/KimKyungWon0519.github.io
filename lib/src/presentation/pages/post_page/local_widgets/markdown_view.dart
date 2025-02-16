@@ -86,22 +86,38 @@ class InlineCodeBuilder extends MarkdownElementBuilder {
 class CodeBlockBuilder extends MarkdownElementBuilder {
   @override
   Widget visitElementAfter(md.Element element, TextStyle? preferredStyle) {
+    ScrollController scrollController = ScrollController();
+
     String content = element.textContent;
     YamlMap languageInfo = content.getFrontMatter();
     String code = content.getContent();
 
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: HighlightView(
-        code,
-        theme: atomOneDarkTheme,
-        language: languageInfo['language'],
-        padding: const EdgeInsets.all(16),
-        textStyle: GoogleFonts.robotoMono(),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Scrollbar(
+          thickness: 5,
+          thumbVisibility: true,
+          controller: scrollController,
+          child: SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            controller: scrollController,
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              constraints: BoxConstraints(minWidth: constraints.maxWidth),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: HighlightView(
+                code,
+                theme: atomOneDarkTheme,
+                language: languageInfo['language'],
+                padding: const EdgeInsets.all(16),
+                textStyle: GoogleFonts.robotoMono(),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
