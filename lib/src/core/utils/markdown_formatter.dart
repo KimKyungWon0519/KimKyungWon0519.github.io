@@ -17,3 +17,19 @@ extension MarkdownFormatter on Markdown {
     return content.substring(closeIndex + frontMatterDelimiter.length).trim();
   }
 }
+
+extension CodeBlockFormatter on String {
+  YamlMap getFrontMatter() {
+    int closeIndex = indexOf('\n');
+
+    String frontMatterRaw = substring(0, closeIndex);
+
+    return loadYaml(frontMatterRaw) as YamlMap;
+  }
+
+  String getContent() {
+    int closeIndex = indexOf('\n');
+
+    return substring(closeIndex).trim();
+  }
+}
