@@ -92,32 +92,65 @@ class CodeBlockBuilder extends MarkdownElementBuilder {
     YamlMap languageInfo = content.getFrontMatter();
     String code = content.getContent();
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scrollbar(
-          thickness: 5,
-          thumbVisibility: true,
-          controller: scrollController,
-          child: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
-            controller: scrollController,
-            scrollDirection: Axis.horizontal,
-            child: Container(
-              constraints: BoxConstraints(minWidth: constraints.maxWidth),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            children: [
+              Container(
+                color: Colors.grey[500],
+                padding: EdgeInsets.all(5),
+                child: Row(
+                  children: [
+                    Text(
+                      languageInfo['language'],
+                      style: GoogleFonts.robotoMono(color: Colors.white),
+                    ),
+                    Spacer(),
+                    TextButton.icon(
+                      onPressed: () {},
+                      label: Text(
+                        '복사하기',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      icon: Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              child: HighlightView(
-                code,
-                theme: atomOneDarkTheme,
-                language: languageInfo['language'],
-                padding: const EdgeInsets.all(16),
-                textStyle: GoogleFonts.robotoMono(),
+              Scrollbar(
+                thickness: 5,
+                thumbVisibility: true,
+                controller: scrollController,
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  controller: scrollController,
+                  scrollDirection: Axis.horizontal,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                    child: HighlightView(
+                      code,
+                      theme: atomOneDarkTheme,
+                      language: languageInfo['language'],
+                      padding: const EdgeInsets.all(16),
+                      textStyle: GoogleFonts.robotoMono(),
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        );
-      },
+            ],
+          );
+        },
+      ),
     );
   }
 }
