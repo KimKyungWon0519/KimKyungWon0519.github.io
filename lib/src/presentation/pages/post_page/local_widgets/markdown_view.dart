@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_highlighter/flutter_highlighter.dart';
 import 'package:flutter_highlighter/themes/atom-one-dark.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -111,19 +115,7 @@ class CodeBlockBuilder extends MarkdownElementBuilder {
                       style: GoogleFonts.robotoMono(color: Colors.white),
                     ),
                     Spacer(),
-                    TextButton.icon(
-                      onPressed: () {},
-                      label: Text(
-                        '복사하기',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                      icon: Icon(
-                        Icons.copy,
-                        color: Colors.white,
-                      ),
-                    ),
+                    _CopyIconButton(code),
                   ],
                 ),
               ),
@@ -150,6 +142,37 @@ class CodeBlockBuilder extends MarkdownElementBuilder {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class _CopyIconButton extends HookWidget {
+  final String code;
+
+  const _CopyIconButton(this.code, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    ValueNotifier<bool> isCopy = useState(false);
+
+    return IconButton(
+      onPressed: () {
+        if (isCopy.value) return;
+
+        Clipboard.setData(
+          ClipboardData(text: code),
+        ).then(
+          (value) {
+            isCopy.value = true;
+
+            Timer(const Duration(seconds: 5), () => isCopy.value = false);
+          },
+        );
+      },
+      icon: Icon(
+        isCopy.value ? Icons.check : Icons.copy,
+        color: isCopy.value ? Colors.green[300] : Colors.white,
       ),
     );
   }
