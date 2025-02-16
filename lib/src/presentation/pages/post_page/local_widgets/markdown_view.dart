@@ -108,14 +108,14 @@ class CodeBlockBuilder extends MarkdownElementBuilder {
             children: [
               Container(
                 color: Colors.grey[500],
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Row(
                   children: [
                     Text(
                       languageInfo['language'],
                       style: GoogleFonts.robotoMono(color: Colors.white),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     _CopyIconButton(code),
                   ],
                 ),
@@ -151,7 +151,7 @@ class CodeBlockBuilder extends MarkdownElementBuilder {
 class _CopyIconButton extends HookWidget {
   final String code;
 
-  const _CopyIconButton(this.code, {super.key});
+  const _CopyIconButton(this.code);
 
   @override
   Widget build(BuildContext context) {
