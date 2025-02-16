@@ -1,7 +1,7 @@
 name: kkw_blog
 description: "A new Flutter project."
 publish_to: 'none'
-version: 1.0.0
+version: 1.1.0
 
 environment:
   sdk: ^3.5.2
@@ -32,6 +32,8 @@ dependencies:
   flutter_svg: ^2.0.10+1
   seo: ^0.0.7
   package_info_plus: ^8.1.1
+  flutter_highlighter: ^0.1.1
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:

@@ -113,6 +113,11 @@
   - **dependency_injection.dart**  
     의존성 주입
 
+### 프로젝트 다이어그램
+![ProjectStruct](.github/readme/project_struct.png)
+
+### 데이터베이스 다이어그램
+![DatabaseERD](.github/readme/database_erd.png)
 ---
 ### 프로젝트 준비
 1. 패키지 설치
